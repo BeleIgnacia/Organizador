@@ -1,0 +1,27 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block header %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="collapse navbar-collapse form-inline" id="navbarColor01">
+        <ul class="navbar-nav mr-auto">
+            <a class="nav-link" href="#"><h2>Organizador</h2><span class="sr-only">(current)</span></a>
+        </ul>
+        <ul class="navbar-nav mr-inline">
+            <li class="nav-item">
+                <a class="nav-link" href="#"><h5>Contacto</h5></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><h5>Ayuda</h5></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><h5>Registrarse</h5></a>
+            </li>
+        </ul>
+        <form action="login/">
+            <input type="submit" class="btn btn-secondary" value="Iniciar Sesión" >
+        </form>
+    </div>
+</nav>
+{% endblock header %}

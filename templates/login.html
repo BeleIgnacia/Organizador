@@ -1,0 +1,38 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block title %}
+Iniciar Sesión
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block content %}
+<div class="login-page">
+	<div class="form">
+	<form method="post">
+	{% csrf_token %}
+		<div class="col-md-30">
+			<div class="form-group">
+				<input class="form-control" type="text" name="username" placeholder="Nombre de usuario" required>
+			</div>
+		</div>
+		<div class="col-md-30">
+			<div class="form-group">
+				<input class="form-control" type="password" name="password" placeholder="Contraseña" required>
+			</div>
+		</div>
+		<div class="col-md-30">
+			<div class="form-group">
+				<input class="btn btn-primary btn-block" type="submit" value="Ingresar">
+			</div>
+		</div>
+</form>
+</div>
+</div>
+{% block extrastatic %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock extrastatic %}
+{% endblock %}

@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	{% block staticextra %}
+	{% endblock %}
+
+	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap_lumen.css' %}">
+	<title>{% block title %}Organizador{% endblock %}</title>
+</head>
+<body>
+	{% block header %}
+	{% endblock %}
+
+	{% block content %}
+	{% endblock %}
+	
+	{% block footer %}
+	{% endblock %}
+
+
+	{% block extrajs %}
+	{% endblock%}
+	<script src="{% static 'js/jquery-3.5.1.js' %}"></script>
+</body>
+</html>
