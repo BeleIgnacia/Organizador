@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Como añadir app
     #'apps.nombre_de_app',
-    'apps.inicio',
+    'apps.interfaz',
+    'apps.hogar',
 ]
 
 MIDDLEWARE = [
@@ -132,4 +133,4 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR,'static'),)
 
 # Pagina a redireccionar luego de logearse
-LOGIN_REDIRECT_URL = reverse_lazy('inicio:inicio')
+LOGIN_REDIRECT_URL = reverse_lazy('interfaz:inicio')

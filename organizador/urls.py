@@ -17,10 +17,16 @@ from django.contrib import admin
 from django.urls import path,include
 from django.contrib.auth.views import LoginView
 
+from apps.hogar.views import registerUser,loginUser
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     # Como añadir url de app
     #path('nombre_app/', include(('apps.nombre_app.urls','app_name'),namespace='nombre_app')),
-    path('login/', LoginView.as_view(template_name='login.html')),    
-    path('', include(('apps.inicio.urls','app_name'),namespace='inicio')),
+    path('register/', registerUser, name='register'),
+    path('login/', loginUser, name='login'),
+    # Conservar así para luego añadir otros elementos de interfaz con menor importancia
+    # Página de contacto, ayuda, etc.
+    path('', include(('apps.interfaz.urls','app_name'),namespace='interfaz')),
+    path('hogar/', include(('apps.hogar.urls','app_name'),namespace='hogar')),
 ]

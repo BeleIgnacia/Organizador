@@ -1,0 +1,38 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block title %}
+Registrarse
+{% endblock %}
+
+{% block content %}
+<div class="login-page">
+	<div class="form">
+	<form method="POST">
+	{% csrf_token %}
+	{% for field in form %}
+	<div class="col-md-30">
+		<div class="form-group">
+    	{{ field }}
+		</div>
+	</div>
+	{% endfor %}
+	<div class="col-md-30">
+		<div class="form-group">
+			<input class="btn btn-primary btn-block" type="submit" value="Regístrar">
+		</div>
+	</div>
+	<div class="col-md-30">
+	¿Ya tienes una cuenta? <a href="/login/">Iniciar sesión</a>
+	</div>
+	</form>
+	{{ form.errors }}
+	</div>
+
+</div>
+{% block extrastatic %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+<script type="text/javascript" src="{% static 'js/register.js' %}"></script>
+{% endblock extrastatic %}
+{% endblock %}

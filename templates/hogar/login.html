@@ -12,7 +12,7 @@ Iniciar Sesión
 {% block content %}
 <div class="login-page">
 	<div class="form">
-	<form method="post">
+	<form method="POST">
 	{% csrf_token %}
 		<div class="col-md-30">
 			<div class="form-group">
@@ -29,6 +29,12 @@ Iniciar Sesión
 				<input class="btn btn-primary btn-block" type="submit" value="Ingresar">
 			</div>
 		</div>
+		<div class="col-md-30">
+			¿No tienes una cuenta? <a href="/register/">Regístrate</a>
+		</div>
+		{% for message in messages %}
+		<p><h4>{{message}}</h4></p>
+		{% endfor %}
 </form>
 </div>
 </div>
