@@ -18,6 +18,13 @@ Registrarse
 		</div>
 	</div>
 	{% endfor %}
+	{% for field in form2 %}
+	<div class="col-md-30">
+		<div class="form-group">
+    	{{ field }}
+		</div>
+	</div>
+	{% endfor %}
 	<div class="col-md-30">
 		<div class="form-group">
 			<input class="btn btn-primary btn-block" type="submit" value="Regístrar">
@@ -27,7 +34,6 @@ Registrarse
 	¿Ya tienes una cuenta? <a href="/login/">Iniciar sesión</a>
 	</div>
 	</form>
-	{{ form.errors }}
 	</div>
 
 </div>

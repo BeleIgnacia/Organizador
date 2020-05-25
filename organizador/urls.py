@@ -15,15 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from django.contrib.auth.views import LoginView
+#from django.contrib.auth.views import LoginView
 
-from apps.hogar.views import registerUser,loginUser
+from apps.hogar.views import loginUser,Register
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     # Como añadir url de app
     #path('nombre_app/', include(('apps.nombre_app.urls','app_name'),namespace='nombre_app')),
-    path('register/', registerUser, name='register'),
+    path('register/', Register.as_view(), name='register'),
     path('login/', loginUser, name='login'),
     # Conservar así para luego añadir otros elementos de interfaz con menor importancia
     # Página de contacto, ayuda, etc.
