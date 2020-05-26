@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     #'apps.nombre_de_app',
     'apps.interfaz',
     'apps.hogar',
+    'apps.tareas',
+
 ]
 
 MIDDLEWARE = [
@@ -89,7 +91,7 @@ DATABASES = {
         'PORT': 5432,
     }
 }
-
+##casa1122
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
