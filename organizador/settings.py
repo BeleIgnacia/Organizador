@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     #'apps.nombre_de_app',
     'apps.interfaz',
     'apps.hogar',
+    'apps.tareas',
+
 ]
 
 MIDDLEWARE = [
@@ -80,6 +82,7 @@ WSGI_APPLICATION = 'organizador.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
+
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'organizador',
@@ -89,7 +92,7 @@ DATABASES = {
         'PORT': 5432,
     }
 }
-
+##casa1122
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -134,3 +137,6 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR,'static'),)
 
 # Pagina a redireccionar luego de logearse
 LOGIN_REDIRECT_URL = reverse_lazy('interfaz:inicio')
+#imagenes
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
