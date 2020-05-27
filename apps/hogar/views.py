@@ -7,15 +7,50 @@ from django.contrib import messages
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
 
-from apps.hogar.forms import RegisterUserForm, RegisterDirectionForm
+from apps.hogar.forms import *
 from apps.hogar.models import *
 
+# Vista para registrar usuario común
+class RegisterUser(CreateView):
+    model = Usuario
+    template_name = 'hogar/register.html'
+    form_class = UsuarioForm
+    success_url = reverse_lazy('login')
 
+    # Despliega formulario por pantalla
+    def get_context_data(self,**kwargs):
+        context = super(RegisterUser,self).get_context_data(**kwargs)
+        if 'form' not in context:
+            context['form'] = self.form_class(self.request.GET)
+        return context
+
+    # Recive formulario de respuesta
+    def post(self, request, *arg, **kwargs):
+        self.object = self.get_object
+        form = self.form_class(request.POST)
+        # Identifica el id del domicilio por la url
+        self.domicilio_id = self.kwargs['domicilio_id']
+        # Si el formulario es valido
+        if form.is_valid():
+            # Almacena una instancia del formulario
+            instance = form.save(commit=False)
+            # Determina la instancia de Domicilio base a la id
+            self.domicilio = Domicilio.objects.get(pk=self.domicilio_id)
+            # Reemplaza la recivida por el formulario
+            instance.domicilio = self.domicilio
+            # Guarda el formulario
+            instance.save()
+            # Redirige al usuario a la pantalla de login
+            return HttpResponseRedirect(self.get_success_url())
+        else:
+            return self.render_to_response(self.get_context_data(form=form))
+
+# Vista doble form para registrar domicilio y usuario administrador
 class Register(CreateView):
     model = Domicilio
     template_name = 'hogar/register.html'
-    form_class = RegisterUserForm
-    second_form_class = RegisterDirectionForm
+    form_class = UsuarioAdminForm
+    second_form_class = DomicilioForm
     success_url = reverse_lazy('login')
 
     def get_context_data(self, **kwargs):
@@ -41,9 +76,9 @@ class Register(CreateView):
 
 '''
 def registerUser(request):
-	form = RegisterUserForm()
+	form = UsuarioAdminForm()
 	if request.method == 'POST':
-		form = RegisterUserForm(request.POST)
+		form = UsuarioAdminForm(request.POST)
 		if form.is_valid():
 			form.save()
 			return redirect('login')
