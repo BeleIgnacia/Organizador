@@ -1,4 +1,6 @@
 from django.contrib import admin
-from apps.tareas.models import Tareas
+from apps.hogar.models import Usuario,Domicilio
+
 # Register your models here.
-admin.site.register(Tareas)
+admin.site.register(Usuario)
+admin.site.register(Domicilio)

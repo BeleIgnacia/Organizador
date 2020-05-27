@@ -3,7 +3,7 @@
 	<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>unapp Template</title>
+	<title>Organizador</title>
 	{% load static %}
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="" />
@@ -59,23 +59,14 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-md-2">
-							<div id="colorlib-logo"><a href=" {% static 'index.html' %} ">Unapp</a></div>
+							<!--<div id="colorlib-logo"><a href=" {% static 'index.html' %} ">Unapp</a></div>-->
 						</div>
 						<div class="col-md-10 text-right menu-1">
 							<ul>
-								<li class="active"><a href=" {% static 'index.html' %} ">Home</a></li>
-								<li class="has-dropdown">
-									<a href=" {% static 'work.html' %} ">Works</a>
-									<ul class="dropdown">
-										<li><a href=" {% static 'work-grid.html' %} ">Works grid with text</a></li>
-										<li><a href=" {% static 'work-grid-without-text.html' %} ">Works grid w/o text</a></li>
-									</ul>
-								</li>
-								<li><a href=" {% static 'services.html' %} ">Services</a></li>
-								<li><a href=" {% static 'blog.html' %} ">Blog</a></li>
-								<li><a href=" {% static 'about.html' %} ">About</a></li>
-								<li><a href=" {% static 'shop.html' %} ">Shop</a></li>
-								<!-- <li><a href=" {% static 'contact.html' %} ">Contact</a></li> -->
+								<li class="active"><a href=" {% url 'hogar:index' %} ">Home</a></li>
+								<li><a href=" {% url 'hogar:services' %} ">Services</a></li>
+								<li><a href=" {% url 'hogar:blog' %} ">Blog</a></li>
+								<li><a href=" {% url 'hogar:about' %} ">About</a></li>
 							</ul>
 						</div>
 					</div>
@@ -131,7 +122,7 @@
 			</div>
 		</div>
 
-		<div class="colorlib-services colorlib-bg-white">
+		<!--<div class="colorlib-services colorlib-bg-white">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-4 text-center animate-box">
@@ -170,8 +161,8 @@
 				</div>
 			</div>
 		</div>
-
-		<div class="colorlib-intro">
+	-->
+		<!--<div class="colorlib-intro">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-8 col-md-offset-2 text-center colorlib-heading animate-box">
@@ -186,8 +177,8 @@
 				</div>
 			</div>
 		</div>
-
-		<div class="colorlib-work-featured colorlib-bg-white">
+		-->
+		<!--<div class="colorlib-work-featured colorlib-bg-white">
 			<div class="container">
 				<div class="row mobile-wrap">
 					<div class="col-md-5 animate-box">
@@ -249,8 +240,8 @@
 				</div>
 			</div>
 		</div>
-
-		<div id="colorlib-counter" class="colorlib-counters" style="background-image: url( {% static 'images/cover_img_1.jpg' %} );" data-stellar-background-ratio="0.5">
+	-->
+		<!--<div id="colorlib-counter" class="colorlib-counters" style="background-image: url( {% static 'images/cover_img_1.jpg' %} );" data-stellar-background-ratio="0.5">
 			<div class="overlay"></div>
 			<div class="container">
 				<div class="row">
@@ -286,7 +277,7 @@
 				</div>
 			</div>
 		</div>
-
+		-->
 		<div class="colorlib-blog">
 			<div class="container">
 				<div class="row">
@@ -324,7 +315,7 @@
 			</div>
 		</div>
 
-		<div id="colorlib-subscribe" class="colorlib-subscribe" style="background-image: url( {% static 'images/cover_img_1.jpg' %} );" data-stellar-background-ratio="0.5">
+		<!--<div id="colorlib-subscribe" class="colorlib-subscribe" style="background-image: url( {% static 'images/cover_img_1.jpg' %} );" data-stellar-background-ratio="0.5">
 			<div class="overlay"></div>
 			<div class="container">
 				<div class="row">
@@ -401,7 +392,7 @@
 			</div>
 		</div>
 
-		<footer id="colorlib-footer">
+		<!--<footer id="colorlib-footer">
 			<div class="container">
 				<div class="row row-pb-md">
 					<div class="col-md-3 colorlib-widget">

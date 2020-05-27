@@ -84,20 +84,5 @@ def services(request):
     return render(request, 'hogar/services.html')
 
 
-def shop(request):
-    return render(request, 'hogar/shop.html')
-
-
-def work_grid1(request):
-    return render(request, 'hogar/work_grid1.html')
-
-
-def work_grid2(request):
-    return render(request, 'hogar/work_grid2.html')
-
-
-def work(request):
-    return render(request, 'hogar/work.html')
-
 def about(request):
     return render(request, 'hogar/about.html')
