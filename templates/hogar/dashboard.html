@@ -1,7 +1,48 @@
-{% extends 'base/base.html' %}
+{% extends 'base/base2.html' %}
 
 {% load static %}
 
 {% block content %}
-<h1>Dashboard</h1>
+
+  <div class="jumbotron">
+    <h1 class="display-3">Buenas Buenas</h1>
+    <p class="lead">Pagina Alfa del administrador.</p>
+    <hr class="my-4">
+    <div class="container"> 
+        <div class="card-columns mt-3">
+            <div class="card border-secondary mb-2" style="max-width: 20rem;">
+                <div class="card-header">Nuevo integrante</div>
+                <div class="card-body">
+                <h4 class="card-title">Añadir nuevo usuario</h4>
+                <p class="card-text">Añade un nuevo usuario del hogar al organizador. {{user.domicilio}}</p>
+                <p class="lead">
+                    <a class="btn btn-primary btn-lg" href="/register/" role="button">Click</a>
+                </p>
+                </div>
+            </div>
+            <div class="card border-secondary mb-2" style="max-width: 20rem;">
+                <div class="card-header">Administrar</div>
+                <div class="card-body">
+                <h4 class="card-title">Administrar usuario</h4>
+                <p class="card-text">Administrar a los usuarios participantes en el organizador, añadiendo/eliminando/modificando</p>
+                <p class="lead">
+                    <a class="btn btn-primary btn-lg" href="/hogar/list_usuarios" role="button">Click</a>
+                </p>
+                </div>
+            </div>
+            <div class="card border-secondary mb-2" style="max-width: 20rem;">
+                <div class="card-header">Tareas</div>
+                <div class="card-body">
+                <h4 class="card-title">Añadir tareas</h4>
+                <p class="card-text">Podra añadir tareas y asignarlas a un usuario del grupo hogar</p>
+                <p class="lead">
+                    <a class="btn btn-primary btn-lg" href="/tareas/tarea_form" role="button">Click</a>
+                </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  </div>
+
 {% endblock %}

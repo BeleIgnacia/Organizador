@@ -8,7 +8,7 @@
 .form {
   position: relative;
   z-index: 1;
-  background: #FFfFFF;
+  background: rgb(255, 255, 255);
   max-width: 360px;
   margin: 0 auto 200px;
   padding: 45px;
@@ -23,10 +23,10 @@
 
 body {
   background: #0c83e2; /* fallback for old browsers */
-  background: -webkit-linear-gradient(right, #0c83e2, #2196F3);
-  background: -moz-linear-gradient(right, #0c83e2, #2196F3);
-  background: -o-linear-gradient(right, #0c83e2, #2196F3);
-  background: linear-gradient(to left, #0c83e2, #2196F3);
+  background: -webkit-linear-gradient(right, #acbfc9, #4b4d4e);
+  background: -moz-linear-gradient(right, #acbfc9, #4b4d4e);
+  background: -o-linear-gradient(right, #acbfc9, #4b4d4e);
+  background: linear-gradient(to left, #acbfc9, #4b4d4e);
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;      

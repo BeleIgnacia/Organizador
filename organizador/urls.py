@@ -32,4 +32,5 @@ urlpatterns = [
     # Página de contacto, ayuda, etc.
     path('', include(('apps.interfaz.urls','app_name'),namespace='interfaz')),
     path('hogar/', include(('apps.hogar.urls','app_name'),namespace='hogar')),
+    path('tareas/', include(('apps.tareas.urls','app_name'),namespace='tareas')),
 ]

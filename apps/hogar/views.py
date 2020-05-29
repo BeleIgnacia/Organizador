@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
-from django.views.generic import CreateView
+from django.views.generic import CreateView,ListView
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
@@ -121,3 +121,8 @@ def services(request):
 
 def about(request):
     return render(request, 'hogar/about.html')
+
+
+class Usuariolist(ListView):
+    model = Usuario
+    template_name = 'hogar/list_usuarios.html'

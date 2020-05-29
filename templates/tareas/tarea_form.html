@@ -1,0 +1,18 @@
+{% extends 'base/base2.html' %}
+
+{% block content %}
+
+<div class="jumbotron">
+    <div class="card border-primary mb-3" style="max-width: 20rem;">
+        <div class="card-header">Añadir</div>
+        <div class="card-body">
+          <h4 class="card-title">Nueva Tarea</h4>
+          <form method="post">
+            {% csrf_token %}
+            {{ form.as_p}}
+            <button type ="submit"> Guardar</button>
+        </form>
+        </div>
+      </div>
+</div>
+{% endblock %}

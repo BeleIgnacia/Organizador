@@ -2,11 +2,10 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-	<meta charset="utf-8">
 	{% block staticextra %}
 	{% endblock %}
-
-	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap_lumen.css' %}">
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 	<title>{% block title %}Organizador{% endblock %}</title>
 </head>
 <body>
@@ -23,5 +22,6 @@
 	{% block extrajs %}
 	{% endblock%}
 	<script src="{% static 'js/jquery-3.5.1.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.css' %}"></script>
 </body>
 </html>
