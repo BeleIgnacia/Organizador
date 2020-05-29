@@ -1,0 +1,53 @@
+{% extends 'base/base2.html' %}
+
+{% block content %}
+
+<table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Nombre</th>
+        <th scope="col">email</th>
+        <th scope="col">Domicilio</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% if object_list %}
+        {% for usuario in object_list %}
+        <tr class="table-active">
+            <td>{{usuario}}</td>
+            <td>{{usuario.email}}</td>
+            <td>{{usuario.domicilio}}</td>
+            <td>
+                <a class="btn btn-primary" href="#">Editar</a>
+                <a class="btn btn-danger" href="#">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+        {% endif %}
+    </tbody>
+  </table> 
+
+{% endblock %}
+
+
+<!-- <table class="table table-bordered">
+    <thead>
+        <tr>
+            <td>nombre</td>
+            <td>domicilio</td>
+        </tr>
+    </thead>
+    <tbody>
+        {% if object_list %}
+        {% for usuario in object_list %}
+        <tr>
+            <td>{{usuario}}</td>
+            <td>{{usuario.domicilio}}</td>
+
+        </tr>
+        {% endfor %}
+        {% else %}
+        <h3>No hay ni mrd de personas</h3>
+        {% endif %}
+    </tbody>
+</table> -->
