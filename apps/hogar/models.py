@@ -18,3 +18,6 @@ class Usuario(User):
 	domicilio = models.ForeignKey(Domicilio, on_delete=models.CASCADE)
 	#domicilio = models.CharField(max_length=50)
 	telefono = models.CharField(max_length=50)
+
+	def __str__(self):
+		return '{}'.format(self.user)

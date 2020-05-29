@@ -95,6 +95,11 @@ def loginUser(request):
         if user is not None:
             login(request, user)
             # redirect()
+            # Instancia de objeto usuario
+            usuario = Usuario.objects.get(username=username)
+            # Almacena la pk de usuario para utilizar a futuro
+            request.session['pk_usuario'] = usuario.pk
+            # Redirige
             return redirect('hogar:dashboard')
         else:
             messages.info(request, 'Usuario o contraseña incorrectos')
@@ -104,7 +109,16 @@ def loginUser(request):
 
 
 def dashboard(request):
-    return render(request, 'hogar/dashboard.html')
+    # Toma la pk de usuario en la sesión
+    pk_usuario = request.session.get('pk_usuario','')
+    # Crea una instancia de usuario
+    usuario = Usuario.objects.get(pk=pk_usuario)
+    # Crea una instancia del domicilio de usuario
+    domicilio = Domicilio.objects.get(pk=usuario.domicilio.id)
+    # Entrega las intancias al contexto
+    context = {'usuario':usuario,'domicilio':domicilio}
+    # Entrega el contexto al render
+    return render(request, 'hogar/dashboard.html', context)
 
 
 def index(request):
