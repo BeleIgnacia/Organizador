@@ -85,10 +85,10 @@ DATABASES = {
 
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'organizador',
-        'USER': 'postgres',
-        'PASSWORD': 'casa1122',
-        'HOST': 'localhost',
+        'NAME': 'isw2020f',
+        'USER': 'isw2020f',
+        'PASSWORD': 'isw2020f',
+        'HOST': 'plop.inf.udec.cl',
         'PORT': 5432,
     }
 }
