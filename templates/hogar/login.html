@@ -30,11 +30,10 @@ Login
 			</div>
 		</div>
 		<div class="col-md-30">
-			<p style="color:red;">¿No tienes una cuenta?</p> 
-			<a class="btn btn-primary btn-block" href="/register/">Regístrate</a>
+			<p style="color:black;">¿No tienes una cuenta? <a style="color:blue" href="/register/">Regístrate</a></p>
 		</div>
 		{% for message in messages %}
-		<p><h4>{{message}}</h4></p>
+		<p><h4 style="color:black;">{{message}}</h4></p>
 		{% endfor %}
 </form>
 </div>

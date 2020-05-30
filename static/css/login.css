@@ -23,10 +23,10 @@
 
 body {
   background: #0c83e2; /* fallback for old browsers */
-  background: -webkit-linear-gradient(right, #acbfc9, #4b4d4e);
-  background: -moz-linear-gradient(right, #acbfc9, #4b4d4e);
-  background: -o-linear-gradient(right, #acbfc9, #4b4d4e);
-  background: linear-gradient(to left, #acbfc9, #4b4d4e);
+  background: -webkit-linear-gradient(right, #0353a4, #001845);
+  background: -moz-linear-gradient(right, #0353a4, #001845);
+  background: -o-linear-gradient(right, #0353a4, #001845);
+  background: linear-gradient(to left, #0353a4, #001845);
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;      
