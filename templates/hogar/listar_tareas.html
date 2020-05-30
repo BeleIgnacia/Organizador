@@ -1,0 +1,29 @@
+{% extends "hogar/index.html" %}
+{% load static %}
+
+{% block contenido2 %}
+
+<table>
+    <tr>
+        <th>Nombre</th>
+        <th>Creada</th>
+        <th>Asignada a</th>
+        <th>¿Completada?</th>
+        <th>Comentarios</th>
+        <th>Opciones</th>
+    </tr>
+
+    {% for tareas  in tareas %}
+        <tr>
+            <td>{{tareas.nombre}}</td>
+            <td>{{tareas.fecha_creacion}}</td>
+            <td>{{tareas.encargado}}</td>
+            <td>{{tareas.completada}}</td>
+            <td>{{tareas.comentarios}}</td>
+
+        </tr>
+
+    {% endfor %}
+</table>
+
+{% endblock contenido2%}

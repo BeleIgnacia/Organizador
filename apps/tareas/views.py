@@ -12,3 +12,8 @@ class TareasCreate(CreateView):
     form_class = TareaForm
     template_name = 'tareas/tarea_form.html'
     success_url = reverse_lazy('tareas:tarea_form')
+
+
+def listar_tareas(request):
+    tareas= Tareas.objects.all()
+    return render(request, 'hogar/listar_tareas.html' , {'tareas':tareas})

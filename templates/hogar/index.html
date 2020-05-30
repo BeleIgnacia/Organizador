@@ -64,6 +64,7 @@
 				</div>
 			</div>
 		</nav>
+
 		<section id="home" class="video-hero" style="height: 500px;  background-size: cover; background-position: center center;background-attachment:fixed;" data-section="home">
 		<div class="overlay"></div>
 			<div class="display-t text-center">
@@ -79,6 +80,7 @@
 				</div>
 			</div>
 		</section>
+
 		<!--<div class="colorlib-featured">
 			<div class="row animate-box">
 				<div class="featured-wrap">
@@ -106,14 +108,16 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</div>block
 		</div>-->
 		<div class="colorlib-blog">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-8 col-md-offset-2 text-center colorlib-heading animate-box">
 						<h2>Ejemplo</h2>
-						<p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.</p>
+						{% block contenido2 %}
+							<p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.</p>
+						{% endblock %}
 					</div>
 				</div>
 				<div class="row">
