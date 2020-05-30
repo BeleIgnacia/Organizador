@@ -1,16 +1,24 @@
 {% extends 'base/base2.html' %}
 
-{% block content %}
+{% load static %}
 
+{% block content %}
 <div class="jumbotron">
     <div class="card border-primary mb-3" style="max-width: 20rem;">
-        <div class="card-header">Añadir</div>
+        <div class="card-header">Añadir Nueva Tarea</div>
         <div class="card-body">
-          <h4 class="card-title">Nueva Tarea</h4>
           <form method="post">
             {% csrf_token %}
-            {{ form.as_p}}
-            <button type ="submit"> Guardar</button>
+            {% for field in form %}
+            <div class="col-md-30">
+              <div class="form-group">
+                {{ field.label }}:
+                <p>
+                {{ field }}
+              </div>
+            </div>
+            {% endfor %}
+            <button type ="submit" class="btn btn-primary btn-block"> Guardar</button>
         </form>
         </div>
       </div>
