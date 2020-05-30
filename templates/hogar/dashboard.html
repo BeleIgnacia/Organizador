@@ -10,6 +10,7 @@
     <hr class="my-4">
     <div class="container"> 
         <div class="card-columns mt-3">
+            {% if usuario.es_administrador%}
             <div class="card border-secondary mb-2" style="max-width: 20rem;">
                 <div class="card-header">Nuevo integrante</div>
                 <div class="card-body">
@@ -40,6 +41,7 @@
                 </p>
                 </div>
             </div>
+            {% endif %}
         </div>
     </div>
 
