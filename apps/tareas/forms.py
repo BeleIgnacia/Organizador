@@ -16,13 +16,13 @@ class TareaForm(forms.ModelForm):
         labels =  {
             'nombre' : 'Nombre',
             'complejidad' : 'Complejidad',
-            'duracion' : 'Duracion',
+            'duracion' : 'Duración en horas',
             'encargado': 'Encargado',
         }
 
         widgets = {
-            'nombre' : forms.TextInput(attrs={'placeholder':'Nombre Tarea'}),
-            'complejidad': forms.TextInput(attrs={'placeholder':'Complejidad Tarea'}),
-            'duracion' : forms.TextInput(attrs={'placeholder':'Duracion Aproximada Tarea'}),
-            'encargado': forms.Select(attrs={'class':'form-control'})
+            'nombre':forms.TextInput(attrs={'class':'form-control'}),
+            'complejidad':forms.NumberInput(attrs={'class':'custom-range','type':'range','max':5,'min':1,'step':1,'list':'tickmarks'}),
+            'duracion':forms.TextInput(attrs={'class':'form-control'}),
+            'encargado':forms.Select(attrs={'class':'form-control'}),
         }
