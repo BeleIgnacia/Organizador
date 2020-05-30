@@ -11,4 +11,4 @@ class TareasCreate(CreateView):
     model = Tareas
     form_class = TareaForm
     template_name = 'tareas/tarea_form.html'
-    success_url = reverse_lazy('/')
+    success_url = reverse_lazy('tareas:tarea_form')
