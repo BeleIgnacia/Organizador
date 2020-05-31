@@ -1,5 +1,5 @@
 from django.contrib import admin
-from apps.tareas.models import Tareas
+from apps.tareas.models import Tarea
 
 # Register your models here.
-admin.site.register(Tareas)
+admin.site.register(Tarea)

@@ -80,9 +80,19 @@ WSGI_APPLICATION = 'organizador.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
+'''
 DATABASES = {
-
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'organizador',
+        'USER': 'postgres',
+        'PASSWORD': 'casa1122',
+        'HOST': 'localhost',
+        'PORT': 5432,
+    }
+}
+'''
+DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'isw2020f',
@@ -92,7 +102,6 @@ DATABASES = {
         'PORT': 5432,
     }
 }
-##casa1122
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators

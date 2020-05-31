@@ -1,10 +1,12 @@
 from django.db import models
-from apps.hogar.models import Usuario
+from apps.hogar.models import Domicilio
 # Create your models here.
 
 
-class Tareas (models.Model):
+class Tarea(models.Model):
     nombre = models.CharField(max_length=50)
+    # Toda tarea esta ligada al domicilio en que se crea
+    domicilio = models.ForeignKey(Domicilio, on_delete=models.CASCADE)
     complejidad = models.PositiveIntegerField(default=0)
     duracion = models.IntegerField(default=0)
     lugar = models.CharField(max_length=50)

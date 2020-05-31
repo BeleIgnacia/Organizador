@@ -36,7 +36,7 @@ class RegisterUser(CreateView):
             instance = form.save(commit=False)
             # Determina la instancia de Domicilio base a la id
             self.domicilio = Domicilio.objects.get(pk=self.domicilio_id)
-            # Reemplaza la recivida por el formulario
+            # Reemplaza la recibida por el formulario
             instance.domicilio = self.domicilio
             # Guarda el formulario
             instance.save()
