@@ -140,3 +140,12 @@ def about(request):
 class Usuariolist(ListView):
     model = Usuario
     template_name = 'hogar/list_usuarios.html'
+
+    def get_queryset(self):
+        # Toma la id de usuario almacenada
+        pk_usuario = self.request.session.get('pk_usuario','')
+        # Intancia el objeto usuario
+        usuario = Usuario.objects.get(pk=pk_usuario)
+        if usuario:
+            # Retorna los usuarios filtrados según domicilio
+            return Usuario.objects.filter(domicilio=usuario.domicilio)
