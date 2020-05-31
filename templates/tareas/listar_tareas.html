@@ -1,0 +1,30 @@
+{% extends "base/base2.html" %}
+
+{% block content %}
+<table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Nombre</th>
+        <th scope="col">Creada</th>
+        <th scope="col">Lugar</th>
+        <th scope="col">Comentarios</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% if object_list %}
+        {% for tarea in object_list %}
+        <tr class="table-active">
+            <td>{{tarea.nombre}}</td>
+            <td>{{tarea.fecha_creacion}}</td>
+            <td>{{tarea.lugar}}</td>
+            <td>{{tarea.comentarios}}</td>
+            <td>
+                <a class="btn btn-primary" href="#">Modificar</a>
+                <a class="btn btn-danger" href="#">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+        {% endif %}
+    </tbody>
+  </table>
+{% endblock content%}
