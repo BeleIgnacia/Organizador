@@ -1,5 +1,26 @@
 from django import forms
-from apps.tareas.models import Tarea
+
+# Modelos
+from apps.tareas.models import Tarea,AsignarTarea
+
+class AsignarTareaForm(forms.ModelForm):
+    class Meta:
+        model = AsignarTarea
+
+        fields = [
+            'tarea',
+            'usuario',
+        ]
+        
+        labels = {
+            'tarea' : 'Tarea',
+            'usuario' : 'Usuario',
+        }
+
+        widgets = {
+            'tarea' : forms.Select(attrs={'class':'form-control'}),
+            'usuario' : forms.Select(attrs={'class':'form-control'}),
+        }
 
 class TareaForm(forms.ModelForm):
 

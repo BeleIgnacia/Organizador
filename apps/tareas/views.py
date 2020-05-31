@@ -5,11 +5,11 @@ from django.urls import reverse_lazy
 from django.contrib import messages
 
 # Formularios
-from apps.tareas.forms import TareaForm
+from apps.tareas.forms import TareaForm,AsignarTareaForm
 
 # Modelos
 from apps.hogar.models import Usuario,Domicilio
-from apps.tareas.models import Tarea
+from apps.tareas.models import Tarea,AsignarTarea
 
 
 class CrearTarea(CreateView):
@@ -35,10 +35,10 @@ class CrearTarea(CreateView):
             return self.render_to_response(self.get_context_data(form=form))
 
 class AsignarTarea(CreateView):
-    model = Tarea
-    form_class = TareaForm
+    model = AsignarTarea
+    form_class = AsignarTareaForm
     template_name = 'tareas/asignar_tarea.html'
-    success_url = reverse_lazy('')
+    success_url = reverse_lazy('tareas:asignar_tarea')
 
 
 class ListarTarea(ListView):

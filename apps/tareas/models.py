@@ -1,7 +1,7 @@
 from django.db import models
-from apps.hogar.models import Domicilio
-# Create your models here.
 
+# Modelos
+from apps.hogar.models import Domicilio,Usuario
 
 class Tarea(models.Model):
     nombre = models.CharField(max_length=50)
@@ -12,7 +12,13 @@ class Tarea(models.Model):
     lugar = models.CharField(max_length=50)
     fecha_creacion = models.DateField(auto_now_add=True)
     comentarios = models.TextField(max_length=200, blank=True)
+    # Tareas por defecto no son asignadas ni completadas
+    asignada = models.BooleanField(default=False)
     completada = models.BooleanField(default=False)
 
     def __str__(self):
         return '{}'.format(self.nombre)
+
+class AsignarTarea(models.Model):
+	tarea = models.ForeignKey(Tarea, on_delete=models.CASCADE)
+	usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
