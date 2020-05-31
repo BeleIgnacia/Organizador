@@ -4,8 +4,11 @@ from django.views.generic import CreateView, ListView
 from django.urls import reverse_lazy
 from django.contrib import messages
 
-from apps.hogar.models import Usuario,Domicilio
+# Formularios
 from apps.tareas.forms import TareaForm
+
+# Modelos
+from apps.hogar.models import Usuario,Domicilio
 from apps.tareas.models import Tarea
 
 
@@ -41,3 +44,12 @@ class AsignarTarea(CreateView):
 class ListarTarea(ListView):
     model = Tarea
     template_name = 'tareas/listar_tareas.html'
+
+    def get_queryset(self):
+        # Toma la id de usuario almacenada
+        pk_usuario = self.request.session.get('pk_usuario','')
+        # Intancia el objeto usuario
+        usuario = Usuario.objects.get(pk=pk_usuario)
+        if usuario:
+            # Retorna las tareas filtradas según domicilio
+            return Tarea.objects.filter(domicilio=usuario.domicilio)
