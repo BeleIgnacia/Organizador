@@ -8,7 +8,7 @@
     <h1 class="display-3">Buenas Buenas</h1>
     <p class="lead">Pagina Alfa del administrador.</p>
     <hr class="my-4">
-    <div class="container"> 
+    <div class="container">
         <div class="card-columns mt-3">
             {% if usuario.es_administrador%}
             <div class="card border-secondary mb-2" style="max-width: 20rem;">
@@ -35,9 +35,20 @@
                 <div class="card-header">Tareas</div>
                 <div class="card-body">
                 <h4 class="card-title">Añadir tareas</h4>
-                <p class="card-text">Podra añadir tareas y asignarlas a un usuario del grupo hogar</p>
+                <p class="card-text">Podra añadir nuevas tareas y mostrar las existentes</p>
                 <p class="lead">
-                    <a class="btn btn-primary btn-lg" href="/tareas/tarea_form" role="button">Click</a>
+                    <a class="btn btn-primary btn-lg" href="/tareas/tarea_form" role="button">Agregar</a>
+                    <a class="btn btn-primary btn-lg" href="/tareas/listar_tareas" role="button">Mostrar</a>
+                </p>
+                </div>
+            </div>
+            <div class="card border-secondary mb-2" style="max-width: 20rem;">
+                <div class="card-header">Tareas</div>
+                <div class="card-body">
+                <h4 class="card-title">Asignar Tareas</h4>
+                <p class="card-text">Podra asignar las tareas a los usuarios del grupo hogar</p>
+                <p class="lead">
+                    <a class="btn btn-primary btn-lg" href="/tareas/asignar_tarea" role="button">Asignar</a>
                 </p>
                 </div>
             </div>

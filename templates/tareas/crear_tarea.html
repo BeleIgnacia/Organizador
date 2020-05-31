@@ -1,0 +1,26 @@
+{% extends 'base/base2.html' %}
+
+{% load static %}
+
+{% block content %}
+<div class="jumbotron">
+    <div class="card border-primary mb-3" style="max-width: 20rem;">
+        <div class="card-header">Añadir Nueva Tarea</div>
+        <div class="card-body">
+          <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="col-md-30">
+              <div class="form-group">
+                {{ field.label }}:
+                <p>
+                {{ field }}
+              </div>
+            </div>
+            {% endfor %}
+            <button type ="submit" class="btn btn-primary btn-block">Guardar</button>
+        </form>
+        </div>
+      </div>
+</div>
+{% endblock %}
