@@ -13,9 +13,9 @@ from apps.hogar.models import *
 # Vista para registrar usuario común
 class RegisterUser(CreateView):
     model = Usuario
-    template_name = 'hogar/register.html'
+    template_name = 'hogar/añadir_usuario.html'
     form_class = UsuarioForm
-    success_url = reverse_lazy('hogar:dashboard')
+    success_url = reverse_lazy('hogar:añadir')
 
     # Despliega formulario por pantalla
     def get_context_data(self,**kwargs):
@@ -24,20 +24,18 @@ class RegisterUser(CreateView):
             context['form'] = self.form_class(self.request.GET)
         return context
 
-    # Recive formulario de respuesta
+    # Recibe formulario de respuesta
     def post(self, request, *arg, **kwargs):
         self.object = self.get_object
         form = self.form_class(request.POST)
-        # Identifica el id del domicilio por la url
-        self.domicilio_id = self.kwargs['domicilio_id']
-        # Si el formulario es valido
+
         if form.is_valid():
             # Almacena una instancia del formulario
             instance = form.save(commit=False)
-            # Determina la instancia de Domicilio base a la id
-            self.domicilio = Domicilio.objects.get(pk=self.domicilio_id)
-            # Reemplaza la recibida por el formulario
-            instance.domicilio = self.domicilio
+            # Instancia de usuario administrador
+            self.usuario = Usuario.objects.get(pk=request.session.get('pk_usuario',''))
+            # Reemplaza el domicilio en la instancia
+            instance.domicilio = self.usuario.domicilio
             # Lo incializa como usuario común
             instance.es_administrador = 0
             # Guarda el formulario

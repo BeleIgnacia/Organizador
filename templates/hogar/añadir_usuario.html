@@ -5,15 +5,13 @@
 {% block content %}
 <div class="jumbotron">
     <div class="card border-primary mb-3" style="max-width: 20rem;">
-        <div class="card-header">Asignar Tarea</div>
+        <div class="card-header">Añadir nuevo usuario</div>
         <div class="card-body">
           <form method="post">
             {% csrf_token %}
             {% for field in form %}
             <div class="col-md-30">
               <div class="form-group">
-                {{ field.label }}:
-                <p>
                 {{ field }}
               </div>
             </div>
@@ -23,4 +21,8 @@
         </div>
       </div>
 </div>
+{% block extrastatic %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+<script type="text/javascript" src="{% static 'js/register.js' %}"></script>
+{% endblock extrastatic %}
 {% endblock %}
