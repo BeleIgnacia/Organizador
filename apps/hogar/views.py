@@ -15,7 +15,7 @@ class RegisterUser(CreateView):
     model = Usuario
     template_name = 'hogar/register.html'
     form_class = UsuarioForm
-    success_url = reverse_lazy('login')
+    success_url = reverse_lazy('hogar:dashboard')
 
     # Despliega formulario por pantalla
     def get_context_data(self,**kwargs):
@@ -38,6 +38,8 @@ class RegisterUser(CreateView):
             self.domicilio = Domicilio.objects.get(pk=self.domicilio_id)
             # Reemplaza la recibida por el formulario
             instance.domicilio = self.domicilio
+            # Lo incializa como usuario común
+            instance.es_administrador = 0
             # Guarda el formulario
             instance.save()
             # Redirige al usuario a la pantalla de login
