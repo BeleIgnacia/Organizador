@@ -2,8 +2,18 @@ from django import forms
 
 # Modelos
 from apps.tareas.models import Tarea,AsignarTarea
+from apps.hogar.models import Usuario
 
 class AsignarTareaForm(forms.ModelForm):
+    
+    def __init__(self, *args, **kwargs):
+        usuario = kwargs.pop('usuario')
+        super(AsignarTareaForm, self).__init__(*args, **kwargs)
+        # Tareas sin asignar en el domicilio
+        self.fields['tarea'].queryset = Tarea.objects.filter(domicilio=usuario.domicilio,asignada=False)
+        # Usuarios que pertencen al domicilio
+        self.fields['usuario'].queryset = Usuario.objects.filter(domicilio=usuario.domicilio)
+    
     class Meta:
         model = AsignarTarea
 

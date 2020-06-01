@@ -40,6 +40,11 @@ class AsignarTarea(CreateView):
     template_name = 'tareas/asignar_tarea.html'
     success_url = reverse_lazy('tareas:asignar_tarea')
 
+    def get_form_kwargs(self):
+        kwargs = super(AsignarTarea,self).get_form_kwargs()
+        kwargs['usuario'] = Usuario.objects.get(pk=self.request.session['pk_usuario'])
+        return kwargs
+
 
 class ListarTarea(ListView):
     model = Tarea
