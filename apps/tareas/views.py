@@ -40,11 +40,24 @@ class AsignarTarea(CreateView):
     template_name = 'tareas/asignar_tarea.html'
     success_url = reverse_lazy('tareas:asignar_tarea')
 
-    def get_form_kwargs(self):
-        kwargs = super(AsignarTarea,self).get_form_kwargs()
-        kwargs['usuario'] = Usuario.objects.get(pk=self.request.session['pk_usuario'])
-        return kwargs
+    def get_context_data(self,**kwargs):
+        context = super(AsignarTarea, self).get_context_data(**kwargs)
+        self.usuario = Usuario.objects.get(pk=self.request.session['pk_usuario'])
+        # Filtra las posibles asignaciones que pueda realizar el admin según su domicilio
+        context['form'].fields['tarea'].queryset = Tarea.objects.filter(domicilio=self.usuario.domicilio,asignada=False)
+        context['form'].fields['usuario'].queryset = Usuario.objects.filter(domicilio=self.usuario.domicilio)
+        return context
 
+    def form_valid(self, form):
+        instance = form.save(commit=False)
+        # Busca la tarea a asignarse
+        tarea = Tarea.objects.get(pk=instance.tarea.pk)
+        # Indica que la terea ahora se encuentra asignada
+        tarea.asignada = True
+        # Guarda la tarea y la asignación a usuario
+        tarea.save()
+        instance.save()
+        return HttpResponseRedirect(reverse_lazy('tareas:asignar_tarea'))
 
 class ListarTarea(ListView):
     model = Tarea
@@ -58,3 +71,9 @@ class ListarTarea(ListView):
         if usuario:
             # Retorna las tareas filtradas según domicilio
             return Tarea.objects.filter(domicilio=usuario.domicilio)
+
+    def form_valid(self, form):
+        instance = form.save(commit=False)
+        print(instance)
+        instance.save()
+        return HttpResponseRedirect(self.get_success_url())

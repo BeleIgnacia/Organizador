@@ -20,5 +20,8 @@ class Tarea(models.Model):
         return '{}'.format(self.nombre)
 
 class AsignarTarea(models.Model):
-	tarea = models.ForeignKey(Tarea, on_delete=models.CASCADE)
-	usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    tarea = models.ForeignKey(Tarea, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return 'tarea {} a usuario {}'.format(self.tarea,self.usuario)
