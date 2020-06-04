@@ -9,7 +9,8 @@ from apps.tareas.forms import TareaForm,AsignarTareaForm
 
 # Modelos
 from apps.hogar.models import Usuario,Domicilio
-from apps.tareas.models import Tarea,AsignarTarea
+from apps.tareas.models import Tarea
+from apps.tareas.models import AsignarTarea as AsignarTarea_model
 
 
 class CrearTarea(CreateView):
@@ -35,7 +36,7 @@ class CrearTarea(CreateView):
             return self.render_to_response(self.get_context_data(form=form))
 
 class AsignarTarea(CreateView):
-    model = AsignarTarea
+    model = AsignarTarea_model
     form_class = AsignarTareaForm
     template_name = 'tareas/asignar_tarea.html'
     success_url = reverse_lazy('tareas:asignar_tarea')
@@ -68,12 +69,18 @@ class ListarTarea(ListView):
         pk_usuario = self.request.session.get('pk_usuario','')
         # Intancia el objeto usuario
         usuario = Usuario.objects.get(pk=pk_usuario)
-        if usuario:
-            # Retorna las tareas filtradas según domicilio
-            return Tarea.objects.filter(domicilio=usuario.domicilio)
+        # Retorna las tareas filtradas según domicilio
+        return Tarea.objects.filter(domicilio=usuario.domicilio) 
 
-    def form_valid(self, form):
-        instance = form.save(commit=False)
-        print(instance)
-        instance.save()
-        return HttpResponseRedirect(self.get_success_url())
+class ListarTareaAsignada(ListView):
+    model = Tarea
+    template_name = 'tareas/listar_tareas_asignadas.html'
+
+    def get_queryset(self):
+        # Toma la id de usuario almacenada
+        pk_usuario = self.request.session.get('pk_usuario','')
+        # Intancia el objeto usuario
+        usuario = Usuario.objects.get(pk=pk_usuario)
+        usuarios = Usuario.objects.filter(domicilio=usuario.domicilio)
+        # Retorna las tareas asignadas filtradas según domicilio
+        return AsignarTarea_model.objects.filter(usuario__in=usuarios)
