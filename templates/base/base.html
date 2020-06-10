@@ -5,7 +5,8 @@
 	{% block staticextra %}
 	{% endblock %}
 	<meta charset="utf-8">
-	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+	<script type="text/javascript" src="{% static 'js/jquery-3.5.1.js' %}"></script>
 	<title>{% block title %}Organizador{% endblock %}</title>
 </head>
 <body>
@@ -21,7 +22,5 @@
 
 	{% block extrajs %}
 	{% endblock%}
-	<script src="{% static 'js/jquery-3.5.1.js' %}"></script>
-	<script src="{% static 'js/bootstrap.min.css' %}"></script>
 </body>
 </html>

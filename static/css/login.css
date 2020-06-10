@@ -1,10 +1,9 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:300);
-
 .login-page {
   width: 360px;
   padding: 8% 0 0;
   margin: auto;
 }
+
 .form {
   position: relative;
   z-index: 1;
@@ -23,10 +22,6 @@
 
 body {
   background: #0c83e2; /* fallback for old browsers */
-  background: -webkit-linear-gradient(right, #0353a4, #001845);
-  background: -moz-linear-gradient(right, #0353a4, #001845);
-  background: -o-linear-gradient(right, #0353a4, #001845);
-  background: linear-gradient(to left, #0353a4, #001845);
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;      

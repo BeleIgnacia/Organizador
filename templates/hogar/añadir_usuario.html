@@ -1,4 +1,4 @@
-{% extends 'base/base2.html' %}
+{% extends 'hogar/dashboard.html' %}
 
 {% load static %}
 
@@ -21,8 +21,9 @@
         </div>
       </div>
 </div>
+
 {% block extrastatic %}
-<link rel="stylesheet" href="{% static 'css/login.css' %}">
 <script type="text/javascript" src="{% static 'js/register.js' %}"></script>
 {% endblock extrastatic %}
+
 {% endblock %}
