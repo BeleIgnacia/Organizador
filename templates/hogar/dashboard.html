@@ -10,23 +10,37 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarColor01">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="/hogar/dashboard">Dashboard <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Features</a>
-            </li>
-          </ul>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/hogar/dashboard">Inicio<span class="sr-only">(current)</span></a>
+                </li>   
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Administrar</a>
+                    <div class="dropdown-menu" style="">
+                        <a class="dropdown-item" href="/hogar/añadir">Añadir usuario al hogar</a>
+                        <a class="dropdown-item" href="/hogar/list_usuarios">Modificar usuario del hogar</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Tareas</a>
+                    <div class="dropdown-menu" style="">
+                        <a class="dropdown-item" href="/tareas/tarea_form">Añadir tareas</a>
+                        <a class="dropdown-item" href="/tareas/asignar_tarea">Asignar Tareas</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/tareas/listar_tareas">Ver tareas</a>
+                        <a class="dropdown-item" href="/tareas/listar_tareas_asignadas">Ver tareas asignadas</a>
+                    </div>
+                </li>
+            </ul>
         </div>
-      </nav>
+    </nav>
 {% endblock %}
 
 {% block content %}
-
   <div class="jumbotron">
     <h1 class="display-3">Buenas Buenas</h1>
     <p class="lead">Pagina Alfa del administrador.</p>
+    <!-- Utilizare el texto que esta aquí
     <hr class="my-4">
     <div class="container">
         <div class="card-columns mt-3">
@@ -85,6 +99,7 @@
             {% endif %}
         </div>
     </div>
+    -->
 
   </div>
 
