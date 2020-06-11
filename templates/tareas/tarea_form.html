@@ -3,9 +3,10 @@
 {% load static %}
 
 {% block content %}
+<!--Esta plantilla es utilizada por las vistas CrearTarea y AsignarTarea-->
 <div class="jumbotron">
     <div class="card border-primary mb-3" style="max-width: 20rem;">
-        <div class="card-header">Añadir Nueva Tarea</div>
+        <div class="card-header">{{name}}</div>
         <div class="card-body">
           <form method="post">
             {% csrf_token %}

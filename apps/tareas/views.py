@@ -16,8 +16,13 @@ from apps.tareas.models import AsignarTarea as AsignarTarea_model
 class CrearTarea(CreateView):
     model = Tarea
     form_class = TareaForm
-    template_name = 'tareas/crear_tarea.html'
+    template_name = 'tareas/tarea_form.html'
     success_url = reverse_lazy('tareas:crear_tarea')
+
+    def get_context_data(self,**kwargs):
+        context = super(CrearTarea, self).get_context_data(**kwargs)
+        context['name'] = "Añadir Nueva Tarea"
+        return context
 
     def post(self, request, *arg, **kwargs):
         self.object = self.get_object
@@ -38,11 +43,12 @@ class CrearTarea(CreateView):
 class AsignarTarea(CreateView):
     model = AsignarTarea_model
     form_class = AsignarTareaForm
-    template_name = 'tareas/asignar_tarea.html'
+    template_name = 'tareas/tarea_form.html'
     success_url = reverse_lazy('tareas:asignar_tarea')
 
     def get_context_data(self,**kwargs):
         context = super(AsignarTarea, self).get_context_data(**kwargs)
+        context['name'] = "Asignar Tarea"
         self.usuario = Usuario.objects.get(pk=self.request.session['pk_usuario'])
         # Filtra las posibles asignaciones que pueda realizar el admin según su domicilio
         context['form'].fields['tarea'].queryset = Tarea.objects.filter(domicilio=self.usuario.domicilio,asignada=False)
