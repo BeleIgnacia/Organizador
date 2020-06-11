@@ -24,21 +24,12 @@ class CrearTarea(CreateView):
         context['name'] = "Añadir Nueva Tarea"
         return context
 
-    def post(self, request, *arg, **kwargs):
-        self.object = self.get_object
-        form = self.form_class(request.POST)
+    def form_valid(self, form):
+        instance = form.save(commit=False)
         self.usuario = Usuario.objects.get(pk=self.request.session['pk_usuario'])
-        if form.is_valid():
-            # Almacena una instancia del formulario
-            instance = form.save(commit=False)
-            # Reemplaza la recibida por el formulario
-            instance.domicilio = self.usuario.domicilio
-            # Guarda el formulario
-            instance.save()
-            # Redirige al usuario a la pantalla de login
-            return HttpResponseRedirect(self.get_success_url())
-        else:
-            return self.render_to_response(self.get_context_data(form=form))
+        instance.domicilio = self.usuario.domicilio
+        instance.save()
+        return HttpResponseRedirect(reverse_lazy('tareas:crear_tarea'))
 
 class AsignarTarea(CreateView):
     model = AsignarTarea_model
