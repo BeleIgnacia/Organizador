@@ -109,16 +109,10 @@ def loginUser(request):
 
 
 def dashboard(request):
-    # Toma la pk de usuario en la sesión
     pk_usuario = request.session.get('pk_usuario','')
-    # Crea una instancia de usuario
     usuario = Usuario.objects.get(pk=pk_usuario)
-    # Crea una instancia del domicilio de usuario
-    domicilio = Domicilio.objects.get(pk=usuario.domicilio.id)
-    # Entrega las intancias al contexto
-    context = {'usuario':usuario,'domicilio':domicilio}
-    # Entrega el contexto al render
-    return render(request, 'hogar/dashboard.html', context)
+    request.session['es_administrador'] = usuario.es_administrador
+    return render(request, 'hogar/dashboard.html')
 
 
 def index(request):

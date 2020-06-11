@@ -5,8 +5,9 @@
 {% block content %}
 <!--Esta plantilla es utilizada por las vistas CrearTarea y AsignarTarea-->
 <div class="jumbotron">
+  <div class="card-deck">
     <div class="card border-primary mb-3" style="max-width: 20rem;">
-        <div class="card-header">{{name}}</div>
+      <div class="card-header">{{name}}</div>
         <div class="card-body">
           <form method="post">
             {% csrf_token %}
@@ -20,8 +21,20 @@
             </div>
             {% endfor %}
             <button type ="submit" class="btn btn-primary btn-block">Guardar</button>
-        </form>
+          </form>
         </div>
+    </div>
+    <div class="card border-primary mb-3" style="max-width: 20rem;">
+      <div class="card-body">
+        <p class="card-text">
+          {% if name == "Añadir Nueva Tarea" %}
+          Podra añadir nuevas tareas
+          {% elif name == "Asignar Tarea" %}
+          Podra asignar las tareas a los usuarios del grupo hogar
+          {% endif %}
+        </p>
       </div>
+    </div>
+  </div>
 </div>
 {% endblock %}

@@ -13,7 +13,8 @@
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
                     <a class="nav-link" href="/hogar/dashboard">Inicio<span class="sr-only">(current)</span></a>
-                </li>   
+                </li>
+                {% if request.session.es_administrador %}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Administrar</a>
                     <div class="dropdown-menu" style="">
@@ -31,6 +32,7 @@
                         <a class="dropdown-item" href="/tareas/listar_tareas_asignadas">Ver tareas asignadas</a>
                     </div>
                 </li>
+                {% endif %}
             </ul>
         </div>
     </nav>

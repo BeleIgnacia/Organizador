@@ -4,22 +4,31 @@
 
 {% block content %}
 <div class="jumbotron">
+  <div class="card-deck">
     <div class="card border-primary mb-3" style="max-width: 20rem;">
-        <div class="card-header">Añadir nuevo usuario</div>
-        <div class="card-body">
-          <form method="post">
-            {% csrf_token %}
-            {% for field in form %}
-            <div class="col-md-30">
-              <div class="form-group">
-                {{ field }}
-              </div>
-            </div>
-            {% endfor %}
-            <button type ="submit" class="btn btn-primary btn-block">Guardar</button>
-        </form>
+      <div class="card-header">Añadir nuevo usuario</div>
+      <div class="card-body">
+      <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="col-md-30">
+          <div class="form-group">
+            {{ field }}
+          </div>
         </div>
+        {% endfor %}
+        <button type ="submit" class="btn btn-primary btn-block">Guardar</button>
+      </form>
       </div>
+    </div>
+    <div class="card border-primary mb-3" style="max-width: 20rem;">
+      <div class="card-body">
+        <p class="card-text">
+        Añade un nuevo usuario del hogar al organizador.
+        </p>
+      </div>
+    </div>
+  </div>
 </div>
 
 {% block extrastatic %}
