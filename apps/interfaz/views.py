@@ -1,4 +1,6 @@
+from django.views.generic import TemplateView
 from django.shortcuts import render
+from random import randrange
 
-def home(request):
-	return render(request,'interfaz/home.html')
+class Home(TemplateView):
+	template_name = 'interfaz/home.html'
