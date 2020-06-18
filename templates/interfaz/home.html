@@ -3,169 +3,40 @@
 {% load static %}
 
 {% block staticextra %}
-<style type="text/css">
-    .home-headline {
-        background-image: url({% static 'images/home/headline.jpg' %});
-        height: 450px;
-        width: 100%;
-        background-size: cover;
-        background-position: center;
-    }
-.footer-distributed{
-    background-color: #292c2f;
-    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
-    box-sizing: border-box;
-    width: 100%;
-    text-align: left;
-    font: normal 16px sans-serif;
-
-    padding: 45px 50px;
-    margin-top: 80px;
-}
-
-.footer-distributed .footer-left p{
-    color:  #8f9296;
-    font-size: 14px;
-    margin: 0;
-}
-
-/* Footer links */
-
-.footer-distributed p.footer-links{
-    font-size:18px;
-    font-weight: bold;
-    color:  #ffffff;
-    margin: 0 0 10px;
-    padding: 0;
-}
-
-.footer-distributed p.footer-links a{
-    display:inline-block;
-    line-height: 1.8;
-    text-decoration: none;
-    color:  inherit;
-}
-
-.footer-distributed .footer-right{
-    float: right;
-    margin-top: 6px;
-    max-width: 180px;
-}
-
-.footer-distributed .footer-right a{
-    display: inline-block;
-    width: 35px;
-    height: 35px;
-    background-color:  #33383b;
-    border-radius: 2px;
-
-    font-size: 20px;
-    color: #ffffff;
-    text-align: center;
-    line-height: 35px;
-
-    margin-left: 3px;
-}
-
-/* If you don't want the footer to be responsive, remove these media queries */
-
-@media (max-width: 600px) {
-
-    .footer-distributed .footer-left,
-    .footer-distributed .footer-right{
-        text-align: center;
-    }
-
-    .footer-distributed .footer-right{
-        float: none;
-        margin: 0 auto 20px;
-    }
-
-    .footer-distributed .footer-left p.footer-links{
-        line-height: 1.8;
-    }
-}
-
-</style>
+<link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
 {% endblock %}
 
 {% block header %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="collapse navbar-collapse form-inline" id="navbarColor01">
-        <ul class="navbar-nav mr-auto">
-            <a class="nav-link" href="#"><h2>Organizador{{ headline_image }}</h2><span class="sr-only">(current)</span></a>
-        </ul>
-        <ul class="navbar-nav mr-inline">
-            <li class="nav-item">
-                <a class="btn btn-primary btn-outline-secondary btn-lg" href="login/">Iniciar Sesión</a>
-            </li>
-        </ul>
-    </div>
+  <a class="navbar-brand" href="#">Organizador</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse form-inline" id="navbarColor01">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/nosotros/">Nosotros</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/contacto/">Contacto</a>
+      </li>
+    </ul>
+    <a class="btn btn-primary btn-outline-secondary btn-lg" href="/login/">Iniciar Sesión</a>
+  </div>
 </nav>
-<div class="p-3 p-md-5 text-white bg-dark home-headline">
-    <div class="col-md-6 px-0">
-        <h1 class="display-3">Bienvenido!</h1>
-        <p class="lead my-3">Bienvenido a 'xxxx', un organizador para su hogar</p>
-        <p class="lead">
-            <a class="btn btn-primary btn-outline-secondary btn-lg" href="register/">Registrarse</a>
-        </p>
-    </div>
-</div>
-<!--
-<div class="jumbotron">
-    <h1 class="display-3">Bienvenido!</h1>
-    <p class="lead">Bienvenido a 'xxxx', un organizador para su hogar</p>
-    <hr class="my-4">
-    <p>Aquí podrá organizar completamente su actividad hogareña, que simplificara su existencia</p>
-    <p class="lead">
-      <a class="btn btn-primary btn-lg" href="#" role="button">Leer más</a>
-    </p>
-    <div class="row featurette">
-        <div class="col-md-7">
-            <h2 class="featurette-heading">First featurette heading. <span class="text-muted">It'll blow your mind.</span></h2>
-            <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-        </div>
-        <div class="col-md-5">
-            <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="500x500" style="width: 500px; height: 500px;" src="{% static 'images/inicio-2.jpg' %}" data-holder-rendered="true">
-        </div>
-    </div>
-</div>
-</div>
--->
 {% endblock %}
 
 {% block content %}
-<div class="jumbotron">
-    <div class="row featurette">
-        <div class="col-md-7">
-            <h2>Heading. <span class="text-muted">with muted text.</span></h2>
-            <p class="lead">Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
-        </div>
-        <div class="col-md-5">
-            <img style="width: 500px; height: 300px;" src="{% static 'images/home/teletrabajo.jpg' %}">
-        </div>
-    </div>
-    <hr class="featurette-divider" style="margin-bottom: 50px; margin-top: 50px;">
-    <div class="row featurette">
-        <div class="col-md-7 order-md-2">
-            <h2>Heading. <span class="text-muted">with muted text.</span></h2>
-            <p class="lead">Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
-        </div>
-        <div class="col-md-5 order-md-1">
-            <img style="width: 500px; height: 300px;" src="{% static 'images/home/manos.jpg' %}">
-        </div>
-    </div>
-    <hr class="featurette-divider" style="margin-bottom: 50px; margin-top: 50px;">
-    <div class="row featurette">
-        <div class="col-md-7">
-            <h2>Heading. <span class="text-muted">with muted text.</span></h2>
-            <p class="lead">Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
-        </div>
-        <div class="col-md-5">
-            <img style="width: 500px; height: 300px;" src="{% static 'images/home/hijo.jpg' %}">
-        </div>
-    </div>
-</div>
+{% if content == 'home_content' %}
+    {% include 'interfaz/home_content.html' %}
+{% elif content == 'nosotros_content' %}
+    {% include 'interfaz/nosotros_content.html' %}
+{% elif content == 'ayuda_content' %}
+    {% include 'interfaz/ayuda_content.html' %}
+{% elif content == 'contacto_content' %}
+    {% include 'interfaz/contacto_content.html' %}
+{% endif %}
 {% endblock  %}
 
 {% block footer %}
@@ -178,13 +49,13 @@
     </div>
     <div class="footer-left">
         <p class="footer-links">
-            <a href="#">Inicio</a>
+            <a href="/">Inicio</a>
             ·
-            <a href="nosotros/">Nosotros</a>
+            <a href="/nosotros/">Nosotros</a>
             ·
-            <a href="ayuda/">Ayuda</a>
+            <a href="/ayuda/">Ayuda</a>
             ·
-            <a href="contacto/">Contacto</a>
+            <a href="/contacto/">Contacto</a>
         </p>
         <p>Organizador © 2020</p>
     </div>

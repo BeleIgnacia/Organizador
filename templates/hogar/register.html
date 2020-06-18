@@ -11,6 +11,7 @@ Registrarse
 	<div class="form">
 	<form method="POST">
 	{% csrf_token %}
+	<span class="text-muted text-justify"><h5>Usuario:</h5></span>
 	{% for field in form %}
 	<div class="col-md-30">
 		<div class="form-group">
@@ -18,6 +19,7 @@ Registrarse
 		</div>
 	</div>
 	{% endfor %}
+	<span class="text-muted text-justify"><h5>Domicilio:</h5></span>
 	{% for field in form2 %}
 	<div class="col-md-30">
 		<div class="form-group">
