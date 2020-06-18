@@ -81,6 +81,22 @@ WSGI_APPLICATION = 'organizador.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'isw2020f',
+        'USER': 'isw2020f',
+        'PASSWORD': 'isw2020f',
+        'HOST': 'plop.inf.udec.cl',
+        'PORT': 5432,
+    }
+}
+
+#Cuando muera la bd de la u utilicen una bd local
+#Añadan la de ustedes si quieren
+#Manuel
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -92,17 +108,7 @@ DATABASES = {
     }
 }
 '''
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'isw2020f',
-        'USER': 'isw2020f',
-        'PASSWORD': 'isw2020f',
-        'HOST': 'plop.inf.udec.cl',
-        'PORT': 5432,
-    }
-}
-'''
+
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
