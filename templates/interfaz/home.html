@@ -28,15 +28,46 @@
 {% endblock %}
 
 {% block content %}
-{% if content == 'home_content' %}
-    {% include 'interfaz/home_content.html' %}
-{% elif content == 'nosotros_content' %}
-    {% include 'interfaz/nosotros_content.html' %}
-{% elif content == 'ayuda_content' %}
-    {% include 'interfaz/ayuda_content.html' %}
-{% elif content == 'contacto_content' %}
-    {% include 'interfaz/contacto_content.html' %}
-{% endif %}
+<div class="p-3 p-md-5 text-white bg-dark home-headline">
+    <div class="col-md-6 px-0">
+        <h1 class="display-3">Bienvenido!</h1>
+        <p class="lead my-3">Bienvenido a 'xxxx', un organizador para su hogar</p>
+        <p class="lead">
+            <a class="btn btn-primary btn-outline-secondary btn-lg" href="register/">Registrarse</a>
+        </p>
+    </div>
+</div>
+<div class="jumbotron">
+    <div class="row featurette">
+        <div class="col-md-7">
+            <h2>Heading. <span class="text-muted">with muted text.</span></h2>
+            <p class="lead">Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+        </div>
+        <div class="col-md-5">
+            <img style="width: 500px; height: 300px;" src="{% static 'images/home/teletrabajo.jpg' %}">
+        </div>
+    </div>
+    <hr class="featurette-divider" style="margin-bottom: 50px; margin-top: 50px;">
+    <div class="row featurette">
+        <div class="col-md-7 order-md-2">
+            <h2>Heading. <span class="text-muted">with muted text.</span></h2>
+            <p class="lead">Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+        </div>
+        <div class="col-md-5 order-md-1">
+            <img style="width: 500px; height: 300px;" src="{% static 'images/home/manos.jpg' %}">
+        </div>
+    </div>
+    <hr class="featurette-divider" style="margin-bottom: 50px; margin-top: 50px;">
+    <div class="row featurette">
+        <div class="col-md-7">
+            <h2>Heading. <span class="text-muted">with muted text.</span></h2>
+            <p class="lead">Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+        </div>
+        <div class="col-md-5">
+            <img style="width: 500px; height: 300px;" src="{% static 'images/home/hijo.jpg' %}">
+        </div>
+    </div>
+</div>
 {% endblock  %}
 
 {% block footer %}
