@@ -8,7 +8,7 @@ class Tarea(models.Model):
     # Toda tarea esta ligada al domicilio en que se crea
     domicilio = models.ForeignKey(Domicilio, on_delete=models.CASCADE)
     complejidad = models.PositiveIntegerField(default=0)
-    duracion = models.IntegerField(default=0)
+    duracion = models.DurationField(default=0)
     lugar = models.CharField(max_length=50)
     fecha_creacion = models.DateField(auto_now_add=True)
     comentarios = models.TextField(max_length=200, blank=True)

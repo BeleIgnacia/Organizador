@@ -18,7 +18,6 @@ class Usuario(User):
     # Por defecto se registra como administrador
     es_administrador = models.BooleanField(default=True)
     domicilio = models.ForeignKey(Domicilio, on_delete=models.CASCADE)
-    #domicilio = models.CharField(max_length=50)
     telefono = models.CharField(max_length=50)
 
     def __str__(self):
