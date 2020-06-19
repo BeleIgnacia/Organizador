@@ -80,6 +80,13 @@ WSGI_APPLICATION = 'organizador.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
+#BD por defecto
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
 
 '''
 DATABASES = {
@@ -92,21 +99,7 @@ DATABASES = {
         'PORT': 5432,
     }
 }
-
-#Cuando muera la bd de la u utilicen una bd local
-#Añadan la de ustedes si quieren
-#Manuel
 '''
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'organizador',
-        'USER': 'postgres',
-        'PASSWORD': 'casa1122',
-        'HOST': 'localhost',
-        'PORT': 5432,
-    }
-}
 
 
 # Password validation
