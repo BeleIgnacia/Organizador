@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
-from django.views.generic import CreateView,ListView
+from django.views.generic import CreateView,ListView,TemplateView
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
@@ -24,26 +24,14 @@ class RegisterUser(CreateView):
             context['form'] = self.form_class(self.request.GET)
         return context
 
-    # Recibe formulario de respuesta
-    def post(self, request, *arg, **kwargs):
-        self.object = self.get_object
-        form = self.form_class(request.POST)
-
-        if form.is_valid():
-            # Almacena una instancia del formulario
-            instance = form.save(commit=False)
-            # Instancia de usuario administrador
-            self.usuario = Usuario.objects.get(pk=request.session.get('pk_usuario',''))
-            # Reemplaza el domicilio en la instancia
-            instance.domicilio = self.usuario.domicilio
-            # Lo incializa como usuario común
-            instance.es_administrador = 0
-            # Guarda el formulario
-            instance.save()
-            # Redirige al usuario a la pantalla de login
-            return HttpResponseRedirect(self.get_success_url())
-        else:
-            return self.render_to_response(self.get_context_data(form=form))
+    # Guarda nuevo usuario añadido a hogar
+    def form_valid(self, form):
+        instance = form.save(commit=False)
+        self.usuario = Usuario.objects.get(pk=self.request.session.get('pk_usuario',''))
+        instance.domicilio = self.usuario.domicilio
+        instance.es_administrador = 0
+        instance.save()
+        return HttpResponseRedirect(self.get_success_url())
 
 # Vista doble form para registrar domicilio y usuario administrador
 class Register(CreateView):
@@ -73,20 +61,6 @@ class Register(CreateView):
         else:
             return self.render_to_response(self.get_context_data(form=form, form2=form2))
 
-
-'''
-def registerUser(request):
-	form = UsuarioAdminForm()
-	if request.method == 'POST':
-		form = UsuarioAdminForm(request.POST)
-		if form.is_valid():
-			form.save()
-			return redirect('login')
-	context = {'form':form}
-	return render(request, 'hogar/register.html', context)
-'''
-
-
 def loginUser(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -99,6 +73,7 @@ def loginUser(request):
             usuario = Usuario.objects.get(username=username)
             # Almacena la pk de usuario para utilizar a futuro
             request.session['pk_usuario'] = usuario.pk
+            request.session['es_administrador'] = usuario.es_administrador
             # Redirige
             return redirect('hogar:dashboard')
         else:
@@ -108,28 +83,8 @@ def loginUser(request):
     return render(request, 'hogar/login.html', context)
 
 
-def dashboard(request):
-    pk_usuario = request.session.get('pk_usuario','')
-    usuario = Usuario.objects.get(pk=pk_usuario)
-    request.session['es_administrador'] = usuario.es_administrador
-    return render(request, 'hogar/dashboard.html')
-
-
-def index(request):
-    return render(request, 'hogar/index.html')
-
-
-def blog(request):
-    return render(request, 'hogar/blog.html')
-
-
-def services(request):
-    return render(request, 'hogar/services.html')
-
-
-def about(request):
-    return render(request, 'hogar/about.html')
-
+class Dashboard(TemplateView):
+    template_name = 'hogar/dashboard.html'
 
 class Usuariolist(ListView):
     model = Usuario
