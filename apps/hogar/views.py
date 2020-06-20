@@ -98,3 +98,10 @@ class Usuariolist(ListView):
         if usuario:
             # Retorna los usuarios filtrados según domicilio
             return Usuario.objects.filter(domicilio=usuario.domicilio)
+
+# Por ahora TemplateView, en cuanto tenga los formularios paso a CreateView
+class DomicilioModificar(TemplateView):
+    template_name = 'hogar/domicilio_modificar.html'
+
+class DomicilioDependencias(TemplateView):
+    template_name = 'hogar/domicilio_dependencias.html'
