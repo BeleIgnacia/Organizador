@@ -5,6 +5,7 @@
 {% block content %}
 <!--Esta plantilla es utilizada por las vistas CrearTarea y AsignarTarea-->
 <div class="jumbotron">
+  <div id="dummy"></div>
   <div class="card-deck">
     <div class="card border-primary mb-3" style="max-width: 20rem;">
       <div class="card-header">{{name}}</div>
@@ -20,7 +21,7 @@
               </div>
             </div>
             {% endfor %}
-            <button type ="submit" class="btn btn-primary btn-block">Guardar</button>
+            <button type ="submit" class="btn btn-primary btn-block" id="enviar">Guardar</button>
           </form>
         </div>
     </div>
@@ -29,6 +30,19 @@
         <p class="card-text">
           {% if name == "Añadir Nueva Tarea" %}
           Podra añadir nuevas tareas
+              {% block extrajs %}
+                  <script>
+                  if (document.getElementById('id_dependencia').childElementCount == 1) {
+	                    document.getElementById('id_nombre').disabled=true;
+                    	document.getElementById('id_complejidad').disabled=true;
+                    	document.getElementById('id_duracion').disabled=true;
+                    	document.getElementById('id_dependencia').disabled=true;
+                    	document.getElementById('id_comentarios').disabled=true;
+	                    document.getElementById('enviar').disabled=true;
+                    	document.getElementById('dummy').innerHTML='<div class="alert alert-dismissible alert-warning" style="max-width: 670px"><button type="button" class="close" data-dismiss="alert">&times;</button><h4 class="alert-heading">Atención!</h4><p class="mb-0"></p>Antes de Añadir una tarea es necesario añadir una dependencia al domicilio</div>'
+                    }
+                  </script>
+              {% endblock %}
           {% elif name == "Asignar Tarea" %}
           Podra asignar las tareas a los usuarios del grupo hogar
           {% endif %}
