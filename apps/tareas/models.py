@@ -1,7 +1,7 @@
 from django.db import models
 
 # Modelos
-from apps.hogar.models import Domicilio,Usuario
+from apps.hogar.models import Domicilio,Usuario,Dependencia
 
 class Tarea(models.Model):
     nombre = models.CharField(max_length=50)
@@ -9,7 +9,7 @@ class Tarea(models.Model):
     domicilio = models.ForeignKey(Domicilio, on_delete=models.CASCADE)
     complejidad = models.PositiveIntegerField(default=0)
     duracion = models.DurationField(default=0)
-    lugar = models.CharField(max_length=50)
+    dependencia = models.ForeignKey(Dependencia, on_delete=models.CASCADE)
     fecha_creacion = models.DateField(auto_now_add=True)
     comentarios = models.TextField(max_length=200, blank=True)
     # Tareas por defecto no son asignadas ni completadas

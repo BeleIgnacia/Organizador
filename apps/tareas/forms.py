@@ -33,7 +33,7 @@ class TareaForm(forms.ModelForm):
             'nombre',
             'complejidad',
             'duracion',
-            'lugar',
+            'dependencia',
             'comentarios'
         ]
 
@@ -41,7 +41,7 @@ class TareaForm(forms.ModelForm):
             'nombre': 'Nombre',
             'complejidad': 'Complejidad',
             'duracion': 'Duración en hh:mm',
-            'lugar': 'Dependencia',
+            'dependencia': 'Dependencia',
             'comentarios': 'Comentarios',
         }
 
@@ -49,6 +49,6 @@ class TareaForm(forms.ModelForm):
             'nombre': forms.TextInput(attrs={'class': 'form-control'}),
             'complejidad': forms.NumberInput(attrs={'class': 'custom-range', 'type': 'range', 'max': 5, 'min': 1, 'step': 1, 'list': 'tickmarks'}),
             'duracion': forms.TimeInput(attrs={'class': 'form-control','type': 'time','value': '0'}),
-            'lugar': forms.TextInput(attrs={'class': 'form-control'}),
+            'dependencia': forms.Select(attrs={'class': 'form-control'}),
             'comentarios': forms.TextInput(attrs={'class': 'form-control'}),
         }

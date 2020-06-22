@@ -8,7 +8,7 @@ from django.contrib import messages
 from apps.tareas.forms import TareaForm,AsignarTareaForm
 
 # Modelos
-from apps.hogar.models import Usuario,Domicilio
+from apps.hogar.models import Usuario,Domicilio,PerteneceDependencia,Dependencia
 from apps.tareas.models import Tarea
 from apps.tareas.models import AsignarTarea as AsignarTarea_model
 
@@ -21,6 +21,10 @@ class CrearTarea(CreateView):
 
     def get_context_data(self,**kwargs):
         context = super(CrearTarea, self).get_context_data(**kwargs)
+        self.usuario = Usuario.objects.get(pk=self.request.session['pk_usuario'])
+        self.pertenece_dependencia = PerteneceDependencia.objects.filter(domicilio=self.usuario.domicilio,asignada=True)
+        self.dependencia = Dependencia.objects.filter(pk__in=self.pertenece_dependencia)
+        context['form'].fields['dependencia'].queryset = self.dependencia
         context['name'] = "Añadir Nueva Tarea"
         return context
 
