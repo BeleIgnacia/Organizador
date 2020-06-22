@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'apps.interfaz',
     'apps.hogar',
     'apps.tareas',
+    'apps.almanac_calendar',
 
 ]
 

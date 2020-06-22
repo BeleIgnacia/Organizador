@@ -15,6 +15,9 @@
                     <a class="nav-link" href="/hogar">Inicio<span class="sr-only">(current)</span></a>
                 </li>
                 {% if request.session.es_administrador %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="calendario/mostrar">Calendario<span class="sr-only">(current)</span></a>
+                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Administrar</a>
                     <div class="dropdown-menu" style="">

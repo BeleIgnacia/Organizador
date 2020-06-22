@@ -10,6 +10,13 @@ from django.http import HttpResponseRedirect
 from apps.hogar.forms import *
 from apps.hogar.models import *
 
+from django.core import serializers
+from django.http import HttpResponse, JsonResponse
+from django.forms.models import model_to_dict
+from apps.almanac_calendar.forms import EventForm
+from apps.almanac_calendar.models import Event
+import json
+
 # Vista para registrar usuario común
 class RegisterUser(CreateView):
     model = Usuario
@@ -105,3 +112,10 @@ class DomicilioModificar(TemplateView):
 
 class DomicilioDependencias(TemplateView):
     template_name = 'hogar/domicilio_dependencias.html'
+
+def MostrarCalendario(request):
+    events = eval(serializers.serialize("json", Event.objects.all()))
+    #print(events[0])
+    events = list(map(lambda x: x['fields'], events))
+    print(events)
+    return render(request, 'almanac_calendar/calendar.html', context={'events': events})
