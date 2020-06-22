@@ -3,5 +3,65 @@
 {% load static %}
 
 {% block content %}
-    Modificador de dependencias
+<div class="jumbotron">
+  <div class="card-deck">
+    <div class="card border-primary mb-3" style="max-width: 20rem;">
+      <div class="card-header">Crear dependencia</div>
+      <div class="card-body">
+      <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="col-md-30">
+          <div class="form-group">
+            {{ field }}
+          </div>
+        </div>
+        {% endfor %}
+        <button type ="submit" class="btn btn-primary btn-block">Crear</button>
+      </form>
+      </div>
+    </div>
+      <div class="card border-primary mb-3" style="max-width: 20rem;">
+      <div class="card-header">Dependencias actuales sin asignar.</div>
+      <div class="card-body">
+        {% csrf_token %}
+        {% for field in dependencias_disponibles %}
+        <div class="col-md-30">
+          <div class="form-group">
+            {{ field.dependencia }}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="card border-primary mb-3" style="max-width: 20rem;">
+      <div class="card-header">Asignar dependencia</div>
+      <div class="card-body">
+      <form method="post">
+        {% csrf_token %}
+        {% for field in form2 %}
+        <div class="col-md-30">
+          <div class="form-group">
+            {{ field }}
+          </div>
+        </div>
+        {% endfor %}
+        <button type ="submit" class="btn btn-primary btn-block">Asignar</button>
+      </form>
+      </div>
+    </div>
+      <div class="card border-primary mb-3" style="max-width: 20rem;">
+      <div class="card-header">Dependencias actuales asignadas.</div>
+      <div class="card-body">
+        {% csrf_token %}
+        {% for field in dependencias_asignadas %}
+        <div class="col-md-30">
+          <div class="form-group">
+            {{ field.dependencia }}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+</div>
 {% endblock %}

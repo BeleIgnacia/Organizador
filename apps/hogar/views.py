@@ -106,12 +106,70 @@ class Usuariolist(ListView):
             # Retorna los usuarios filtrados según domicilio
             return Usuario.objects.filter(domicilio=usuario.domicilio)
 
-# Por ahora TemplateView, en cuanto tenga los formularios paso a CreateView
-class DomicilioModificar(TemplateView):
+# View para modificar domicilio
+class DomicilioModificar(CreateView):
+    model = Domicilio
+    form_class = DomicilioForm
     template_name = 'hogar/domicilio_modificar.html'
+    success_url = reverse_lazy('hogar:domicilio_modificar')
 
-class DomicilioDependencias(TemplateView):
+    def get_context_data(self,**kwargs):
+        context = super(DomicilioModificar, self).get_context_data(**kwargs)
+        self.usuario = Usuario.objects.get(pk=self.request.session['pk_usuario'])
+        context['domicilio_actual'] = self.usuario.domicilio
+        return context
+
+    def form_valid(self, form):
+        instance = form.save(commit=False)
+        self.usuario = Usuario.objects.get(pk=self.request.session['pk_usuario'])
+        self.usuario.domicilio.calle = instance.calle
+        self.usuario.domicilio.numero = instance.numero
+        self.usuario.domicilio.comuna = instance.comuna
+        self.usuario.domicilio.ciudad = instance.ciudad
+        self.usuario.domicilio.save()
+        return HttpResponseRedirect(self.success_url)
+
+# View para crear y asignar dependencias, las dos en una
+class DomicilioDependencias(CreateView):
+    model = Dependencia
     template_name = 'hogar/domicilio_dependencias.html'
+    form_class = CrearDependenciaForm
+    second_form_class = AsignarDependenciaForm
+    success_url = reverse_lazy('hogar:domicilio_dependencias')
+
+    def get_context_data(self, **kwargs):
+        context = super(DomicilioDependencias, self).get_context_data(**kwargs)
+        if 'form' not in context:
+            context['form'] = self.form_class(self.request.GET)
+        if 'form2' not in context:
+            context['form2'] = self.second_form_class(self.request.GET)
+
+        self.usuario = Usuario.objects.get(pk=self.request.session['pk_usuario'])
+        context['dependencias_disponibles'] = PerteneceDependencia.objects.filter(domicilio=self.usuario.domicilio,asignada=False)
+        context['dependencias_asignadas'] = PerteneceDependencia.objects.filter(domicilio=self.usuario.domicilio,asignada=True)
+        context['form2'].fields['dependencia'].queryset = PerteneceDependencia.objects.filter(domicilio=self.usuario.domicilio,asignada=False)
+        return context
+
+    def post(self, request, *arg, **kwargs):
+        self.object = self.get_object
+        form = self.form_class(request.POST)
+        form2 = self.second_form_class(request.POST)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            self.usuario = Usuario.objects.get(pk=self.request.session['pk_usuario'])
+            pertence_instance = PerteneceDependencia(domicilio=self.usuario.domicilio,dependencia=instance,asignada=False)
+            instance.save()
+            pertence_instance.save()
+            return HttpResponseRedirect(self.get_success_url())
+        elif form2.is_valid():
+            instance = form2.save(commit=False)
+            self.usuario = Usuario.objects.get(pk=self.request.session['pk_usuario'])
+            self.pertenece_instance = PerteneceDependencia.objects.get(dependencia_id=instance.dependencia.pk)
+            self.pertenece_instance.asignada = True
+            self.pertenece_instance.save()
+            return HttpResponseRedirect(self.get_success_url())
+        else:
+            return self.render_to_response(self.get_context_data(form=form, form2=form2))
 
 def MostrarCalendario(request):
     events = eval(serializers.serialize("json", Event.objects.all()))

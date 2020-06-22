@@ -3,5 +3,66 @@
 {% load static %}
 
 {% block content %}
-    Modificador de domicilio
+<div class="jumbotron">
+  <div class="card-deck">
+    <div class="card border-primary mb-3" style="max-width: 20rem;">
+      <div class="card-header">Modificar domicilio</div>
+      <div class="card-body">
+      <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="col-md-30">
+          <div class="form-group">
+            {{ field }}
+          </div>
+        </div>
+        {% endfor %}
+        <button type ="submit" class="btn btn-primary btn-block">Guardar</button>
+      </form>
+      </div>
+    </div>
+    <div class="card border-primary mb-3" style="max-width: 20rem;">
+      <div class="card-header">Domicilio actual</div>
+      <div class="card-body">
+      	<span class="text-muted text-justify"><h5>Calle:</h5></span>
+        <div class="col-md-30">
+          <div class="form-group">
+          	<input type="text" class="form-control" disabled value="{{domicilio_actual.calle}}">
+          </div>
+        </div>
+        <span class="text-muted text-justify"><h5>Numero:</h5></span>
+        <div class="col-md-30">
+          <div class="form-group">
+          	<input type="text" class="form-control" disabled value="{{domicilio_actual.numero}}">
+          </div>
+        </div>
+        <span class="text-muted text-justify"><h5>Comuna:</h5></span>
+        <div class="col-md-30">
+          <div class="form-group">
+          	<input type="text" class="form-control" disabled value="{{domicilio_actual.comuna}}">
+          </div>
+        </div>
+        <span class="text-muted text-justify"><h5>Ciudad:</h5></span>
+        <div class="col-md-30">
+          <div class="form-group">
+          	<input type="text" class="form-control" disabled value="{{domicilio_actual.ciudad}}">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card border-primary mb-3" style="max-width: 20rem;">
+      <div class="card-body">
+        <p class="card-text">
+        Modificador de domicilio.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extrajs %}
+<script type="text/javascript">
+	document.getElementById('id_numero').value='';
+</script>
 {% endblock %}

@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 
-from apps.hogar.models import Usuario,Domicilio
+from apps.hogar.models import Usuario,Domicilio,Dependencia,PerteneceDependencia
 
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
@@ -79,8 +79,38 @@ class DomicilioForm(forms.ModelForm):
 			'ciudad': 'Ciudad',
 		}
 		widgets = {
-			'calle': forms.TextInput(attrs={'placeholder':'Calle'}),
-			'numero': forms.NumberInput(attrs={'placeholder':'Número'}),
-			'comuna': forms.TextInput(attrs={'placeholder':'Comuna'}),
-			'ciudad': forms.TextInput(attrs={'placeholder':'Ciudad'}),
+			'calle': forms.TextInput(attrs={'placeholder':'Calle','class':'form-control'}),
+			'numero': forms.NumberInput(attrs={'placeholder':'Número','class':'form-control'}),
+			'comuna': forms.TextInput(attrs={'placeholder':'Comuna','class':'form-control'}),
+			'ciudad': forms.TextInput(attrs={'placeholder':'Ciudad','class':'form-control'}),
+		}
+
+class CrearDependenciaForm(forms.ModelForm):
+
+	class Meta:
+
+		model = Dependencia
+		fields = [
+			'nombre',
+		]
+		labels = {
+			'nombre': 'Nombre',
+		}
+		widgets = {
+			'nombre': forms.TextInput(attrs={'placeholder':'Nombre','class':'form-control'}),
+		}
+
+class AsignarDependenciaForm(forms.ModelForm):
+
+	class Meta:
+
+		model = PerteneceDependencia
+		fields = [
+			'dependencia',
+		]
+		labels = {
+			'dependencia': 'Dependencias',
+		}
+		widgets = {
+			'dependencia': forms.Select(attrs={'placeholder':'Dependencias','class':'form-control'}),
 		}
