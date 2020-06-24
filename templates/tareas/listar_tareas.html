@@ -18,10 +18,12 @@
             <td>{{tarea.fecha_creacion}}</td>
             <td>{{tarea.dependencia }}</td>
             <td>{{tarea.comentarios}}</td>
+            {% if request.session.es_administrador %}
             <td>
                 <a class="btn btn-primary" href="#">Modificar</a>
                 <a class="btn btn-danger" href="#">Eliminar</a>
             </td>
+            {% endif %}
         </tr>
         {% endfor %}
         {% endif %}
