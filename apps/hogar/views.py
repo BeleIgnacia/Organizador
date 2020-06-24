@@ -176,11 +176,9 @@ class DomicilioDependencias(CreateView):
 
 def MostrarCalendario(request):
     tareas_asignadas=Tarea.objects.filter(asignada=True)
-    print(tareas_asignadas)
     lista_tareas = []
     for tareas in tareas_asignadas:
         lista_tareas.append(tareas)
-    print(lista_tareas)
     event=Event.objects.all()
     event.delete()
     for tareas in lista_tareas:
@@ -188,5 +186,4 @@ def MostrarCalendario(request):
     event=Event.objects.all()
     events = eval(serializers.serialize("json", event))
     events = list(map(lambda x: x['fields'], events))
-    print(events)
     return render(request, 'almanac_calendar/calendar.html', context={'events': events})
