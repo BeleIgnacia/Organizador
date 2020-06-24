@@ -1,30 +1,35 @@
 {% extends 'hogar/dashboard.html' %}
 
 {% block content %}
-<table class="table table-hover">
-    <thead>
-      <tr>
-        <th scope="col">Nombre</th>
-        <th scope="col">Creada</th>
-        <th scope="col">Lugar</th>
-        <th scope="col">Comentarios</th>
-      </tr>
-    </thead>
-    <tbody>
+<div class="container">
         {% if object_list %}
-        {% for tarea in object_list %}
-        <tr class="table-active">
-            <td>{{tarea.nombre}}</td>
-            <td>{{tarea.fecha_creacion}}</td>
-            <td>{{tarea.dependencia }}</td>
-            <td>{{tarea.comentarios}}</td>
-            <td>
-                <a class="btn btn-primary" href="#">Modificar</a>
-                <a class="btn btn-danger" href="#">Eliminar</a>
-            </td>
-        </tr>
+        {% for asignada in object_list %}
+        <div class="card">
+          <img src="..." class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">{{asignada.tarea.nombre}}</h5>
+            <p class="card-text">
+              Debes realizar esta tarea, lo antes posible
+              <br>{{asignada.tarea.comentarios}}
+            </p>
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#{{asignada.tarea.nombre}}" aria-expanded="false" aria-controls="collapseExample">
+              Detalles
+            </button>
+            <div class="collapse" id="{{asignada.tarea.nombre}}">
+              <div class="card card-body">
+                <br>Complejidad tarea : {{asignada.tarea.complejidad}}
+                <br>Duracion tarea : {{asignada.tarea.duracion}}
+                <br>Dependencia tarea : {{asignada.tarea.dependencia}}
+                <br>Fecha de creacion : {{asignada.tarea.fecha_creacion}}
+                <br>Estado completada : {{asignada.tarea.completada}}
+              </div>
+            </div>
+          </div>
+        </div>
         {% endfor %}
         {% endif %}
-    </tbody>
-  </table>
+
+</div>
+
+</div>
 {% endblock content%}

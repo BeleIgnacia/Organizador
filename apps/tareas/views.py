@@ -70,8 +70,9 @@ class ListarTarea(ListView):
         pk_usuario = self.request.session.get('pk_usuario','')
         # Intancia el objeto usuario
         usuario = Usuario.objects.get(pk=pk_usuario)
-        # Retorna las tareas filtradas según domicilio
-        return Tarea.objects.filter(domicilio=usuario.domicilio) 
+        usuarios = Usuario.objects.filter(domicilio=usuario.domicilio)
+        # Retorna las tareas filtradas según domicilio, indicando las correspondiente al usuario en session
+        return AsignarTarea_model.objects.filter(usuario__in=usuarios, usuario = usuario)
 
 class ListarTareaAsignada(ListView):
     model = Tarea

@@ -14,10 +14,10 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="/hogar">Inicio<span class="sr-only">(current)</span></a>
                 </li>
-                {% if request.session.es_administrador %}
                 <li class="nav-item active">
                     <a class="nav-link" href="calendario/mostrar">Calendario<span class="sr-only">(current)</span></a>
                 </li>
+                {% if request.session.es_administrador %}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Administrar</a>
                     <div class="dropdown-menu" style="">
@@ -32,17 +32,19 @@
                         <a class="dropdown-item" href="/hogar/domicilio/dependencias">Añadir o quitar dependencias</a>
                     </div>
                 </li>
+                {% endif %}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Tareas</a>
                     <div class="dropdown-menu" style="">
+                        {% if request.session.es_administrador %}
                         <a class="dropdown-item" href="/tareas/crear/">Añadir tareas</a>
                         <a class="dropdown-item" href="/tareas/asignar/">Asignar Tareas</a>
+                        {% endif %}
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="/tareas/listar/">Ver tareas</a>
-                        <a class="dropdown-item" href="/tareas/listar/asignadas/">Ver tareas asignadas</a>
+                        <a class="dropdown-item" href="/tareas/listar/">Ver mis tareas</a>
+                        <a class="dropdown-item" href="/tareas/listar/asignadas/">Ver tareas asignadas en hogar</a>
                     </div>
                 </li>
-                {% endif %}
             </ul>
         </div>
     </nav>
