@@ -6,6 +6,7 @@ class Event(models.Model):
     #description
     #heading
     #datetime
+    title = models.CharField(max_length=100, default='Title')
     CHOICES = (
         ('EV', 'Event'),
         ('HD', 'Holiday'),
@@ -13,10 +14,9 @@ class Event(models.Model):
     )
     type = models.CharField(blank=True, null=True, choices=CHOICES, max_length=10, default='EV')
     #description = models.CharField(max_length=50, null=True, blank=True, default='')
-    title = models.CharField(max_length=100, default='Title')
-    start = models.DateField()
-    end = models.DateField()
+    start = models.DateTimeField(auto_now_add=True)
+    end = models.DateTimeField(auto_now_add=True)
     #all_day = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.type + " =>  " + self.heading
+        return self.title

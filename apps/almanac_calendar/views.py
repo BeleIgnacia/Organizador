@@ -14,7 +14,6 @@ def add_event(request):
         if form.is_valid():
             form.save()
             return HttpResponse(status=201)
-
         return render(request, 'almanac_calendar/index.html', context={'form': form})
     return render(request, 'almanac_calendar/index.html', context={'form': EventForm()})
 

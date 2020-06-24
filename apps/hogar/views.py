@@ -15,6 +15,9 @@ from django.http import HttpResponse, JsonResponse
 from django.forms.models import model_to_dict
 from apps.almanac_calendar.forms import EventForm
 from apps.almanac_calendar.models import Event
+from apps.tareas.models import Tarea, AsignarTarea
+from apps.hogar.models import Usuario
+
 import json
 
 # Vista para registrar usuario común
@@ -172,8 +175,18 @@ class DomicilioDependencias(CreateView):
             return self.render_to_response(self.get_context_data(form=form, form2=form2))
 
 def MostrarCalendario(request):
-    events = eval(serializers.serialize("json", Event.objects.all()))
-    #print(events[0])
+    tareas_asignadas=Tarea.objects.filter(asignada=True)
+    print(tareas_asignadas)
+    lista_tareas = []
+    for tareas in tareas_asignadas:
+        lista_tareas.append(tareas)
+    print(lista_tareas)
+    event=Event.objects.all()
+    event.delete()
+    for tareas in lista_tareas:
+        event = Event.objects.create(title=tareas.nombre)
+    event=Event.objects.all()
+    events = eval(serializers.serialize("json", event))
     events = list(map(lambda x: x['fields'], events))
     print(events)
     return render(request, 'almanac_calendar/calendar.html', context={'events': events})

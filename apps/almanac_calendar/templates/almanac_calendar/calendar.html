@@ -10,18 +10,18 @@
     <link rel="stylesheet" media="print" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.7.0/fullcalendar.print.css"/>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <style>
-        
+
             body {
                 margin: 0;
                 padding: 0;
                 font-size: 14px;
             }
-        
+
             #top,
             #calendar.fc-unthemed {
                 font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
             }
-        
+
             #top {
                 background: #eee;
                 border-bottom: 1px solid #ddd;
@@ -30,34 +30,34 @@
                 font-size: 12px;
                 color: #000;
             }
-        
+
             #top .selector {
                 display: inline-block;
                 margin-right: 10px;
             }
-        
+
             #top select {
                 font: inherit; /* mock what Boostrap does, don't compete  */
             }
-        
+
             .left { float: left }
             .right { float: right }
             .clear { clear: both }
-        
+
             #calendar {
                 max-width: 900px;
                 margin: 40px auto;
                 padding: 0 10px;
             }
-        
+
         </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="{% static 'almanac_calendar/moment.min.js' %}"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.7.0/fullcalendar.min.js"></script>    
-    
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.7.0/fullcalendar.min.js"></script>
+
 </head>
 <body>
-    <div id='calendar' style="height:550px;width:550px;"></div>   
+    <div id='calendar' style="height:1200px;width:1200px;"></div>
    <div id="data" hidden>{{events}}</div>
    <script>
             var events = eval($('#data').text());
@@ -74,12 +74,12 @@
                             navLinks: true, // can click day/week names to navigate views
                             editable: false,
                             eventLimit: false, // allow "more" link when too many events
-                            events: events
-                            
+                            events: events //events block
+
                         });
             });
-        
-    </script> 
+
+    </script>
 </body>
 
 </html>
