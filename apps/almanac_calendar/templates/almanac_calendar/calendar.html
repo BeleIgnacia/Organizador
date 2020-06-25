@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.7.0/fullcalendar.min.css"/>
     <link rel="stylesheet" media="print" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.7.0/fullcalendar.print.css"/>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <style>
 
             body {
@@ -57,29 +60,89 @@
 
 </head>
 <body>
-    <div id='calendar' style="height:1200px;width:1200px;"></div>
-   <div id="data" hidden>{{events}}</div>
-   <script>
-            var events = eval($('#data').text());
-            console.log(events);
-            $(document).ready(function() {
-                        $('#calendar').fullCalendar({
-                            header: {
-                                left:   'title',
-                                center: '',
-                                right:  'today prev,next'
-                            },
-                            themeSystem: 'bootstrap3',
-                            weekNumbers: true,
-                            navLinks: true, // can click day/week names to navigate views
-                            editable: false,
-                            eventLimit: false, // allow "more" link when too many events
-                            events: events //events block
+    <div class="row">
+      <div class="col-sm-4">
+          <div class="container">
+              <!--<h2>Calendarizar Tarea</h2>
+              <!-- Trigger the modal with a button -->
+              <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal1">Calendarizar</button>
 
-                        });
-            });
+              <!-- Modal -->
+              <div class="modal fade" id="myModal1" role="dialog">
+                  <div class="modal-dialog">
 
-    </script>
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                              <h4 class="modal-title">Opciones de calendarización</h4>
+                          </div>
+                          <div class="modal-body">
+                              <p>Some text in the modal.</p>
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          </div>
+                      </div>
+
+                  </div>
+              </div>
+          </div>
+          <p></p>
+          <div class="container">
+              <!--<h2>Modificar</h2>
+              <!-- Trigger the modal with a button -->
+              <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal2">Cancelar</button>
+
+              <!-- Modal -->
+              <div class="modal fade" id="myModal2" role="dialog">
+                  <div class="modal-dialog">
+
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                              <h4 class="modal-title">Modal Header</h4>
+                          </div>
+                          <div class="modal-body">
+                              <p>Some text in the modal.</p>
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          </div>
+                      </div>
+
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="col-sm-8">
+          <div id='calendar' style="height:1200px;width:1200px;"></div>
+         <div id="data" hidden>{{events}}</div>
+         <script>
+                  var events = eval($('#data').text());
+                  console.log(events);
+                  $(document).ready(function() {
+                              $('#calendar').fullCalendar({
+                                  header: {
+                                      left:   'title',
+                                      center: '',
+                                      right:  'today prev,next'
+                                  },
+                                  themeSystem: 'bootstrap3',
+                                  weekNumbers: true,
+                                  navLinks: true, // can click day/week names to navigate views
+                                  editable: false,
+                                  eventLimit: false, // allow "more" link when too many events
+                                  events: events //events block
+      
+                              });
+                  });
+
+          </script>
+      </div>
+    </div>
+
 </body>
 
 </html>
