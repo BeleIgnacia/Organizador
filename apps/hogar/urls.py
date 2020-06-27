@@ -9,5 +9,4 @@ urlpatterns = [
     #URLs para administrar domicilio
     path('domicilio/modificar', views.DomicilioModificar.as_view(), name='domicilio_modificar'),
     path('domicilio/dependencias', views.DomicilioDependencias.as_view(), name='domicilio_dependencias'),
-    path('calendario/mostrar', views.MostrarCalendario, name='mostrar_calendario'),
 ]

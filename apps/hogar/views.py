@@ -173,17 +173,4 @@ class DomicilioDependencias(CreateView):
             return HttpResponseRedirect(self.get_success_url())
         else:
             return self.render_to_response(self.get_context_data(form=form, form2=form2))
-
-def MostrarCalendario(request):
-    tareas_asignadas=Tarea.objects.filter(asignada=True)
-    lista_tareas = []
-    for tareas in tareas_asignadas:
-        lista_tareas.append(tareas)
-    event=Event.objects.all()
-    event.delete()
-    for tareas in lista_tareas:
-        event = Event.objects.create(title=tareas.nombre)
-    event=Event.objects.all()
-    events = eval(serializers.serialize("json", event))
-    events = list(map(lambda x: x['fields'], events))
-    return render(request, 'almanac_calendar/calendar.html', context={'events': events})
+    
