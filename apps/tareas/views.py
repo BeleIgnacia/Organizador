@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
-from django.views.generic import CreateView, ListView
-from django.urls import reverse_lazy
+from django.views.generic import CreateView, ListView, UpdateView,DetailView,DeleteView
+from django.urls import reverse_lazy,reverse
 from django.contrib import messages
 
 # Formularios
@@ -61,6 +61,40 @@ class AsignarTarea(CreateView):
         instance.save()
         return HttpResponseRedirect(reverse_lazy('tareas:asignar_tarea'))
 
+#vista para modificar las propiedades de una tarea, no modifica la asignacion de esta tarea.
+class ModificarTarea(UpdateView):
+    model = Tarea
+    form_class = TareaForm
+    template_name = 'tareas/modificar_tarea.html'
+    success_url = reverse_lazy('tareas:listar_tareas_asignadas')
+   
+    def get_context_data(self,**kwargs):
+        context = super(ModificarTarea, self).get_context_data(**kwargs)
+        context['name'] = "Modificar Tarea"
+        return context
+
+    def form_valid(self, form):
+        print(form.cleaned_data)
+        return super().form_valid(form)
+
+    def get_object(self):
+        id_ = self.kwargs.get("pk")
+        return get_object_or_404(Tarea,id=id_)
+
+class EliminarTarea(DeleteView):
+    model = Tarea
+    template_name = 'tareas/modificar_tarea.html'
+    success_url = reverse_lazy('tareas:listar_tareas_asignadas')
+
+    def get_context_data(self,**kwargs):
+        context = super(EliminarTarea, self).get_context_data(**kwargs)
+        context['name'] = "Eliminar Tarea"
+        return context
+
+    def get_object(self):
+        id_ = self.kwargs.get("pk")
+        return get_object_or_404(Tarea,id=id_)
+    
 class ListarTarea(ListView):
     model = Tarea
     template_name = 'tareas/listar_tareas.html'

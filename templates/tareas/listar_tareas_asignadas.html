@@ -16,9 +16,10 @@
               Detalles
             </button>
             {% if request.session.es_administrador %}
-            <a class="btn btn-primary" href="#">Modificar</a>
-            <a class="btn btn-danger" href="#">Eliminar</a>
+            <a class="btn btn btn-success" href="../../editar/{{asignada.tarea.pk}}">Modificar</a>
+            <a class="btn btn-danger" href="../../eliminar/{{asignada.tarea.pk}}">Eliminar</a>
             {% endif %}
+
             <div class="collapse" id="{{asignada.tarea.nombre}}">
               <div class="card card-body">
                 <br>Comentario tarea : {{asignada.tarea.comentarios}}
@@ -27,12 +28,17 @@
                 <br>Dependencia tarea : {{asignada.tarea.dependencia}}
                 <br>Fecha de creacion : {{asignada.tarea.fecha_creacion}}
                 <br>Estado completada : {{asignada.tarea.completada}}
+                <br> cosas : {{asignada.tarea.pk}}
               </div>
             </div>
+
           </div>
         </div>
         {% endfor %}
         {% endif %}
+
+      
+      
 </div>
 
 </div>
