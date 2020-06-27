@@ -1,0 +1,42 @@
+{% extends 'hogar/dashboard.html' %}
+
+{% load static %}
+
+{% block content %}
+<!-- vistas sobre modificar propiedades tarea, eliminar tarea  -->
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <div class="card-deck">
+            <div class="card border-primary mb-3" style="max-width: 30rem;">
+            {% if request.session.es_administrador %}
+            {% if name == "Modificar Tarea" %}
+                <div class="card-header">Modificar Tarea</div>
+                <div class="card-body">
+                    <form method='POST'>
+                        {% csrf_token %}
+                        {{form.as_p}}
+                        <input type='submit' class="btn btn btn-success" value='Guardar Cambios' />
+                    </form>
+                    <a class="btn btn btn-primary" href="/tareas/listar/asignadas">Volver</a>
+                {% elif name == "Eliminar Tarea"%}
+                <div class="card-header">Modificar Tarea</div>
+                <div class="card-body">
+                <form method='POST'>
+                    {% csrf_token %}
+                    <h1>¿Eliminar tarea permanentemente "{{tarea.nombre}}"?</h1>
+                    <input type='submit' class="btn btn btn-danger" value='Eliminar' />
+                </form>
+                <a class="btn btn btn-primary" href="/tareas/listar/asignadas">Volver</a>
+                </div>  
+            {% endif %}
+            {% endif %}
+            </div>
+        </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block extrajs %}
+
+{% endblock %}
