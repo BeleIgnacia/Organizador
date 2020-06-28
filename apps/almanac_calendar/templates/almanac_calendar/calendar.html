@@ -57,17 +57,15 @@
 <body>
     <div class="row">
         <div class="container">
-              <h2>Calendarización</h2>
+              <h2>Calendarización de actividades</h2>
               <form>
                 <div class="form-group">
                   <label for="sel1">Lista de tareas asignadas:</label>
                   <select multiple class="form-control input-sm" id="sel1">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
+                      {% for tareas in tareas %}
+                      <option>{{tareas}}</option>
+                      {% endfor %}
                   </select>
-                  <p></p>
                   <br>
                   <label for="sel2">Seleccione el rango Fecha/Hora:</label>
                   <br>

@@ -10,5 +10,5 @@ class EventForm(ModelForm):
         fields = '__all__'
         widgets = {
             'start': DateInput(),
-            'end': DateInput(),            
+            'end': DateInput(),
         }
