@@ -59,11 +59,12 @@
         <div class="container">
               <h2>Calendarización de actividades</h2>
               <form>
-                <div class="form-group">
                   <label for="sel1">Lista de tareas asignadas:</label>
-                  <select multiple class="form-control input-sm" id="sel1">
-                      {% for tareas in tareas %}
-                      <option>{{tareas}}</option>
+                  <p></p>
+                  <select class="form-control input-sm" id="sel1">
+                      <option value="" disabled selected>Seleccione Tarea</option>
+                      {% for tarea in tareas %}
+                      <option value="tarea.nombre">{{tarea}}</option>
                       {% endfor %}
                   </select>
                   <br>
@@ -83,34 +84,16 @@
                     });
                   });
                   </script>
-                </div>
               </form>
         </div>
       </div>
+      <p></p>
       <div class="row">
           <div class=".col-sm-4">
                   <div class="container">
                       <!--<h2>Calendarizar Tarea</h2>
                       <!- Trigger the modal with a button -->
                       <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal1">Calendarizar</button>
-                      <!-- Modal -->
-                      <div class="modal fade" id="myModal1" role="dialog">
-                          <div class="modal-dialog">
-                              <!-- Modal content-->
-                              <div class="modal-content">
-                                  <div class="modal-header">
-                                      <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                      <h4 class="modal-title">Opciones de calendarización</h4>
-                                  </div>
-                                  <div class="modal-body">
-                                      <p>Some text in the modal.</p>
-                                  </div>
-                                  <div class="modal-footer">
-                                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
                   </div>
       </div>
           <p></p>
