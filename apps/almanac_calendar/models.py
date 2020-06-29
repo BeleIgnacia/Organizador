@@ -8,12 +8,7 @@ class Event(models.Model):
     #heading
     #datetime
     title = models.CharField(max_length=100, default='Title')
-    CHOICES = (
-        ('EV', 'Event'),
-        ('HD', 'Holiday'),
-        ('EX', 'Exam')
-    )
-    type = models.CharField(blank=True, null=True, choices=CHOICES, max_length=10, default='EV')
+    type = models.CharField(blank=True, null=True, max_length=10, default='EV')
     #description = models.CharField(max_length=50, null=True, blank=True, default='')
     start = models.DateTimeField(default=timezone.now)
     end = models.DateTimeField(default=timezone.now)
