@@ -42,7 +42,7 @@ class RegisterUser(CreateView):
         instance.domicilio = self.usuario.domicilio
         instance.es_administrador = 0
         instance.save()
-        return HttpResponseRedirect(self.get_success_url())
+        return HttpResponseRedirect(reverse_lazy('hogar:añadir'))
 
 
 # Vista doble form para registrar domicilio y usuario administrador

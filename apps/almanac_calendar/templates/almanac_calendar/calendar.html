@@ -7,119 +7,150 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Calendar</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.7.0/fullcalendar.min.css"/>
-    <link rel="stylesheet" media="print" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.7.0/fullcalendar.print.css"/>
+    <link rel="stylesheet" media="print"
+          href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.7.0/fullcalendar.print.css"/>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <style>
-            body {
-                margin: 0;
-                padding: 0;
-                font-size: 14px;
-            }
-            #top,
-            #calendar.fc-unthemed {
-                font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
-            }
-            #top {
-                background: #eee;
-                border-bottom: 1px solid #ddd;
-                padding: 0 10px;
-                line-height: 40px;
-                font-size: 12px;
-                color: #000;
-            }
-            #top .selector {
-                display: inline-block;
-                margin-right: 10px;
-            }
-            #top select {
-                font: inherit; /* mock what Boostrap does, don't compete  */
-            }
-            .left { float: left }
-            .right { float: right }
-            .clear { clear: both }
-            #calendar {
-                max-width: 900px;
-                margin: 20px auto;
-                padding: 0 10px;
-            }
-        </style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-size: 14px;
+        }
+
+        #top,
+        #calendar.fc-unthemed {
+            font-family: "Lucida Grande", Helvetica, Arial, Verdana, sans-serif;
+        }
+
+        #top {
+            background: #eee;
+            border-bottom: 1px solid #ddd;
+            padding: 0 10px;
+            line-height: 40px;
+            font-size: 12px;
+            color: #000;
+        }
+
+        #top .selector {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        #top select {
+            font: inherit; /* mock what Boostrap does, don't compete  */
+        }
+
+        .left {
+            float: left
+        }
+
+        .right {
+            float: right
+        }
+
+        .clear {
+            clear: both
+        }
+
+        #calendar {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 0 10px;
+        }
+    </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="{% static 'almanac_calendar/moment.min.js' %}"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.7.0/fullcalendar.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.7.0/fullcalendar.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
 
 </head>
 <body>
-    <div class="row">
-        <div class="container">
-              <h2>Calendarización de actividades</h2>
-              <form>
-                  <label for="sel1">Lista de tareas asignadas:</label>
-                  <p></p>
-                  <select class="form-control input-sm" id="sel1">
-                      <option value="" disabled selected>Seleccione Tarea</option>
-                      {% for tarea in tareas %}
-                      <option value="tarea.nombre">{{tarea}}</option>
-                      {% endfor %}
-                  </select>
-                  <br>
-                  <label for="sel2">Seleccione el rango Fecha/Hora:</label>
-                  <br>
-                  <p></p>
-                  <input type="text" name="datetimes" />
-                  <script>
-                  $(function() {
+<div class="row">
+    <div class="container">
+        <h2>Calendarización de actividades</h2>
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="col-md-30">
+                    <div class="form-group">
+                        {{ field }}
+                    </div>
+                </div>
+            {% endfor %}
+            <label for="sel1">Lista de tareas asignadas:</label>
+            <p></p>
+            <select class="form-control input-sm" id="sel1">
+                <option value="" disabled selected>Seleccione Tarea</option>
+                {% for tarea in tareas %}
+                    <option value="tarea.nombre">{{ tarea }}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <label for="sel2">Seleccione el rango Fecha/Hora:</label>
+            <br>
+            <p></p>
+            <input type="text" name="datetimes"/>
+            <script>
+                $(function () {
                     $('input[name="datetimes"]').daterangepicker({
-                      timePicker: true,
-                      startDate: moment().startOf('hour'),
-                      endDate: moment().startOf('hour').add(32, 'hour'),
-                      locale: {
-                        format: 'M/DD hh:mm A'
-                      }
+                        timePicker: true,
+                        startDate: moment().startOf('hour'),
+                        endDate: moment().startOf('hour').add(32, 'hour'),
+                        locale: {
+                            format: 'M/DD hh:mm A'
+                        }
                     });
-                  });
-                  </script>
-              </form>
-        </div>
-      </div>
-      <p></p>
-      <div class="row">
-          <div class=".col-sm-4">
-                  <div class="container">
-                      <!--<h2>Calendarizar Tarea</h2>
-                      <!- Trigger the modal with a button -->
-                      <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal1">Calendarizar</button>
-                  </div>
-      </div>
-          <p></p>
-      <div class="col">
-          <div id='calendar' style="height:1200px;width:1200px;"></div>
-         <div id="data" hidden>{{events}}</div>
-         <script>
-                  var events = eval($('#data').text());
-                  console.log(events);
-                  $(document).ready(function() {
-                              $('#calendar').fullCalendar({
-                                  header: {
-                                      left:   'title',
-                                      center: '',
-                                      right:  'today prev,next'
-                                  },
-                                  themeSystem: 'bootstrap3',
-                                  weekNumbers: true,
-                                  navLinks: true, // can click day/week names to navigate views
-                                  editable: false,
-                                  eventLimit: false, // allow "more" link when too many events
-                                  events: events //events block
-                              });
-                  });
-          </script>
-      </div>
+                });
+            </script>
+            <p></p>
+            <input type="submit" class="btn btn-primary" value="Calendarizar"/>
+        </form>
     </div>
+</div>
+<p></p>
+<!--
+<div class="row">
+  <div class=".col-sm-4">
+          <div class="container">
+              <h2>Calendarizar Tarea</h2>
+              Trigger the modal with a button
+              <form method="POST">
+
+              </form>
+              <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal1">Calendarizar</button>
+
+          </div>
+</div>
+-->
+<p></p>
+<div class="col">
+    <div id='calendar' style="height:1200px;width:1200px;"></div>
+    <div id="data" hidden>{{ events }}</div>
+    <script>
+        var events = eval($('#data').text());
+        console.log(events);
+        $(document).ready(function () {
+            $('#calendar').fullCalendar({
+                header: {
+                    left: 'title',
+                    center: '',
+                    right: 'today prev,next'
+                },
+                themeSystem: 'bootstrap3',
+                weekNumbers: true,
+                navLinks: true, // can click day/week names to navigate views
+                editable: false,
+                eventLimit: false, // allow "more" link when too many events
+                events: events //events block
+            });
+        });
+    </script>
+</div>
 </body>
 </html>

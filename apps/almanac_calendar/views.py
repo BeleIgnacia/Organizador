@@ -2,11 +2,13 @@ from django.shortcuts import render, redirect
 from django.core import serializers
 from django.http import HttpResponse, JsonResponse
 from django.forms.models import model_to_dict
+from django.views.generic import CreateView
 from .forms import EventForm
 from .models import Event
 from apps.tareas.models import Tarea, AsignarTarea
 from apps.hogar.models import Usuario
 import json
+from django.urls import reverse_lazy
 
 """
 def add_event(request):
@@ -19,6 +21,30 @@ def add_event(request):
     return render(request, 'almanac_calendar/index.html', context={'form': EventForm()})
 """
 
+
+class MostrarCalendario(CreateView):
+    model = Event
+    template_name = 'almanac_calendar/calendar.html'
+    form_class = EventForm
+    success_url = reverse_lazy()
+
+    def get_context_data(self, **kwargs):
+        context = super(MostrarCalendario, self).get_context_data(**kwargs)
+        all_events = Event.objects.all()
+        events = eval(serializers.serialize("json", all_events))
+        events = list(map(lambda x: x['fields'], events))
+        tareas = ListarTareasUsuario(self.request)
+        context['events'] = events
+        context['tareas'] = tareas
+        return context
+
+    def form_valid(self, form):
+        instance = form.save(commit=False)
+        print(instance)
+        pass
+
+
+'''
 def MostrarCalendario(request):
     #se resetea el calendario
     all_events = Event.objects.all()
@@ -41,7 +67,12 @@ def MostrarCalendario(request):
     #se entrega el contexto a la platilla
     context = {'events': events,
                'tareas': tareas}
+
+    if request.method == 'POST':
+        print(request.POST)
+
     return render(request, 'almanac_calendar/calendar.html', context)
+'''
 
 
 def ListarTareasUsuario(request):
@@ -52,6 +83,7 @@ def ListarTareasUsuario(request):
     for asignadas in asignadas.values('tarea_id'):
         tareas.append(Tarea.objects.get(pk=asignadas['tarea_id']))
     return tareas
+
 
 """
 def events_list(request):
