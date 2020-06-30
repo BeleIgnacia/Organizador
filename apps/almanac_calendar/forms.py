@@ -1,14 +1,15 @@
-from django.forms import ModelForm, DateInput
+from django.forms import ModelForm, DateInput, DateTimeInput
 from .models import Event
 
-class DateInput(DateInput):
-    input_type = 'date'
 
 class EventForm(ModelForm):
     class Meta:
         model = Event
-        fields = '__all__'
+
+        fields = [
+            'start',
+        ]
+
         widgets = {
-            'start': DateInput(),
-            'end': DateInput(),
+            'start': DateTimeInput(attrs={'class':'form-control'}),
         }

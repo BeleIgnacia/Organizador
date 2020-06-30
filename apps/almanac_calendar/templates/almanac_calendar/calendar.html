@@ -66,9 +66,10 @@
     <script type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.7.0/fullcalendar.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
-
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css"/>
 </head>
 <body>
 <div class="row">
@@ -76,13 +77,11 @@
         <h2>Calendarización de actividades</h2>
         <form method="post">
             {% csrf_token %}
-            {% for field in form %}
-                <div class="col-md-30">
-                    <div class="form-group">
-                        {{ field }}
-                    </div>
+            <div class="col-md-30">
+                <div class="form-group">
+
                 </div>
-            {% endfor %}
+            </div>
             <label for="sel1">Lista de tareas asignadas:</label>
             <p></p>
             <select class="form-control input-sm" id="sel1">
@@ -92,22 +91,31 @@
                 {% endfor %}
             </select>
             <br>
-            <label for="sel2">Seleccione el rango Fecha/Hora:</label>
+            <label for="sel2">Seleccione Fecha/Hora:</label>
             <br>
             <p></p>
-            <input type="text" name="datetimes"/>
-            <script>
-                $(function () {
-                    $('input[name="datetimes"]').daterangepicker({
-                        timePicker: true,
-                        startDate: moment().startOf('hour'),
-                        endDate: moment().startOf('hour').add(32, 'hour'),
-                        locale: {
-                            format: 'M/DD hh:mm A'
-                        }
-                    });
-                });
-            </script>
+            <div class="container">
+                <div class="row">
+                    <div class='col-sm-6'>
+                        <div class="form-group">
+                            <div class='input-group date' id='datetimepicker1'>
+                                {{ form.start }}
+                                <!--
+                                <input type='text' class="form-control"/>
+                                -->
+                                <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                            </div>
+                        </div>
+                    </div>
+                    <script type="text/javascript">
+                        $(function () {
+                            $('#datetimepicker1').datetimepicker();
+                        });
+                    </script>
+                </div>
+            </div>
             <p></p>
             <input type="submit" class="btn btn-primary" value="Calendarizar"/>
         </form>
