@@ -12,6 +12,7 @@ class Domicilio(models.Model):
     def __str__(self):
         return '{} {}, {}, {}'.format(self.calle, self.numero, self.comuna, self.ciudad)
 
+
 # Usuario crea sus dependencias
 # Todas las que quiera
 # Luego ve si las asigna
@@ -20,6 +21,7 @@ class Dependencia(models.Model):
 
     def __str__(self):
         return '{}'.format(self.nombre)
+
 
 # Son un tanto redundantes estos modelos
 # Pero su estructura es necesaria para los formularios
@@ -33,6 +35,7 @@ class PerteneceDependencia(models.Model):
 
     def __str__(self):
         return '{}'.format(self.dependencia)
+
 
 class Usuario(User):
     user = models.OneToOneField(User, parent_link=True, on_delete=models.CASCADE)

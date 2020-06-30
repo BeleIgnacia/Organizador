@@ -2,9 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
-from django.views.generic import CreateView,ListView,TemplateView
+from django.views.generic import CreateView, ListView, TemplateView
 from django.contrib import messages
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
 
 from apps.hogar.forms import *
@@ -20,6 +20,7 @@ from apps.hogar.models import Usuario
 
 import json
 
+
 # Vista para registrar usuario común
 class RegisterUser(CreateView):
     model = Usuario
@@ -28,8 +29,8 @@ class RegisterUser(CreateView):
     success_url = reverse_lazy('hogar:añadir')
 
     # Despliega formulario por pantalla
-    def get_context_data(self,**kwargs):
-        context = super(RegisterUser,self).get_context_data(**kwargs)
+    def get_context_data(self, **kwargs):
+        context = super(RegisterUser, self).get_context_data(**kwargs)
         if 'form' not in context:
             context['form'] = self.form_class(self.request.GET)
         return context
@@ -37,11 +38,12 @@ class RegisterUser(CreateView):
     # Guarda nuevo usuario añadido a hogar
     def form_valid(self, form):
         instance = form.save(commit=False)
-        self.usuario = Usuario.objects.get(pk=self.request.session.get('pk_usuario',''))
+        self.usuario = Usuario.objects.get(pk=self.request.session.get('pk_usuario', ''))
         instance.domicilio = self.usuario.domicilio
         instance.es_administrador = 0
         instance.save()
         return HttpResponseRedirect(self.get_success_url())
+
 
 # Vista doble form para registrar domicilio y usuario administrador
 class Register(CreateView):
@@ -71,6 +73,7 @@ class Register(CreateView):
         else:
             return self.render_to_response(self.get_context_data(form=form, form2=form2))
 
+
 def loginUser(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -85,7 +88,7 @@ def loginUser(request):
             request.session['pk_usuario'] = usuario.pk
             request.session['es_administrador'] = usuario.es_administrador
             # Redirige
-            return redirect('hogar:dashboard')
+            return HttpResponseRedirect(reverse('hogar:dashboard'))
         else:
             messages.info(request, 'Usuario o contraseña incorrectos')
 
@@ -96,18 +99,20 @@ def loginUser(request):
 class Dashboard(TemplateView):
     template_name = 'hogar/dashboard.html'
 
+
 class Usuariolist(ListView):
     model = Usuario
     template_name = 'hogar/list_usuarios.html'
 
     def get_queryset(self):
         # Toma la id de usuario almacenada
-        pk_usuario = self.request.session.get('pk_usuario','')
+        pk_usuario = self.request.session.get('pk_usuario', '')
         # Intancia el objeto usuario
         usuario = Usuario.objects.get(pk=pk_usuario)
         if usuario:
             # Retorna los usuarios filtrados según domicilio
             return Usuario.objects.filter(domicilio=usuario.domicilio)
+
 
 # View para modificar domicilio
 class DomicilioModificar(CreateView):
@@ -116,7 +121,7 @@ class DomicilioModificar(CreateView):
     template_name = 'hogar/domicilio_modificar.html'
     success_url = reverse_lazy('hogar:domicilio_modificar')
 
-    def get_context_data(self,**kwargs):
+    def get_context_data(self, **kwargs):
         context = super(DomicilioModificar, self).get_context_data(**kwargs)
         self.usuario = Usuario.objects.get(pk=self.request.session['pk_usuario'])
         context['domicilio_actual'] = self.usuario.domicilio
@@ -131,6 +136,7 @@ class DomicilioModificar(CreateView):
         self.usuario.domicilio.ciudad = instance.ciudad
         self.usuario.domicilio.save()
         return HttpResponseRedirect(self.success_url)
+
 
 # View para crear y asignar dependencias, las dos en una
 class DomicilioDependencias(CreateView):
@@ -148,9 +154,12 @@ class DomicilioDependencias(CreateView):
             context['form2'] = self.second_form_class(self.request.GET)
 
         self.usuario = Usuario.objects.get(pk=self.request.session['pk_usuario'])
-        context['dependencias_disponibles'] = PerteneceDependencia.objects.filter(domicilio=self.usuario.domicilio,asignada=False)
-        context['dependencias_asignadas'] = PerteneceDependencia.objects.filter(domicilio=self.usuario.domicilio,asignada=True)
-        context['form2'].fields['dependencia'].queryset = PerteneceDependencia.objects.filter(domicilio=self.usuario.domicilio,asignada=False)
+        context['dependencias_disponibles'] = PerteneceDependencia.objects.filter(domicilio=self.usuario.domicilio,
+                                                                                  asignada=False)
+        context['dependencias_asignadas'] = PerteneceDependencia.objects.filter(domicilio=self.usuario.domicilio,
+                                                                                asignada=True)
+        context['form2'].fields['dependencia'].queryset = PerteneceDependencia.objects.filter(
+            domicilio=self.usuario.domicilio, asignada=False)
         return context
 
     def post(self, request, *arg, **kwargs):
@@ -160,7 +169,8 @@ class DomicilioDependencias(CreateView):
         if form.is_valid():
             instance = form.save(commit=False)
             self.usuario = Usuario.objects.get(pk=self.request.session['pk_usuario'])
-            pertence_instance = PerteneceDependencia(domicilio=self.usuario.domicilio,dependencia=instance,asignada=False)
+            pertence_instance = PerteneceDependencia(domicilio=self.usuario.domicilio, dependencia=instance,
+                                                     asignada=False)
             instance.save()
             pertence_instance.save()
             return HttpResponseRedirect(self.get_success_url())
