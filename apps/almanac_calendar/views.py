@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.core import serializers
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse
 from django.forms.models import model_to_dict
 from django.views.generic import CreateView
 from .forms import EventForm
@@ -15,22 +15,28 @@ class MostrarCalendario(CreateView):
     model = Event
     template_name = 'almanac_calendar/calendar.html'
     form_class = EventForm
-    success_url = reverse_lazy()
+    success_url = reverse_lazy('calendario:mostrar_calendario')
 
     def get_context_data(self, **kwargs):
         context = super(MostrarCalendario, self).get_context_data(**kwargs)
         all_events = Event.objects.all()
         events = eval(serializers.serialize("json", all_events))
         events = list(map(lambda x: x['fields'], events))
-        tareas = ListarTareasUsuario(self.request)
+
+        #Este procedimiento filtra las tareas asignadas al domicilio
+        #Pero no filtra las que ya se candelarizaron
+        self.usuario = Usuario.objects.get(pk=self.request.session['pk_usuario'])
+        self.usuarios = Usuario.objects.filter(domicilio=self.usuario.domicilio)
+        self.tareas = AsignarTarea.objects.filter(usuario__in=self.usuarios)
+        context['form'].fields['asignar_tarea'].queryset = self.tareas
+
         context['events'] = events
-        context['tareas'] = tareas
         return context
 
     def form_valid(self, form):
         instance = form.save(commit=False)
-        print(instance)
-        pass
+        print("dira hola cuando la form sea valida")
+        return HttpResponseRedirect(reverse_lazy('calendario:mostrar_calendario'))
 
 
 """
