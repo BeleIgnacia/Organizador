@@ -21,16 +21,17 @@ class MostrarCalendario(CreateView):
         context = super(MostrarCalendario, self).get_context_data(**kwargs)
 
         self.usuario = Usuario.objects.get(pk=self.request.session['pk_usuario'])
-        # Este procedimiento filtra las tareas asignadas al domicilio
-        # Pero no filtra las que ya se candelarizaron
+        # Determina usuarios de domicilio
         self.usuarios = Usuario.objects.filter(domicilio=self.usuario.domicilio)
-        self.tareas = AsignarTarea.objects.filter(usuario__in=self.usuarios)
-        context['form'].fields['asignar_tarea'].queryset = self.tareas
-
+        # Filtra las tareas asignadas al domicilio con candelarizar
+        self.tareas = AsignarTarea.objects.filter(usuario__in=self.usuarios, calendarizar=True)
         self.events = Event.objects.filter(asignar_tarea__in=self.tareas)
         self.events = eval(serializers.serialize("json", self.events))
         self.events = list(map(lambda x: x['fields'], self.events))
+        # Filtra las tareas asignadas al domicilio sin candelarizar
+        self.tareas = AsignarTarea.objects.filter(usuario__in=self.usuarios, calendarizar=False)
 
+        context['form'].fields['asignar_tarea'].queryset = self.tareas
         context['events'] = self.events
         return context
 
@@ -38,8 +39,9 @@ class MostrarCalendario(CreateView):
         instance = form.save(commit=False)
         instance.title = instance.asignar_tarea.tarea.nombre
         instance.end = instance.start + instance.asignar_tarea.tarea.duracion
-        print(instance.start)
-        print(instance.end)
+        instance.description = instance.asignar_tarea.tarea.comentarios
+        instance.asignar_tarea.calendarizar = True
+        instance.asignar_tarea.save()
         instance.save()
         return HttpResponseRedirect(reverse_lazy('calendario:mostrar_calendario'))
 

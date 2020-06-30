@@ -12,7 +12,7 @@ class Event(models.Model):
     type = models.CharField(blank=True, null=True, max_length=10, default='EV')
     start = models.DateTimeField(default=timezone.now)
     end = models.DateTimeField(default=timezone.now)
-
+    description = models.CharField(max_length=200, blank=True, default='')
     # all_day = models.BooleanField(default=False)
 
     def __str__(self):

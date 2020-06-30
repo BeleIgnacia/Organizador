@@ -24,6 +24,7 @@ class Tarea(models.Model):
 class AsignarTarea(models.Model):
     tarea = models.ForeignKey(Tarea, on_delete=models.CASCADE)
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    calendarizar = models.BooleanField(default=False)
 
     def __str__(self):
         return 'tarea {} a usuario {}'.format(self.tarea, self.usuario)
