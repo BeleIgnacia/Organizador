@@ -1,14 +1,12 @@
 from django.db import models
 from django.utils import timezone
 
-from apps.tareas.models import Tarea
-from apps.hogar.models import Usuario
+from apps.tareas.models import AsignarTarea
 
 
 # Create your models here.
 class Event(models.Model):
-    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
-    tarea = models.ForeignKey(Tarea, on_delete=models.CASCADE)
+    asignar_tarea = models.ForeignKey(AsignarTarea, on_delete=models.CASCADE)
 
     title = models.CharField(max_length=100, default='Title')
     type = models.CharField(blank=True, null=True, max_length=10, default='EV')
