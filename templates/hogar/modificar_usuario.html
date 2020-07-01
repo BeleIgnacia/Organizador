@@ -3,14 +3,13 @@
 {% load static %}
 
 {% block content %}
-<!-- vistas sobre modificar propiedades tarea, eliminar tarea  -->
 <div class="jumbotron jumbotron-fluid">
     <div class="container">
         <div class="card-deck">
             <div class="card border-primary mb-3" style="max-width: 30rem;">
             {% if request.session.es_administrador %}
-            {% if name == "Modificar Tarea" %}
-                <div class="card-header">Modificar Tarea 
+            {% if name == "Modificar Usuario" %}
+                <div class="card-header">Modificar Usuario
                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-wrench" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M.102 2.223A3.004 3.004 0 0 0 3.78 5.897l6.341 6.252A3.003 3.003 0 0 0 13 16a3 3 0 1 0-.851-5.878L5.897 3.781A3.004 3.004 0 0 0 2.223.1l2.141 2.142L4 4l-1.757.364L.102 2.223zm13.37 9.019L13 11l-.471.242-.529.026-.287.445-.445.287-.026.529L11 13l.242.471.026.529.445.287.287.445.529.026L13 15l.471-.242.529-.026.287-.445.445-.287.026-.529L15 13l-.242-.471-.026-.529-.445-.287-.287-.445-.529-.026z"/>
                     </svg>
@@ -21,17 +20,7 @@
                         {{form.as_p}}
                         <input type='submit' class="btn btn btn-success" value='Guardar Cambios' />
                     </form>
-                    <a class="btn btn btn-primary" href="/tareas/listar/asignadas">Volver</a>
-                {% elif name == "Eliminar Tarea"%}
-                <div class="card-header">Modificar Tarea</div>
-                    <div class="card-body">
-                    <form method='POST'>
-                     {% csrf_token %}
-                     <h1>¿Eliminar tarea permanentemente "{{tarea.nombre}}"?</h1>
-                        <input type='submit' class="btn btn btn-danger" value='Eliminar' />
-                    </form>
-                    <a class="btn btn btn-primary" href="/tareas/listar/asignadas">Volver</a>
-                </div>  
+                    <a class="btn btn btn-primary" href="/hogar/usuarios/listar">Volver</a>
             {% endif %}
             {% endif %}
             </div>

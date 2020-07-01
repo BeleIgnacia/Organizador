@@ -1,14 +1,46 @@
 {% extends 'hogar/dashboard.html' %}
 
 {% block content %}
+<div class="card-deck">
+  {% if request.session.es_administrador %}
+  {% if object_list %}
+  {% for usuario in object_list %}
+    <div class="card text-center">
+      <div class="card-header">
+        Imagen usuario?
+        <br><img src="..." class="card-img-top" alt="...">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">Usuario : {{usuario}}</h5>
+        <p class="card-text">Detalles: 
+          <br>Correo electronico : {{usuario.email}}
+          <br>Telefono : {{usuario.telefono}}
+          <br>Domicilio : {{usuario.domicilio}}
+        </p>
+        <a class="btn btn btn-success" href="/hogar/usuarios/editar/{{usuario.pk}}">Modificar
+          <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-sliders" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M14 3.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0zM11.5 5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM7 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0zM4.5 10a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm9.5 3.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0zM11.5 15a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+            <path fill-rule="evenodd" d="M9.5 4H0V3h9.5v1zM16 4h-2.5V3H16v1zM9.5 14H0v-1h9.5v1zm6.5 0h-2.5v-1H16v1zM6.5 9H16V8H6.5v1zM0 9h2.5V8H0v1z"/>
+          </svg>
+        </a>
+      </div>
+      <div class="card-footer text-muted">
+        Administrador : {{usuario.es_administrador}}
+      </div>
+    </div>
+  {% endfor %}
+  {% endif %}
+  {% endif %}
+</div>
+
+
+
+
+
+
+<!-- 
 <table class="table table-hover">
-    <thead>
-      <tr>
-        <th scope="col">Nombre</th>
-        <th scope="col">email</th>
-        <th scope="col">Domicilio</th>
-      </tr>
-    </thead>
+
     <tbody>
         {% if object_list %}
         {% for usuario in object_list %}
@@ -25,4 +57,4 @@
         {% endif %}
     </tbody>
   </table>
-{% endblock %}
+{% endblock %} -->

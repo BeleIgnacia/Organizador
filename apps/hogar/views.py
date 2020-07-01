@@ -1,8 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
-from django.views.generic import CreateView, ListView, TemplateView
+from django.views.generic import CreateView, ListView, TemplateView,UpdateView
 from django.contrib import messages
 from django.urls import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
@@ -112,6 +112,27 @@ class Usuariolist(ListView):
         if usuario:
             # Retorna los usuarios filtrados según domicilio
             return Usuario.objects.filter(domicilio=usuario.domicilio)
+
+
+#view para modificar datos de un determinado usuario
+class UsuarioModificar(UpdateView):
+    model = Usuario
+    form_class = UsuarioForm
+    template_name = 'hogar/modificar_usuario.html'
+    success_url = reverse_lazy('hogar:list_usuarios')
+
+    def get_context_data(self, **kwargs):
+        context = super(UsuarioModificar, self).get_context_data(**kwargs)
+        context['name'] = "Modificar Usuario"
+        return context
+
+    def form_valid(self, form):
+        print(form.cleaned_data)
+        return super().form_valid(form)
+
+    def get_object(self):
+        id_ = self.kwargs.get("pk")
+        return get_object_or_404(Usuario, id=id_)
 
 
 # View para modificar domicilio
