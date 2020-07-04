@@ -1,14 +1,16 @@
 from django.shortcuts import render, redirect
 from django.core import serializers
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.forms.models import model_to_dict
 from django.views.generic import CreateView
 from .forms import EventForm
 from .models import Event
 from apps.tareas.models import Tarea, AsignarTarea
-from apps.hogar.models import Usuario
+from apps.hogar.models import Usuario, Dependencia
+from apps.almanac_calendar.forms import Horario_OcupadoForm
 import json
 from django.urls import reverse_lazy
+from datetime import timedelta
 
 
 class MostrarCalendario(CreateView):
@@ -96,6 +98,43 @@ def ListarTareasUsuario(request):
     for asignadas in asignadas.values('tarea_id'):
         tareas.append(Tarea.objects.get(pk=asignadas['tarea_id']))
     return tareas
+
+def Horario_Ocupado_View(request):
+    if request.method == 'POST':
+        form = Horario_OcupadoForm(request.POST)
+        if form.is_valid():
+            pk_usuario = request.session.get('pk_usuario', '')
+            usuario = Usuario.objects.get(pk=pk_usuario)
+            dur = timedelta()
+
+            dependencia = Dependencia.objects.create(
+                nombre = "nulo"
+            )
+
+            tarea = Tarea.objects.create(
+                nombre = form.cleaned_data['titulo'],
+                domicilio = usuario.domicilio,
+                dependencia = dependencia,
+                duracion = dur,
+                asignada = True
+            )
+            
+            asignar_tarea = AsignarTarea.objects.create(
+                tarea = tarea,
+                usuario = usuario,
+                calendarizar = True
+            )
+
+            Event.objects.create(
+                title = form.cleaned_data['titulo'],
+                asignar_tarea = asignar_tarea,
+                start = form.cleaned_data['start'],
+                end = form.cleaned_data['end']
+            )
+            return HttpResponse('Horario guardado')
+    else:
+        form = Horario_OcupadoForm()
+    return render(request, 'hogar/horario_ocupado.html', {'form':form})
 
 
 """

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import include, path
-
+from . import views
 from .views import *
 
 urlpatterns = [
@@ -9,4 +9,5 @@ urlpatterns = [
     #path('eventslist', events_list),
     path('mostrar', MostrarCalendario.as_view(), name='mostrar_calendario'),
     path('listar_tareas', ListarTareasUsuario, name='listar_tareas'),
+    path('agregar_horario_ocupado', views.Horario_Ocupado_View, name='agregar_horario_ocupado'),
 ]

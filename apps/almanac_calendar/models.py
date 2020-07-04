@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 
 from apps.tareas.models import AsignarTarea
+from apps.hogar.models import Usuario
 
 
 # Create your models here.
@@ -17,3 +18,10 @@ class Event(models.Model):
 
     def __str__(self):
         return self.title
+
+class Horario_Ocupado(models.Model):
+    usuario = models.ForeignKey(Usuario, null=False, blank=False, on_delete=models.CASCADE)
+    start = models.DateTimeField(default=timezone.now)
+    end = models.DateTimeField(default=timezone.now)
+    titulo = models.CharField(blank=True, null=True, max_length=30)
+    repetir = models.BooleanField(default=False)
