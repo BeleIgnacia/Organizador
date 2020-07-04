@@ -11,6 +11,7 @@ from apps.tareas.forms import TareaForm, AsignarTareaForm
 from apps.hogar.models import Usuario, Domicilio, PerteneceDependencia, Dependencia
 from apps.tareas.models import Tarea
 from apps.tareas.models import AsignarTarea as AsignarTarea_model
+from django.core.mail import send_mail
 
 
 class CrearTarea(CreateView):
@@ -62,6 +63,12 @@ class AsignarTarea(CreateView):
         # Guarda la tarea y la asignación a usuario
         tarea.save()
         instance.save()
+        
+        #Notifica mediante mail al usuario 
+        datos = Usuario.objects.get(pk=instance.usuario.pk)
+        mensaje = "Hola "+datos.username+", se te ha asignado la siguiente tarea: "+tarea.nombre+", en "+str(tarea.dependencia)+".\nComentarios: "+tarea.comentarios+".\nPorfavor revisa la app.\n\nOrganizador =D"
+        send_mail('Nueva asignación de tarea', mensaje, 'organizador.is2020@gmail.com', [datos.email], fail_silently=False)
+
         return HttpResponseRedirect(reverse_lazy('tareas:asignar_tarea'))
 
 
