@@ -124,13 +124,21 @@ def Horario_Ocupado_View(request):
                 usuario = usuario,
                 calendarizar = True
             )
-
-            Event.objects.create(
-                title = form.cleaned_data['titulo'],
-                asignar_tarea = asignar_tarea,
-                start = form.cleaned_data['start'],
-                end = form.cleaned_data['end']
-            )
+            if form.cleaned_data['repetir'] == True:
+                for i in range(10):
+                    Event.objects.create(
+                        title = form.cleaned_data['titulo'],
+                        asignar_tarea = asignar_tarea,
+                        start = form.cleaned_data['start'] + timedelta(weeks=i),
+                        end = form.cleaned_data['end'] + timedelta(weeks=i)
+                    )
+            else:
+                Event.objects.create(
+                    title = form.cleaned_data['titulo'],
+                    asignar_tarea = asignar_tarea,
+                    start = form.cleaned_data['start'],
+                    end = form.cleaned_data['end']
+                )
             return HttpResponse('Horario guardado')
     else:
         form = Horario_OcupadoForm()
