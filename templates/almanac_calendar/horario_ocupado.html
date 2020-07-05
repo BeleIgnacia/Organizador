@@ -19,6 +19,11 @@
                 <div class="card-header">Añadir horario ocupado</div>
                 <div class="card-body">
                     <form method="post">
+                        {% if messages %}
+                            {% for message in messages %}
+                                <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
+                            {% endfor %}
+                        {% endif %}
                         {% csrf_token %}
                         {% for field in form %}
                             <div class="col-md-30">

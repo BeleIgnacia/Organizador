@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
+from django.contrib import messages
 
 from apps.almanac_calendar.forms import Horario_OcupadoForm
 from apps.hogar.models import Usuario, Dependencia
@@ -62,6 +63,9 @@ def Horario_Ocupado_View(request):
     if request.method == 'POST':
         form = Horario_OcupadoForm(request.POST)
         if form.is_valid():
+            if form.cleaned_data['start'] > form.cleaned_data['end']:
+                messages.error(request, 'La hora de termino debe ser despues que la hora de inicio!!!')
+                return render(request, 'hogar/../../templates/almanac_calendar/horario_ocupado.html', {'form': form})
             pk_usuario = request.session.get('pk_usuario', '')
             usuario = Usuario.objects.get(pk=pk_usuario)
             dur = timedelta()
