@@ -1,24 +1,13 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import authenticate, login, logout
-from django.views.generic import CreateView, ListView, TemplateView,UpdateView
 from django.contrib import messages
-from django.urls import reverse_lazy, reverse
+from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404
+from django.urls import reverse_lazy, reverse
+from django.views.generic import CreateView, ListView, TemplateView, UpdateView
 
 from apps.hogar.forms import *
 from apps.hogar.models import *
-
-from django.core import serializers
-from django.http import HttpResponse, JsonResponse
-from django.forms.models import model_to_dict
-from apps.almanac_calendar.forms import EventForm
-from apps.almanac_calendar.models import Event
-from apps.tareas.models import Tarea, AsignarTarea
 from apps.hogar.models import Usuario
-
-import json
 
 
 # Vista para registrar usuario común
@@ -114,7 +103,7 @@ class Usuariolist(ListView):
             return Usuario.objects.filter(domicilio=usuario.domicilio)
 
 
-#view para modificar datos de un determinado usuario
+# view para modificar datos de un determinado usuario
 class UsuarioModificar(UpdateView):
     model = Usuario
     form_class = UsuarioForm

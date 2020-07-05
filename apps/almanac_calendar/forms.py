@@ -36,8 +36,8 @@ class Horario_OcupadoForm(forms.ModelForm):
         }
 
         widgets = {
-            'start': forms.DateTimeInput(attrs={'class': 'form-control'}),
-            'end': forms.DateTimeInput(attrs={'class': 'form-control'}),
-            'titulo': forms.TextInput(),
-            'repetir': forms.CheckboxInput(),
+            'start': forms.DateTimeInput(attrs={'class': 'form-control', 'required': ''}),
+            'end': forms.DateTimeInput(attrs={'class': 'form-control',  'required': ''}),
+            'titulo': forms.TextInput(attrs={'class': 'form-control', 'required': ''}),
+            'repetir': forms.CheckboxInput(attrs={'class': 'form-control'}),
         }

@@ -1,16 +1,16 @@
-from django.shortcuts import render, redirect
+from datetime import timedelta
+
 from django.core import serializers
-from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
-from django.forms.models import model_to_dict
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views.generic import CreateView
+
+from apps.almanac_calendar.forms import Horario_OcupadoForm
+from apps.hogar.models import Usuario, Dependencia
+from apps.tareas.models import Tarea, AsignarTarea
 from .forms import EventForm
 from .models import Event
-from apps.tareas.models import Tarea, AsignarTarea
-from apps.hogar.models import Usuario, Dependencia
-from apps.almanac_calendar.forms import Horario_OcupadoForm
-import json
-from django.urls import reverse_lazy
-from datetime import timedelta
 
 
 class MostrarCalendario(CreateView):
@@ -48,48 +48,6 @@ class MostrarCalendario(CreateView):
         return HttpResponseRedirect(reverse_lazy('calendario:mostrar_calendario'))
 
 
-"""
-def add_event(request):
-    if request.POST:
-        form = EventForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponse(status=201)
-        return render(request, 'almanac_calendar/index.html', context={'form': form})
-    return render(request, 'almanac_calendar/index.html', context={'form': EventForm()})
-"""
-
-'''
-def MostrarCalendario(request):
-    #se resetea el calendario
-    all_events = Event.objects.all()
-    all_events.delete()
-    #############################
-    #se piden todas las tareas asignadas a todos los usuarios
-    #y luego se parsean para entregarlas en el formato válido de tipo Event al calendario
-    tareas_asignadas = Tarea.objects.filter(asignada=True)
-    lista_tareas = []
-    for asignadas in tareas_asignadas:
-        lista_tareas.append(asignadas)
-    for object in lista_tareas:
-        new_event = Event.objects.create(title=object.nombre)
-    all_events = Event.objects.all()
-    events = eval(serializers.serialize("json", all_events))
-    events = list(map(lambda x: x['fields'], events))
-    ##############################
-    #se obtienen las tareas asignadas al usuario que esta viendo el calendario
-    tareas = ListarTareasUsuario(request)
-    #se entrega el contexto a la platilla
-    context = {'events': events,
-               'tareas': tareas}
-
-    if request.method == 'POST':
-        print(request.POST)
-
-    return render(request, 'almanac_calendar/calendar.html', context)
-'''
-
-
 def ListarTareasUsuario(request):
     pk_usuario = request.session.get('pk_usuario', '')
     usuario = Usuario.objects.get(pk=pk_usuario)
@@ -98,6 +56,7 @@ def ListarTareasUsuario(request):
     for asignadas in asignadas.values('tarea_id'):
         tareas.append(Tarea.objects.get(pk=asignadas['tarea_id']))
     return tareas
+
 
 def Horario_Ocupado_View(request):
     if request.method == 'POST':
@@ -108,46 +67,38 @@ def Horario_Ocupado_View(request):
             dur = timedelta()
 
             dependencia = Dependencia.objects.create(
-                nombre = "nulo"
+                nombre="nulo"
             )
 
             tarea = Tarea.objects.create(
-                nombre = form.cleaned_data['titulo'],
-                domicilio = usuario.domicilio,
-                dependencia = dependencia,
-                duracion = dur,
-                asignada = True
+                nombre=form.cleaned_data['titulo'],
+                domicilio=usuario.domicilio,
+                dependencia=dependencia,
+                duracion=dur,
+                asignada=True
             )
-            
+
             asignar_tarea = AsignarTarea.objects.create(
-                tarea = tarea,
-                usuario = usuario,
-                calendarizar = True
+                tarea=tarea,
+                usuario=usuario,
+                calendarizar=True
             )
             if form.cleaned_data['repetir'] == True:
                 for i in range(10):
                     Event.objects.create(
-                        title = form.cleaned_data['titulo'],
-                        asignar_tarea = asignar_tarea,
-                        start = form.cleaned_data['start'] + timedelta(weeks=i),
-                        end = form.cleaned_data['end'] + timedelta(weeks=i)
+                        title=form.cleaned_data['titulo'],
+                        asignar_tarea=asignar_tarea,
+                        start=form.cleaned_data['start'] + timedelta(weeks=i),
+                        end=form.cleaned_data['end'] + timedelta(weeks=i)
                     )
             else:
                 Event.objects.create(
-                    title = form.cleaned_data['titulo'],
-                    asignar_tarea = asignar_tarea,
-                    start = form.cleaned_data['start'],
-                    end = form.cleaned_data['end']
+                    title=form.cleaned_data['titulo'],
+                    asignar_tarea=asignar_tarea,
+                    start=form.cleaned_data['start'],
+                    end=form.cleaned_data['end']
                 )
-            return HttpResponse('Horario guardado')
+            return HttpResponseRedirect(reverse_lazy('calendario:agregar_horario_ocupado'))
     else:
         form = Horario_OcupadoForm()
-    return render(request, 'hogar/horario_ocupado.html', {'form':form})
-
-
-"""
-def events_list(request):
-    print('in events lists')
-    events = Event.objects.all()
-    return JsonResponse(list(map(lambda x: model_to_dict(x), events)), safe=False)
-"""
+    return render(request, 'hogar/../../templates/almanac_calendar/horario_ocupado.html', {'form': form})

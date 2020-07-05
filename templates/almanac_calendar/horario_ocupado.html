@@ -1,0 +1,63 @@
+{% extends 'hogar/dashboard.html' %}
+
+{% load static %}
+
+{% block content %}
+
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker-standalone.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{% static 'almanac_calendar/moment.min.js' %}"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
+
+    <div class="jumbotron">
+        <div id="dummy"></div>
+        <div class="card-deck">
+            <div class="card border-primary mb-3" style="max-width: 20rem;">
+                <div class="card-header">Añadir horario ocupado</div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        {% for field in form %}
+                            <div class="col-md-30">
+                                <div class="form-group">
+                                    {{ field.label }}:
+                                    {{ field }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <script type="text/javascript">
+                            $(function () {
+                                $.fn.datetimepicker.defaults.icons = {
+                                    time: 'fa fa-clock-o',
+                                    date: 'fa fa-calendar',
+                                    up: 'fa fa-chevron-up',
+                                    down: 'fa fa-chevron-down',
+                                    previous: 'fa fa-chevron-left',
+                                    next: 'fa fa-chevron-right',
+                                    today: 'fa fa-dot-circle-o',
+                                    clear: 'fa fa-trash',
+                                    close: 'fa fa-times'
+                                };
+                                $('#id_start').datetimepicker({
+                                    format: 'DD/MM/YYYY HH:mm:ss'
+                                });
+                            });
+                        </script>
+                        <button type="submit" class="btn btn-primary btn-block" id="enviar">Guardar</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card border-primary mb-3" style="max-width: 20rem;">
+                <div class="card-body">
+                    <p class="card-text">
+                        Aquí podras definir un horario sobre el cual no se te podran calendarizar tus tareas.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
