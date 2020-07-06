@@ -63,55 +63,48 @@
     <body>
     {{ kwargs.dependencia_disponible }}
 
-    <div class="jumbotron hoverable p-4">
+    <div class="jumbotron">
         <div class="row">
             <div class="col-md-3 mx-2 my-2">
-                <div class="card border-primary mb-3" style="max-width: 20rem;">
-                    <div class="card-header">Calendarización de actividades</div>
-                    <div class="card-body">
-                        <form method="post">
-                            {% csrf_token %}
-                            <div class="col-md-30">
-                                <div class="form-group">
-                                    Lista de tareas asignadas:
-                                    <p></p>
-                                    {{ form.asignar_tarea }}
-                                </div>
-                            </div>
-                            <div class="col-md-30">
-                                <div class="form-group">
-                                    Seleccione Fecha/Hora:
-                                    <p></p>
-                                    {{ form.start }}
-                                </div>
-                            </div>
-                            <label for="sel1"></label>
-
-                            <script type="text/javascript">
-                                $(function () {
-                                    $.fn.datetimepicker.defaults.icons = {
-                                        time: 'fa fa-clock-o',
-                                        date: 'fa fa-calendar',
-                                        up: 'fa fa-chevron-up',
-                                        down: 'fa fa-chevron-down',
-                                        previous: 'fa fa-chevron-left',
-                                        next: 'fa fa-chevron-right',
-                                        today: 'fa fa-dot-circle-o',
-                                        clear: 'fa fa-trash',
-                                        close: 'fa fa-times'
-                                    };
-                                    $('#id_start').datetimepicker({
-                                        format: 'DD/MM/YYYY HH:mm'
+                <div class="row">
+                    <div class="card border-primary mb-3" style="width: 600px">
+                        <div class="card-header">Calendarización de actividades</div>
+                        <div class="card-body">
+                            <form method="post">
+                                {% csrf_token %}
+                                <h6>Lista de tareas asignadas:</h6>
+                                <p></p>
+                                {{ form.asignar_tarea }}
+                                <p></p>
+                                <h6>Seleccione Fecha/Hora:</h6>
+                                <p></p>
+                                {{ form.start }}
+                                <p></p>
+                                <script type="text/javascript">
+                                    $(function () {
+                                        $.fn.datetimepicker.defaults.icons = {
+                                            time: 'fa fa-clock-o',
+                                            date: 'fa fa-calendar',
+                                            up: 'fa fa-chevron-up',
+                                            down: 'fa fa-chevron-down',
+                                            previous: 'fa fa-chevron-left',
+                                            next: 'fa fa-chevron-right',
+                                            today: 'fa fa-dot-circle-o',
+                                            clear: 'fa fa-trash',
+                                            close: 'fa fa-times'
+                                        };
+                                        $('#id_start').datetimepicker({
+                                            format: 'DD/MM/YYYY HH:mm'
+                                        });
                                     });
-                                });
-                            </script>
-                            <input type="submit" class="btn btn-primary btn-block" value="Calendarizar"/>
-                        </form>
+                                </script>
+                                <input type="submit" class="btn btn-primary btn-block" value="Calendarizar"/>
+                            </form>
+                        </div>
                     </div>
                 </div>
+                <div class="row" id="dummy"></div>
             </div>
-
-            {{ valida }}
 
             <div class="col-md-8">
                 <div id='calendar' style="height:1200px;width:1200px;"></div>
@@ -145,6 +138,13 @@
 {% endblock %}
 
 {% block extrajs %}
+    <script type="text/javascript">
+        var url = window.location.pathname.split('/');
+        var valida = url.pop();
+        if (valida.localeCompare("invalida") == 0) {
+            document.getElementById('dummy').innerHTML = '<div class="alert alert-dismissible alert-warning" style="width: 600px;"><button type="button" class="close" data-dismiss="alert">&times;</button><h4 class="alert-heading">Atención!</h4><p class="mb-0"></p>Esa dependencia se encuentra ocupada en ese horario, prefiera otro horario para calendarizar</div>'
+        }
+    </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

@@ -22,7 +22,6 @@ class MostrarCalendario(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(MostrarCalendario, self).get_context_data(**kwargs)
-
         self.usuario = Usuario.objects.get(pk=self.request.session['pk_usuario'])
         # Determina usuarios de domicilio
         self.usuarios = Usuario.objects.filter(domicilio=self.usuario.domicilio)
@@ -39,6 +38,7 @@ class MostrarCalendario(CreateView):
         return context
 
     def form_valid(self, form):
+
         instance = form.save(commit=False)
         # Asigna titulo, termino y descripción al evento
         instance.title = instance.asignar_tarea.tarea.nombre
@@ -55,6 +55,7 @@ class MostrarCalendario(CreateView):
         # caso 1: event comienza antes y acaba antes de instance
         # caso 2: event comienza luego y acaba luego de instance
         # caso 3: event comienza luego y acaba antes de instance
+        # caso 4: event comienza antes y acaba luego de instance
         dependencia_disponible = True
         for event in self.events:
             if event.asignar_tarea.tarea.dependencia == instance.asignar_tarea.tarea.dependencia:
@@ -67,11 +68,11 @@ class MostrarCalendario(CreateView):
                 if instance.start < event.start < instance.end < event.end:
                     dependencia_disponible = False
                     # print("caso 3")
+                if event.start < instance.start < instance.end < event.end:
+                    dependencia_disponible = False
+                    # print("caso 4")
         if not dependencia_disponible:
-            # return HttpResponseRedirect(reverse_lazy('calendario:mostrar_calendario', kwargs={}))
-            # return HttpResponseRedirect(reverse('calendario:mostrar_calendario', kwargs={}))
-            print("Ya hay otra tarea en esa dependencia")
-            return HttpResponseRedirect(reverse_lazy('calendario:mostrar_calendario'))
+            return HttpResponseRedirect(reverse_lazy('calendario:mostrar_calendario_valida', kwargs={'valida': 'invalida'}))
 
         instance.asignar_tarea.save()
         instance.save()
