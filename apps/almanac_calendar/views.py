@@ -1,9 +1,9 @@
 from datetime import timedelta
 
 from django.core import serializers
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView
 from django.contrib import messages
 
@@ -40,10 +40,39 @@ class MostrarCalendario(CreateView):
 
     def form_valid(self, form):
         instance = form.save(commit=False)
+        # Asigna titulo, termino y descripción al evento
         instance.title = instance.asignar_tarea.tarea.nombre
         instance.end = instance.start + instance.asignar_tarea.tarea.duracion
         instance.description = instance.asignar_tarea.tarea.comentarios
         instance.asignar_tarea.calendarizar = True
+
+        # Verifica si dependencia no esta ocupada
+        self.usuario = Usuario.objects.get(pk=self.request.session['pk_usuario'])
+        self.usuarios = Usuario.objects.filter(domicilio=self.usuario.domicilio)
+        self.tareas = AsignarTarea.objects.filter(usuario__in=self.usuarios, calendarizar=True)
+        self.events = Event.objects.filter(asignar_tarea__in=self.tareas)
+        # Si hay un evento que se solape con instance
+        # caso 1: event comienza antes y acaba antes de instance
+        # caso 2: event comienza luego y acaba luego de instance
+        # caso 3: event comienza luego y acaba antes de instance
+        dependencia_disponible = True
+        for event in self.events:
+            if event.asignar_tarea.tarea.dependencia == instance.asignar_tarea.tarea.dependencia:
+                if event.start < instance.start < event.end < instance.end:
+                    dependencia_disponible = False
+                    # print("caso 1")
+                if instance.start < event.start < event.end < instance.end:
+                    dependencia_disponible = False
+                    # print("caso 2")
+                if instance.start < event.start < instance.end < event.end:
+                    dependencia_disponible = False
+                    # print("caso 3")
+        if not dependencia_disponible:
+            # return HttpResponseRedirect(reverse_lazy('calendario:mostrar_calendario', kwargs={}))
+            # return HttpResponseRedirect(reverse('calendario:mostrar_calendario', kwargs={}))
+            print("Ya hay otra tarea en esa dependencia")
+            return HttpResponseRedirect(reverse_lazy('calendario:mostrar_calendario'))
+
         instance.asignar_tarea.save()
         instance.save()
         return HttpResponseRedirect(reverse_lazy('calendario:mostrar_calendario'))
