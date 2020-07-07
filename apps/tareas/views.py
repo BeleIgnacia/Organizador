@@ -1,17 +1,15 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
-from django.views.generic import CreateView, ListView, UpdateView, DetailView, DeleteView
-from django.urls import reverse_lazy, reverse
-from django.contrib import messages
-
-# Formularios
-from apps.tareas.forms import TareaForm, AsignarTareaForm
+from django.shortcuts import get_object_or_404
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 
 # Modelos
-from apps.hogar.models import Usuario, Domicilio, PerteneceDependencia, Dependencia
-from apps.tareas.models import Tarea
+from apps.hogar.models import Usuario, PerteneceDependencia, Dependencia
+# Formularios
+from apps.tareas.forms import TareaForm, AsignarTareaForm
 from apps.tareas.models import AsignarTarea as AsignarTarea_model
-from django.core.mail import send_mail
+from apps.tareas.models import Tarea
 
 
 class CrearTarea(CreateView):
@@ -34,6 +32,8 @@ class CrearTarea(CreateView):
         instance = form.save(commit=False)
         self.usuario = Usuario.objects.get(pk=self.request.session['pk_usuario'])
         instance.domicilio = self.usuario.domicilio
+        # Pasa los minutos a horas
+        instance.duracion = instance.duracion * 60
         instance.save()
         return HttpResponseRedirect(reverse_lazy('tareas:crear_tarea'))
 
@@ -63,10 +63,10 @@ class AsignarTarea(CreateView):
         # Guarda la tarea y la asignación a usuario
         tarea.save()
         instance.save()
-        
-        #Notifica mediante mail al usuario 
+
+        # Notifica mediante mail al usuario
         datos = Usuario.objects.get(pk=instance.usuario.pk)
-        mensaje = "Hola "+datos.username+", se te ha asignado la siguiente tarea: "+tarea.nombre+", en "+str(tarea.dependencia)+".\nComentarios: "+tarea.comentarios+".\nPorfavor revisa la app.\n\nOrganizador =D"
+        mensaje = "Hola " + datos.username + ", se te ha asignado la siguiente tarea: " + tarea.nombre + ", en " + str(tarea.dependencia) + ".\nComentarios: " + tarea.comentarios + ".\nPorfavor revisa la app.\n\nOrganizador =D"
         send_mail('Nueva asignación de tarea', mensaje, 'organizador.is2020@gmail.com', [datos.email], fail_silently=False)
 
         return HttpResponseRedirect(reverse_lazy('tareas:asignar_tarea'))

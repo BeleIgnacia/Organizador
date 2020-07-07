@@ -48,7 +48,7 @@ class TareaForm(forms.ModelForm):
         widgets = {
             'nombre': forms.TextInput(attrs={'class': 'form-control'}),
             'complejidad': forms.NumberInput(attrs={'class': 'custom-range', 'type': 'range', 'max': 5, 'min': 1, 'step': 1, 'list': 'tickmarks'}),
-            'duracion': forms.TimeInput(attrs={'class': 'form-control','type': 'time','value': '0'}),
+            'duracion': forms.TimeInput(attrs={'class': 'form-control', 'type': 'time', 'value': '0'}),
             'dependencia': forms.Select(attrs={'class': 'form-control'}),
             'comentarios': forms.TextInput(attrs={'class': 'form-control'}),
         }
