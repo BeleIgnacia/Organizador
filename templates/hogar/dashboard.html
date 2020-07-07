@@ -7,7 +7,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <a class="navbar-brand" href="#">Organizador</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarColor01">
@@ -15,38 +15,39 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="/hogar">Inicio<span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="/calendario/mostrar">Calendario</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="/calendario/agregar_horario_ocupado">Agregar horario ocupado<span class="sr-only">(current)</span></a>
-                </li>
                 {% if request.session.es_administrador %}
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Administrar</a>
-                    <div class="dropdown-menu" style="">
-                        <a class="dropdown-item" href="/hogar/usuarios/agregar">Añadir usuario al hogar</a>
-                        <a class="dropdown-item" href="/hogar/usuarios/listar">Modificar usuario del hogar</a>
-                    </div>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Domicilio</a>
-                    <div class="dropdown-menu"  style="">
-                        <a class="dropdown-item" href="/hogar/domicilio/modificar">Modificar domicilio</a>
-                        <a class="dropdown-item" href="/hogar/domicilio/dependencias">Añadir o quitar dependencias</a>
-                    </div>
-                </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Administrar</a>
+                        <div class="dropdown-menu" style="">
+                            <a class="dropdown-item" href="/hogar/usuarios/agregar">Añadir usuario al hogar</a>
+                            <a class="dropdown-item" href="/hogar/usuarios/listar">Modificar usuario del hogar</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Domicilio</a>
+                        <div class="dropdown-menu" style="">
+                            <a class="dropdown-item" href="/hogar/domicilio/modificar">Modificar domicilio</a>
+                            <a class="dropdown-item" href="/hogar/domicilio/dependencias">Añadir o quitar dependencias</a>
+                        </div>
+                    </li>
                 {% endif %}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Tareas</a>
                     <div class="dropdown-menu" style="">
                         {% if request.session.es_administrador %}
-                        <a class="dropdown-item" href="/tareas/crear/">Añadir tareas</a>
-                        <a class="dropdown-item" href="/tareas/asignar/">Asignar Tareas</a>
+                            <a class="dropdown-item" href="/tareas/crear/">Añadir tareas</a>
+                            <a class="dropdown-item" href="/tareas/asignar/">Asignar Tareas</a>
+                            <div class="dropdown-divider"></div>
                         {% endif %}
-                        <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="/tareas/listar/">Ver mis tareas</a>
                         <a class="dropdown-item" href="/tareas/listar/asignadas/">Ver tareas asignadas en hogar</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Horarios</a>
+                    <div class="dropdown-menu" style="">
+                        <a class="dropdown-item" href="/calendario/mostrar">Calendario</a>
+                        <a class="dropdown-item" href="/calendario/agregar_horario_ocupado">Agregar horario ocupado</a>
                     </div>
                 </li>
             </ul>
@@ -55,8 +56,15 @@
 {% endblock %}
 
 {% block content %}
-  <div class="jumbotron">
-    <h1 class="display-3">Buenas Buenas</h1>
-    <p class="lead">Pagina Alfa del administrador.</p>
-  </div>
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col col-sm-9">
+                <h2 class="display-4"><strong>Bienvenido</strong><br>al Organizador de su Hogar.</h2>
+                <p class="lead">Mantengase al tanto de sus compromisos y colabore con las tareas del hogar.</p>
+            </div>
+            <div class="col col-sm-3 align-right">
+                <!--Aladir algo notificaciones/hogar/tareas etc.-->
+            </div>
+        </div>
+    </div>
 {% endblock %}

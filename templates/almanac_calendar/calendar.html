@@ -53,6 +53,13 @@
             margin: 20px auto;
             padding: 0 10px;
         }
+
+
+        .fc-header-title {
+            color: #0052ba;
+            background: #000;
+            font-size: 20px;
+        }
     </style>
 {% endblock %}
 
@@ -65,46 +72,48 @@
 
     <div class="jumbotron">
         <div class="row">
-            <div class="col-md-3 mx-2 my-2">
-                <div class="row">
-                    <div class="card border-primary mb-3" style="width: 600px">
-                        <div class="card-header">Calendarización de actividades</div>
-                        <div class="card-body">
-                            <form method="post">
-                                {% csrf_token %}
-                                <h6>Lista de tareas asignadas:</h6>
-                                <p></p>
-                                {{ form.asignar_tarea }}
-                                <p></p>
-                                <h6>Seleccione Fecha/Hora:</h6>
-                                <p></p>
-                                {{ form.start }}
-                                <p></p>
-                                <script type="text/javascript">
-                                    $(function () {
-                                        $.fn.datetimepicker.defaults.icons = {
-                                            time: 'fa fa-clock-o',
-                                            date: 'fa fa-calendar',
-                                            up: 'fa fa-chevron-up',
-                                            down: 'fa fa-chevron-down',
-                                            previous: 'fa fa-chevron-left',
-                                            next: 'fa fa-chevron-right',
-                                            today: 'fa fa-dot-circle-o',
-                                            clear: 'fa fa-trash',
-                                            close: 'fa fa-times'
-                                        };
-                                        $('#id_start').datetimepicker({
-                                            format: 'DD/MM/YYYY HH:mm'
+            {% if request.session.es_administrador %}
+                <div class="col-md-3 mx-2 my-2">
+                    <div class="row">
+                        <div class="card border-primary mb-3" style="width: 600px">
+                            <div class="card-header">Calendarización de actividades</div>
+                            <div class="card-body">
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <h6>Lista de tareas asignadas:</h6>
+                                    <p></p>
+                                    {{ form.asignar_tarea }}
+                                    <p></p>
+                                    <h6>Seleccione Fecha/Hora:</h6>
+                                    <p></p>
+                                    {{ form.start }}
+                                    <p></p>
+                                    <script type="text/javascript">
+                                        $(function () {
+                                            $.fn.datetimepicker.defaults.icons = {
+                                                time: 'fa fa-clock-o',
+                                                date: 'fa fa-calendar',
+                                                up: 'fa fa-chevron-up',
+                                                down: 'fa fa-chevron-down',
+                                                previous: 'fa fa-chevron-left',
+                                                next: 'fa fa-chevron-right',
+                                                today: 'fa fa-dot-circle-o',
+                                                clear: 'fa fa-trash',
+                                                close: 'fa fa-times'
+                                            };
+                                            $('#id_start').datetimepicker({
+                                                format: 'DD/MM/YYYY HH:mm'
+                                            });
                                         });
-                                    });
-                                </script>
-                                <input type="submit" class="btn btn-primary btn-block" value="Calendarizar"/>
-                            </form>
+                                    </script>
+                                    <input type="submit" class="btn btn-primary btn-block" value="Calendarizar"/>
+                                </form>
+                            </div>
                         </div>
                     </div>
+                    <div class="row" id="dummy"></div>
                 </div>
-                <div class="row" id="dummy"></div>
-            </div>
+            {% endif %}
 
             <div class="col-md-8">
                 <div id='calendar' style="height:1200px;width:1200px;"></div>
@@ -131,6 +140,14 @@
                         });
                     });
                 </script>
+                <style>
+                    .fc-title {
+                        color: #f6f6f6;
+                    }
+                    .fc-time {
+                        color: #f6f6f6;
+                    }
+                </style>
             </div>
         </div>
     </div>
