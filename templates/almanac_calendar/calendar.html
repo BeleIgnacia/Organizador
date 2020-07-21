@@ -125,13 +125,14 @@
                         $('#calendar').fullCalendar({
                             header: {
                                 left: 'title',
-                                center: '',
+                                center: 'month,agendaWeek,agendaDay',
                                 right: 'today prev,next'
                             },
                             // Se bugean los botones con bootstrap
                             // Ya arreglare esto quizas cuando u.u
                             // Manuel
                             //themeSystem: 'bootstrap3',
+                            defaultView: 'month',
                             weekNumbers: true,
                             navLinks: true, // can click day/week names to navigate views
                             editable: false,
