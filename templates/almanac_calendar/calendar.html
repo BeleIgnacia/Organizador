@@ -6,70 +6,14 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.7.0/fullcalendar.min.css"/>
     <link rel="stylesheet" media="print" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.7.0/fullcalendar.print.css"/>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-size: 14px;
-        }
-
-        #top,
-        #calendar.fc-unthemed {
-            font-family: "Lucida Grande", Helvetica, Arial, Verdana, sans-serif;
-        }
-
-        #top {
-            background: #eee;
-            border-bottom: 1px solid #ddd;
-            padding: 0 10px;
-            line-height: 40px;
-            font-size: 12px;
-            color: #000000;
-        }
-
-        #top .selector {
-            display: inline-block;
-            margin-right: 10px;
-        }
-
-        #top select {
-            font: inherit; /* mock what Boostrap does, don't compete  */
-        }
-
-        .left {
-            float: left
-        }
-
-        .right {
-            float: right
-        }
-
-        .clear {
-            clear: both
-        }
-
-        #calendar {
-            max-width: 900px;
-            margin: 20px auto;
-            padding: 0 10px;
-        }
-
-
-        .fc-header-title {
-            color: #0052ba;
-            background: #000;
-            font-size: 20px;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/calendar.css' %}">
 {% endblock %}
 
 {% block content %}
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker-standalone.css">
-
-
+    <script src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
     <body>
     {{ kwargs.dependencia_disponible }}
-
     <div class="jumbotron">
         <div class="row">
             {% if request.session.es_administrador %}
@@ -88,24 +32,6 @@
                                     <p></p>
                                     {{ form.start }}
                                     <p></p>
-                                    <script type="text/javascript">
-                                        $(function () {
-                                            $.fn.datetimepicker.defaults.icons = {
-                                                time: 'fa fa-clock-o',
-                                                date: 'fa fa-calendar',
-                                                up: 'fa fa-chevron-up',
-                                                down: 'fa fa-chevron-down',
-                                                previous: 'fa fa-chevron-left',
-                                                next: 'fa fa-chevron-right',
-                                                today: 'fa fa-dot-circle-o',
-                                                clear: 'fa fa-trash',
-                                                close: 'fa fa-times'
-                                            };
-                                            $('#id_start').datetimepicker({
-                                                format: 'DD/MM/YYYY HH:mm'
-                                            });
-                                        });
-                                    </script>
                                     <input type="submit" class="btn btn-primary btn-block" value="Calendarizar"/>
                                 </form>
                             </div>
@@ -114,41 +40,9 @@
                     <div class="row" id="dummy"></div>
                 </div>
             {% endif %}
-
             <div class="col-md-8">
                 <div id='calendar' style="height:1200px;width:1200px;"></div>
                 <div id="data" hidden>{{ events }}</div>
-                <script>
-                    var events = eval($('#data').text());
-                    console.log(events);
-                    $(document).ready(function () {
-                        $('#calendar').fullCalendar({
-                            header: {
-                                left: 'title',
-                                center: 'month,agendaWeek,agendaDay',
-                                right: 'today prev,next'
-                            },
-                            // Se bugean los botones con bootstrap
-                            // Ya arreglare esto quizas cuando u.u
-                            // Manuel
-                            //themeSystem: 'bootstrap3',
-                            defaultView: 'month',
-                            weekNumbers: true,
-                            navLinks: true, // can click day/week names to navigate views
-                            editable: false,
-                            eventLimit: false, // allow "more" link when too many events
-                            events: events //events block
-                        });
-                    });
-                </script>
-                <style>
-                    .fc-title {
-                        color: #f6f6f6;
-                    }
-                    .fc-time {
-                        color: #f6f6f6;
-                    }
-                </style>
             </div>
         </div>
     </div>
@@ -156,12 +50,24 @@
 {% endblock %}
 
 {% block extrajs %}
+    <!-- DateTimePicker -->
     <script type="text/javascript">
-        var url = window.location.pathname.split('/');
-        var valida = url.pop();
-        if (valida.localeCompare("invalida") == 0) {
-            document.getElementById('dummy').innerHTML = '<div class="alert alert-dismissible alert-warning" style="width: 600px;"><button type="button" class="close" data-dismiss="alert">&times;</button><h4 class="alert-heading">Atención!</h4><p class="mb-0"></p>Esa dependencia se encuentra ocupada en ese horario, prefiera otro horario para calendarizar</div>'
-        }
+        $(function () {
+            $.fn.datetimepicker.defaults.icons = {
+                time: 'fa fa-clock-o',
+                date: 'fa fa-calendar',
+                up: 'fa fa-chevron-up',
+                down: 'fa fa-chevron-down',
+                previous: 'fa fa-chevron-left',
+                next: 'fa fa-chevron-right',
+                today: 'fa fa-dot-circle-o',
+                clear: 'fa fa-trash',
+                close: 'fa fa-times'
+            };
+            $('#id_start').datetimepicker({
+                format: 'DD/MM/YYYY HH:mm'
+            });
+        });
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -170,4 +76,36 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.7.0/fullcalendar.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    <!-- Calendario -->
+    <script>
+        var events = eval($('#data').text());
+        console.log(events);
+        $(document).ready(function () {
+            $('#calendar').fullCalendar({
+                header: {
+                    left: 'title',
+                    center: 'month,agendaWeek,agendaDay',
+                    right: 'today prev,next'
+                },
+                // Se bugean los botones con bootstrap
+                // Ya arreglare esto quizas cuando u.u
+                // Manuel
+                //themeSystem: 'bootstrap3',
+                defaultView: 'month',
+                weekNumbers: true,
+                navLinks: true, // can click day/week names to navigate views
+                editable: false,
+                eventLimit: false, // allow "more" link when too many events
+                events: events //events block
+            });
+        });
+    </script>
+    <!-- Alerta de horario ocupado -->
+    <script type="text/javascript">
+        var url = window.location.pathname.split('/');
+        var valida = url.pop();
+        if (valida.localeCompare("invalida") == 0) {
+            document.getElementById('dummy').innerHTML = '<div class="alert alert-dismissible alert-warning" style="width: 600px;"><button type="button" class="close" data-dismiss="alert">&times;</button><h4 class="alert-heading">Atención!</h4><p class="mb-0"></p>Esa dependencia se encuentra ocupada en ese horario, prefiera otro horario para calendarizar</div>'
+        }
+    </script>
 {% endblock %}

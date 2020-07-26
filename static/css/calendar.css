@@ -1,0 +1,61 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+}
+
+#top,
+#calendar.fc-unthemed {
+    font-family: "Lucida Grande", Helvetica, Arial, Verdana, sans-serif;
+}
+
+#top {
+    background: #eee;
+    border-bottom: 1px solid #ddd;
+    padding: 0 10px;
+    line-height: 40px;
+    font-size: 12px;
+    color: #000000;
+}
+
+#top .selector {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+#top select {
+    font: inherit; /* mock what Boostrap does, don't compete  */
+}
+
+.left {
+    float: left
+}
+
+.right {
+    float: right
+}
+
+.clear {
+    clear: both
+}
+
+#calendar {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 0 10px;
+}
+
+
+.fc-header-title {
+    color: #0052ba;
+    background: #000;
+    font-size: 20px;
+}
+
+.fc-title {
+    color: #f6f6f6;
+}
+
+.fc-time {
+    color: #f6f6f6;
+}
