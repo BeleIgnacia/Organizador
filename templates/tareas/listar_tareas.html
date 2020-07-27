@@ -1,42 +1,47 @@
 {% extends 'hogar/dashboard.html' %}
 
 {% block content %}
-<div class="container">
+    <div class="container">
         {% if object_list %}
-        {% for asignada in object_list %}
-        <div class="card">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">{{asignada.tarea.nombre}}</h5>
-            <p class="card-text">
-              Debes realizar esta tarea, lo antes posible
-              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-hourglass-split" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" d="M2.5 15a.5.5 0 1 1 0-1h1v-1a4.5 4.5 0 0 1 2.557-4.06c.29-.139.443-.377.443-.59v-.7c0-.213-.154-.451-.443-.59A4.5 4.5 0 0 1 3.5 3V2h-1a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-1v1a4.5 4.5 0 0 1-2.557 4.06c-.29.139-.443.377-.443.59v.7c0 .213.154.451.443.59A4.5 4.5 0 0 1 12.5 13v1h1a.5.5 0 0 1 0 1h-11zm2-13v1c0 .537.12 1.045.337 1.5h6.326c.216-.455.337-.963.337-1.5V2h-7zm3 6.35c0 .701-.478 1.236-1.011 1.492A3.5 3.5 0 0 0 4.5 13s.866-1.299 3-1.48V8.35zm1 0c0 .701.478 1.236 1.011 1.492A3.5 3.5 0 0 1 11.5 13s-.866-1.299-3-1.48V8.35z"/>
-              </svg>
-              <br>{{asignada.tarea.comentarios}}
-            </p>
-            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#{{asignada.tarea.nombre}}" aria-expanded="false" aria-controls="collapseExample">
-              Detalles
-              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chat-right-text" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" d="M2 1h12a1 1 0 0 1 1 1v11.586l-2-2A2 2 0 0 0 11.586 11H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zm12-1a2 2 0 0 1 2 2v12.793a.5.5 0 0 1-.854.353l-2.853-2.853a1 1 0 0 0-.707-.293H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12z"/>
-                <path fill-rule="evenodd" d="M3 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 6a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 6zm0 2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
-              </svg>
-            </button>
-            <div class="collapse" id="{{asignada.tarea.nombre}}">
-              <div class="card card-body">
-                <br>Complejidad tarea : {{asignada.tarea.complejidad}}
-                <br>Duracion tarea : {{asignada.tarea.duracion}}
-                <br>Dependencia tarea : {{asignada.tarea.dependencia}}
-                <br>Fecha de creacion : {{asignada.tarea.fecha_creacion}}
-                <br>Estado completada : {{asignada.tarea.completada}}
-              </div>
-            </div>
-          </div>
-        </div>
-        {% endfor %}
+            {% for asignada in object_list %}
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ asignada.tarea.nombre }}</h5>
+                        <p class="card-text">
+                            Debes realizar esta tarea, lo antes posible
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-hourglass-split" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                      d="M2.5 15a.5.5 0 1 1 0-1h1v-1a4.5 4.5 0 0 1 2.557-4.06c.29-.139.443-.377.443-.59v-.7c0-.213-.154-.451-.443-.59A4.5 4.5 0 0 1 3.5 3V2h-1a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-1v1a4.5 4.5 0 0 1-2.557 4.06c-.29.139-.443.377-.443.59v.7c0 .213.154.451.443.59A4.5 4.5 0 0 1 12.5 13v1h1a.5.5 0 0 1 0 1h-11zm2-13v1c0 .537.12 1.045.337 1.5h6.326c.216-.455.337-.963.337-1.5V2h-7zm3 6.35c0 .701-.478 1.236-1.011 1.492A3.5 3.5 0 0 0 4.5 13s.866-1.299 3-1.48V8.35zm1 0c0 .701.478 1.236 1.011 1.492A3.5 3.5 0 0 1 11.5 13s-.866-1.299-3-1.48V8.35z"/>
+                            </svg>
+                            <br>{{ asignada.tarea.comentarios }}
+                        </p>
+                        <div class="row">
+                            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#{{ asignada.tarea.nombre }}" aria-expanded="false" aria-controls="collapseExample" style="margin-left: 10px;">
+                                <span style="font-size: 15px;">Detalles </span><i class="fa fa-comment fa-lg"></i>
+                            </button>
+                            <form method="post" id=upload_{{ asignada.tarea.id }} action="" enctype='multipart/form-data'>
+                                {% csrf_token %}
+                                <input type='hidden' value='{{ asignada.tarea.id }}' name='id'>
+                                <button type="submit" class="btn btn-success" style="margin-left: 15px;">
+                                    <span style="font-size: 15px;">Notificar tarea lograda </span><i class="fa fa-check fa-lg"></i>
+                                </button>
+                            </form>
+                        </div>
+                        <div class="collapse" id="{{ asignada.tarea.nombre }}">
+                            <div class="card card-body">
+                                <br>Complejidad tarea : {{ asignada.tarea.complejidad }}
+                                <br>Duracion tarea : {{ asignada.tarea.duracion }}
+                                <br>Dependencia tarea : {{ asignada.tarea.dependencia }}
+                                <br>Fecha de creacion : {{ asignada.tarea.fecha_creacion }}
+                                <br>Estado completada : {{ asignada.tarea.completada }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
         {% endif %}
 
-</div>
+    </div>
 
-</div>
-{% endblock content%}
+    </div>
+{% endblock content %}

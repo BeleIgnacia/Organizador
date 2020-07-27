@@ -112,6 +112,15 @@ class ListarTarea(ListView):
     model = Tarea
     template_name = 'tareas/listar_tareas.html'
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(ListarTarea, self).get_context_data(**kwargs)
+        return context
+
+    def post(self, request, *args, **kwargs):
+        pk = request.POST.get('id')
+        print(pk)
+        return HttpResponseRedirect(reverse_lazy('tareas:listar_tareas'))
+
     def get_queryset(self):
         # Toma la id de usuario almacenada
         pk_usuario = self.request.session.get('pk_usuario', '')
