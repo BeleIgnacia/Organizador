@@ -117,8 +117,11 @@ class ListarTarea(ListView):
         return context
 
     def post(self, request, *args, **kwargs):
-        pk = request.POST.get('id')
-        print(pk)
+        # Notifica su tarea asignada como completada
+        pk_asignada = request.POST.get('id_asignada')
+        asignada_tarea = AsignarTarea_model.objects.get(pk=pk_asignada)
+        asignada_tarea.notifica_completada = True
+        asignada_tarea.save()
         return HttpResponseRedirect(reverse_lazy('tareas:listar_tareas'))
 
     def get_queryset(self):
@@ -128,7 +131,8 @@ class ListarTarea(ListView):
         usuario = Usuario.objects.get(pk=pk_usuario)
         usuarios = Usuario.objects.filter(domicilio=usuario.domicilio)
         # Retorna las tareas filtradas según domicilio, indicando las correspondiente al usuario en session
-        return AsignarTarea_model.objects.filter(usuario__in=usuarios, usuario=usuario)
+        tareas_no_completadas = Tarea.objects.filter(domicilio=usuario.domicilio, completada=False)
+        return AsignarTarea_model.objects.filter(usuario__in=usuarios, usuario=usuario, tarea__in=tareas_no_completadas)
 
 
 class ListarTareaAsignada(ListView):

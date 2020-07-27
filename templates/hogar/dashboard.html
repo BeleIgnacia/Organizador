@@ -9,7 +9,6 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
         <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item" id="nav_inicio">
@@ -109,15 +108,46 @@
 {% endblock %}
 
 {% block content %}
-    <div class="jumbotron">
-        <div class="row">
-            <div class="col col-sm-9">
-                <h2 class="display-4"><strong>Bienvenido</strong><br>al Organizador de su Hogar.</h2>
-                <p class="lead">Mantengase al tanto de sus compromisos y colabore con las tareas del hogar.</p>
-            </div>
-            <div class="col col-sm-3 align-right">
-                <!--Aladir algo notificaciones/hogar/tareas etc.-->
-            </div>
+<div class="jumbotron">
+    <div class="row">
+        <div class="col col-sm-7">
+            <h2 class="display-4"><strong>Bienvenido</strong><br>al Organizador de su Hogar.</h2>
+            <p class="lead">Mantengase al tanto de sus compromisos y colabore con las tareas del hogar.</p>
+        </div>
+        <div class="col col-sm-5 align-right">
+            {% if request.session.es_administrador %}
+            {% if object_list.count > 0 %}
+                <div class="card border-primary mb-3">
+                    <div class="card-header">Notificaciones de tareas</div>
+                    <div class="card-body">
+                        <table class="table table-hover">
+                            <tbody>
+                                {% for asignada_tarea in object_list %}
+                                <tr>
+                                    <form method="post">
+                                        {% csrf_token %}
+                                        <th scope="row">
+                                            <input type='hidden' value='{{ asignada_tarea.id }}' name='id_asignada'>
+                                            <input type='checkbox' style="display:none" id="checkbox_{{ asignada_tarea.id }}" name='asignada_status'>
+                                        <td>
+                                            {{ asignada_tarea.usuario }} notifica su tarea {{ asignada_tarea.tarea }} como cumplida
+                                        </td>
+                                        <td>
+                                            <button type="submit" class="btn btn-warning" style="font-size: medium;"><span style="font-size: 15px;">Rechazar <i class="fa fa-times fa-lg"></i></span></button>
+                                        </td>
+                                        <td>
+                                            <button type="submit" class="btn btn-success" style="font-size: medium;" onclick="document.getElementById('checkbox_{{ asignada_tarea.id }}').click()"><span style="font-size: 15px;">Aceptar<i class="fa fa-check fa-lg"></i></span></button>
+                                        </td>
+                                    </form>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            {% endif %}
+            {% endif %}
         </div>
     </div>
+</div>
 {% endblock %}

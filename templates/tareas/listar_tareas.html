@@ -19,9 +19,9 @@
                             <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#{{ asignada.tarea.nombre }}" aria-expanded="false" aria-controls="collapseExample" style="margin-left: 10px;">
                                 <span style="font-size: 15px;">Detalles </span><i class="fa fa-comment fa-lg"></i>
                             </button>
-                            <form method="post" id=upload_{{ asignada.tarea.id }} action="" enctype='multipart/form-data'>
+                            <form method="post" id=upload_{{ asignada.id }} action="" enctype='multipart/form-data'>
                                 {% csrf_token %}
-                                <input type='hidden' value='{{ asignada.tarea.id }}' name='id'>
+                                <input type='hidden' value='{{ asignada.id }}' name='id_asignada'>
                                 <button type="submit" class="btn btn-success" style="margin-left: 15px;">
                                     <span style="font-size: 15px;">Notificar tarea lograda </span><i class="fa fa-check fa-lg"></i>
                                 </button>

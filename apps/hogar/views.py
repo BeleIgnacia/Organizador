@@ -5,9 +5,9 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, TemplateView, UpdateView
 
-from apps.hogar.forms import *
-from apps.hogar.models import *
-from apps.hogar.models import Usuario
+from apps.hogar.forms import UsuarioForm, UsuarioAdminForm, DomicilioForm, CrearDependenciaForm, AsignarDependenciaForm
+from apps.hogar.models import Usuario, Domicilio, Dependencia, PerteneceDependencia
+from apps.tareas.models import AsignarTarea
 
 
 # Vista para registrar usuario común
@@ -85,8 +85,30 @@ def loginUser(request):
     return render(request, 'hogar/login.html', context)
 
 
-class Dashboard(TemplateView):
+class Dashboard(ListView):
+    model = AsignarTarea
     template_name = 'hogar/dashboard.html'
+
+    def get_queryset(self):
+        pk_usuario = self.request.session.get('pk_usuario', '')
+        usuario = Usuario.objects.get(pk=pk_usuario)
+        usuarios = Usuario.objects.filter(domicilio=usuario.domicilio)
+        return AsignarTarea.objects.filter(usuario__in=usuarios, notifica_completada=True)
+
+    def post(self, request, *args, **kwargs):
+        # Notifica su tarea asignada como completada
+        pk_asignada = request.POST.get('id_asignada')
+        asignada_status = request.POST.get('asignada_status')
+        asignada_tarea = AsignarTarea.objects.get(pk=pk_asignada)
+        if asignada_status == "on":
+            asignada_tarea.tarea.completada = True
+            asignada_tarea.notifica_completada = False
+        else:
+            asignada_tarea.tarea.completada = False
+            asignada_tarea.notifica_completada = False
+        asignada_tarea.tarea.save()
+        asignada_tarea.save()
+        return HttpResponseRedirect(reverse_lazy('hogar:dashboard'))
 
 
 class Usuariolist(ListView):
