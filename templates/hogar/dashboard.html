@@ -12,47 +12,100 @@
 
         <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/hogar">Inicio<span class="sr-only">(current)</span></a>
+                <li class="nav-item" id="nav_inicio">
+                    <a class="nav-link" href="/hogar">Inicio</a>
                 </li>
                 {% if request.session.es_administrador %}
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown" id="nav_administrar">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Administrar</a>
                         <div class="dropdown-menu" style="">
-                            <a class="dropdown-item" href="/hogar/usuarios/agregar">Añadir usuario al hogar</a>
-                            <a class="dropdown-item" href="/hogar/usuarios/listar">Modificar usuario del hogar</a>
+                            <a class="dropdown-item" href="/hogar/usuarios/agregar" id="nav_administrar_agregar">Añadir usuario al hogar</a>
+                            <a class="dropdown-item" href="/hogar/usuarios/listar" id="nav_administrar_listar">Modificar usuario del hogar</a>
                         </div>
                     </li>
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown" id="nav_domicilio">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Domicilio</a>
                         <div class="dropdown-menu" style="">
-                            <a class="dropdown-item" href="/hogar/domicilio/modificar">Modificar domicilio</a>
-                            <a class="dropdown-item" href="/hogar/domicilio/dependencias">Añadir o quitar dependencias</a>
+                            <a class="dropdown-item" href="/hogar/domicilio/modificar" id="nav_domicilio_modificar">Modificar domicilio</a>
+                            <a class="dropdown-item" href="/hogar/domicilio/dependencias" id="nav_domicilio_dependencias">Añadir o quitar dependencias</a>
                         </div>
                     </li>
                 {% endif %}
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown" id="nav_tareas">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Tareas</a>
                     <div class="dropdown-menu" style="">
                         {% if request.session.es_administrador %}
-                            <a class="dropdown-item" href="/tareas/crear/">Añadir tareas</a>
-                            <a class="dropdown-item" href="/tareas/asignar/">Asignar Tareas</a>
+                            <a class="dropdown-item" href="/tareas/crear/" id="nav_tareas_crear">Añadir tareas</a>
+                            <a class="dropdown-item" href="/tareas/asignar/" id="nav_tareas_asignar">Asignar Tareas</a>
                             <div class="dropdown-divider"></div>
                         {% endif %}
-                        <a class="dropdown-item" href="/tareas/listar/">Ver mis tareas</a>
-                        <a class="dropdown-item" href="/tareas/listar/asignadas/">Ver tareas asignadas en hogar</a>
+                        <a class="dropdown-item" href="/tareas/listar/" id="nav_tareas_listar">Ver mis tareas</a>
+                        <a class="dropdown-item" href="/tareas/listar/asignadas/" id="nav_tareas_asignadas">Ver tareas asignadas en hogar</a>
                     </div>
                 </li>
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown" id="nav_horarios">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Horarios</a>
                     <div class="dropdown-menu" style="">
-                        <a class="dropdown-item" href="/calendario/mostrar">Calendario</a>
-                        <a class="dropdown-item" href="/calendario/agregar_horario_ocupado">Agregar horario ocupado</a>
+                        <a class="dropdown-item" href="/calendario/mostrar" id="nav_horarios_mostrar">Calendario</a>
+                        <a class="dropdown-item" href="/calendario/agregar_horario_ocupado" id="nav_horarios_agregar_horario_ocupado">Agregar horario ocupado</a>
                     </div>
                 </li>
             </ul>
         </div>
     </nav>
+    <script type="text/javascript">
+        let nav = window.location.pathname.split('/');
+        let filtered = nav.filter(function (el) {
+            return el != "";
+        });
+        if (filtered.length === 1) {
+            if (filtered[0].localeCompare("hogar") === 0) {
+                document.getElementById('nav_inicio').classList.add('active');
+            }
+        } else if (filtered.length === 2) {
+            if (filtered[0].localeCompare('tareas') === 0) {
+                document.getElementById('nav_tareas').classList.add('active');
+                if (filtered[1].localeCompare('crear') === 0) {
+                    document.getElementById('nav_tareas_crear').classList.add('active');
+                }
+                if (filtered[1].localeCompare('asignar') === 0) {
+                    document.getElementById('nav_tareas_asignar').classList.add('active');
+                }
+                if (filtered[1].localeCompare('listar') === 0) {
+                    document.getElementById('nav_tareas_listar').classList.add('active');
+                }
+            }
+            if (filtered[0].localeCompare('calendario') === 0) {
+                document.getElementById('nav_horarios').classList.add('active');
+                if (filtered[1].localeCompare('mostrar') === 0) {
+                    document.getElementById('nav_horarios_mostrar').classList.add('active');
+                }
+                if (filtered[1].localeCompare('agregar_horario_ocupado') === 0) {
+                    document.getElementById('nav_horarios_agregar_horario_ocupado').classList.add('active');
+                }
+            }
+        } else if (filtered.length === 3) {
+            if (filtered[0].localeCompare('hogar') === 0) {
+                if (filtered[1].localeCompare('usuarios') === 0) {
+                    document.getElementById('nav_administrar').classList.add('active');
+                    if (filtered[2].localeCompare('agregar') === 0) {
+                        document.getElementById('nav_administrar_agregar').classList.add('active');
+                    }
+                    if (filtered[2].localeCompare('listar') === 0) {
+                        document.getElementById('nav_administrar_listar').classList.add('active');
+                    }
+                } else if (filtered[1].localeCompare("domicilio") === 0) {
+                    document.getElementById('nav_domicilio').classList.add('active');
+                    if (filtered[2].localeCompare('modificar') === 0) {
+                        document.getElementById('nav_domicilio_modificar').classList.add('active');
+                    }
+                    if (filtered[2].localeCompare('dependencias') === 0) {
+                        document.getElementById('nav_domicilio_dependencias').classList.add('active');
+                    }
+                }
+            }
+        }
+    </script>
 {% endblock %}
 
 {% block content %}
