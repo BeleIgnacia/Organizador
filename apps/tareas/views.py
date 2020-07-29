@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView, TemplateView
 
 # Modelos
-from apps.hogar.models import Usuario, PerteneceDependencia, Dependencia
+from apps.hogar.models import Usuario, PerteneceDependencia, Dependencia, Domicilio
 # Formularios
 from apps.tareas.forms import TareaForm, AsignarTareaForm
 from apps.tareas.models import AsignarTarea as AsignarTarea_model
@@ -151,3 +151,13 @@ class ListarTareaAsignada(ListView):
 
 class DistribuirTarea(TemplateView):
     template_name = 'tareas/tarea_distribuir.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(DistribuirTarea, self).get_context_data(**kwargs)
+        # Toma la id de usuario almacenada
+        pk_usuario = self.request.session.get('pk_usuario', '')
+        # Intancia el objeto usuario
+        usuario = Usuario.objects.get(pk=pk_usuario)
+        pertenece_dependencia = PerteneceDependencia.objects.filter(domicilio=usuario.domicilio, asignada=True)
+        context['pertenece_dependencia'] = pertenece_dependencia
+        return context
