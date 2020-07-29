@@ -48,7 +48,6 @@
                                         </button>
                                     </div>
                                 </div>
-
                                 <!-- Cocinar -->
                                 <div class="row" style="margin-top: 10px;">
                                     <div class="col col-md-8">
@@ -56,6 +55,7 @@
                                             <option>----------</option>
                                             <option>Tallarines con salsa</option>
                                             <option>Pollo asado con papas fritas</option>
+                                            <option>Lentejas</option>
                                         </select>
                                     </div>
                                     <div class="col col-md-4">
@@ -81,11 +81,14 @@
 {% block extrajs %}
     <!-- Script de tareas nativas -->
     <script>
+        function nativa_limpiar() {
+            document.getElementById('id_dependencia').value = document.getElementById('id_nativa_dependencia').value;
+            document.getElementById('id_nombre').value = "Debe limpiar";
+            // Al acabar de llenar el formulario
+            document.getElementById('enviar').click();
+        }
         function nativa_cocinar() {
             alert("cocinar");
-        }
-        function nativa_limpiar() {
-            alert("limpiar");
         }
     </script>
 
