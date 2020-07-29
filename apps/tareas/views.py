@@ -161,3 +161,13 @@ class DistribuirTarea(TemplateView):
         pertenece_dependencia = PerteneceDependencia.objects.filter(domicilio=usuario.domicilio, asignada=True)
         context['pertenece_dependencia'] = pertenece_dependencia
         return context
+
+    def post(self, request, *args, **kwargs):
+        identificador = request.POST.get('identificador')
+        if identificador == 'cocinar':
+            print(identificador)
+        elif identificador == 'limpiar':
+            print(identificador)
+        elif identificador == 'cuentas':
+            print(identificador)
+        return HttpResponseRedirect(reverse_lazy('tareas:distribuir_tarea'))
