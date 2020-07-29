@@ -2,7 +2,7 @@ from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView, UpdateView, DeleteView
+from django.views.generic import CreateView, ListView, UpdateView, DeleteView, TemplateView
 
 # Modelos
 from apps.hogar.models import Usuario, PerteneceDependencia, Dependencia
@@ -147,3 +147,7 @@ class ListarTareaAsignada(ListView):
         usuarios = Usuario.objects.filter(domicilio=usuario.domicilio)
         # Retorna las tareas asignadas filtradas según domicilio
         return AsignarTarea_model.objects.filter(usuario__in=usuarios)
+
+
+class DistribuirTarea(TemplateView):
+    template_name = 'tareas/tarea_distribuir.html'
