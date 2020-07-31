@@ -1,0 +1,44 @@
+<form method="post" name="cocinar" id="id_cocinar">
+    {% csrf_token %}
+    <h2>Cocinar.</h2>
+
+    <!-- seleccion de usuario -->
+    <label for="cocinar_usuario">Asignar a usuario.</label>
+    <select name="usuario" class="form-control" required id="cocinar_usuario">
+        {% for item in usuarios %}
+            <option>{{ item }}</option>
+        {% endfor %}
+        <option>Todos de forma rotativa</option>
+    </select>
+
+    <!-- duracion -->
+    <label for="cocinar_duracion">Tiempo estimado para cocinar.</label>
+    <input type="time" name="duracion" value="0" class="form-control" required="" id="cocinar_duracion">
+
+    <!-- hora -->
+    <label for="cocinar_hora">Hora de cocinar.</label>
+    <input type="time" name="hora" value="0" class="form-control" required="" id="cocinar_hora">
+
+    <!-- tipo de comida (radio) -->
+    <label for="cocinar_tipo">Tipo.</label>
+    <div class="form-group" id="cocinar_tipo">
+        <div class="custom-control custom-radio">
+            <input type="radio" id="cocinar_radio_1" name="customRadio" class="custom-control-input" checked="">
+            <label class="custom-control-label" for="radio_1">Desayuno.</label>
+        </div>
+        <div class="custom-control custom-radio">
+            <input type="radio" id="cocinar_radio_2" name="customRadio" class="custom-control-input">
+            <label class="custom-control-label" for="radio_2">Almuerzo.</label>
+        </div>
+        <div class="custom-control custom-radio">
+            <input type="radio" id="cocinar_radio_3" name="customRadio" class="custom-control-input">
+            <label class="custom-control-label" for="radio_3">Once.</label>
+        </div>
+        <div class="custom-control custom-radio">
+            <input type="radio" id="cocinar_radio_3" name="customRadio" class="custom-control-input">
+            <label class="custom-control-label" for="radio_4">Cena.</label>
+        </div>
+    </div>
+    <input type="hidden" name="identificador" value="cocinar">
+    <button type="submit" class="btn btn-primary" style="font-size: 15px; margin-top: 20px">Añadir distribución <i class="fa fa-bell"></i></button>
+</form>

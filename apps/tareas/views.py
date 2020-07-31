@@ -154,20 +154,24 @@ class DistribuirTarea(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(DistribuirTarea, self).get_context_data(**kwargs)
-        # Toma la id de usuario almacenada
         pk_usuario = self.request.session.get('pk_usuario', '')
-        # Intancia el objeto usuario
         usuario = Usuario.objects.get(pk=pk_usuario)
+
         pertenece_dependencia = PerteneceDependencia.objects.filter(domicilio=usuario.domicilio, asignada=True)
         context['pertenece_dependencia'] = pertenece_dependencia
+
+        usuarios = Usuario.objects.filter(domicilio=usuario.domicilio)
+        context['usuarios'] = usuarios
         return context
 
     def post(self, request, *args, **kwargs):
         identificador = request.POST.get('identificador')
         if identificador == 'cocinar':
+            # Si no tiene una dependencia cocina se crea una y se asigna inmediatamente al domicilio actual
             print(identificador)
         elif identificador == 'limpiar':
             print(identificador)
         elif identificador == 'cuentas':
+            # Si no tiene una dependencia oficina o exterior se crea una y se asigna inmediatamente al domicilio actual
             print(identificador)
         return HttpResponseRedirect(reverse_lazy('tareas:distribuir_tarea'))

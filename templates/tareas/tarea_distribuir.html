@@ -7,20 +7,7 @@
                 <div class="card border-primary mb-3" style="max-width: available;">
                     <div class="card-body" style="margin: 20px;">
                         <!-- Formulario de Cocinar -->
-                        <form method="post" name="cocinar" id="id_cocinar">
-                            {% csrf_token %}
-                            <h2>Cocinar.</h2>
-                            <label for="cocinar_usuario">Asignar a usuario.</label>
-                            <select name="usuario" class="form-control" required id="cocinar_usuario">
-                                <option>Todos de forma rotativa</option>
-                            </select>
-                            <label for="cocinar_duracion">Duración de cocinar.</label>
-                            <input type="time" name="duracion" value="0" class="form-control" required="" id="cocinar_duracion">
-                            <label for="cocinar_hora">Hora de cocinar.</label>
-                            <input type="time" name="hora" value="0" class="form-control" required="" id="cocinar_hora">
-                            <input type="hidden" name="identificador" value="cocinar">
-                            <button type="submit" class="btn btn-primary" style="font-size: 15px; margin-top: 20px">Añadir distribución <i class="fa fa-bell"></i></button>
-                        </form>
+                        {% include 'tareas/formularios_distribucion/form_distribucion_cocinar.html' %}
                     </div>
                 </div>
             </div>
@@ -28,38 +15,7 @@
                 <div class="card border-primary mb-3" style="max-width: available;">
                     <div class="card-body" style="margin: 20px;">
                         <!-- Formulario de limpieza -->
-                        <form method="post" name="limpieza" id="id_limpieza">
-                            {% csrf_token %}
-                            <h2>Limpiar.</h2>
-                            <label for="limpieza_dependencia">Dependencia a limpiar.</label>
-                            <select name="dependencia" class="form-control" required="" id="limpieza_dependencia">
-                                {% for value in pertenece_dependencia %}
-                                    <option>{{ value }}</option>
-                                {% endfor %}
-                                <option>Todas de forma rotativa</option>
-                            </select>
-                            <label for="limpieza_usuario">Asignar a usuario.</label>
-                            <select name="usuario" class="form-control" required id="limpieza_usuario">
-                                <option>Todos de forma rotativa</option>
-                            </select>
-                            <label for="limpieza_duracion">Duración de limpieza.</label>
-                            <input type="time" name="duracion" value="0" class="form-control" required="" id="limpieza_duracion">
-                            <label for="limpieza_hora">Hora de limpieza.</label>
-                            <input type="time" name="hora" value="0" class="form-control" required="" id="limpieza_hora">
-                            <label for="limpieza_periodicidad">Periodicidad.</label>
-                            <div class="form-group" id="limpieza_periodicidad">
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" checked="">
-                                    <label class="custom-control-label" for="customRadio1">Toda la semana.</label>
-                                </div>
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
-                                    <label class="custom-control-label" for="customRadio2">Cada dos dias.</label>
-                                </div>
-                            </div>
-                            <input type="hidden" name="identificador" value="limpiar">
-                            <button type="submit" class="btn btn-primary" style="font-size: 15px;">Añadir distribución <i class="fa fa-bell"></i></button>
-                        </form>
+                        {% include 'tareas/formularios_distribucion/form_distribucion_limpiar.html' %}
                     </div>
                 </div>
             </div>
@@ -67,33 +23,7 @@
                 <div class="card border-primary mb-3" style="max-width: available;">
                     <div class="card-body" style="margin: 20px;">
                         <!-- Formulario de pagar cuentas -->
-                        <form method="post" name="cuentas" id="id_cuentas">
-                            {% csrf_token %}
-                            <h2>Pagar Cuentas.</h2>
-                            <label for="cuentasdependencia">Oficina.</label>
-                            <select name="dependencia" class="form-control" required="" id="cuentasdependencia">
-                                {% for value in pertenece_dependencia %}
-                                    <option>{{ value }}</option>
-                                {% endfor %}
-                            </select>
-                            <label for="cuentas_usuario">Asignar a usuario.</label>
-                            <select name="usuario" class="form-control" required id="cuentas_usuario">
-                                <option>Todos de forma rotativa</option>
-                            </select>
-                            <label for="cuentas_periodicidad">Fecha a pagarse.</label>
-                            <div class="form-group" id="cuentas_periodicidad">
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" id="cuentas_radio_1" name="customRadio" class="custom-control-input" checked="">
-                                    <label class="custom-control-label" for="cuentas_radio_1">Pagar a fin de mes.</label>
-                                </div>
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" id="cuentas_radio_2" name="customRadio" class="custom-control-input">
-                                    <label class="custom-control-label" for="cuentas_radio_2">Pagar a la quincena.</label>
-                                </div>
-                            </div>
-                            <input type="hidden" name="identificador" value="cuentas">
-                            <button type="submit" class="btn btn-primary" style="font-size: 15px;">Añadir distribución <i class="fa fa-bell"></i></button>
-                        </form>
+                        {% include 'tareas/formularios_distribucion/form_distribucion_cuentas.html' %}
                     </div>
                 </div>
             </div>
