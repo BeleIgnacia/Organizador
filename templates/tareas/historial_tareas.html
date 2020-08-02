@@ -1,0 +1,51 @@
+{% extends 'hogar/dashboard.html' %}
+
+{% load static %}
+
+{% block content %}
+<div class="jumbotron">
+    <div class="row">
+        <div class="col col-md-4">
+            <div class="card border-primary mb-3" style="max-width: available;">
+                <div class="card-body" style="margin: 20px;">
+                    <h3>Tareas completadas</h3>
+                    <table>
+                        <tr>
+                            <th>Tarea       </th>
+                            <th>Fecha de creación</th>
+                        </tr>
+                        {% if tareas_completadas %}
+                            {% for tarea in tareas_completadas %}
+                                <th>{{tarea.nombre}}</th>
+                                <th>{{tarea.fecha_creacion}}</th>
+                            {% endfor %}
+                        {% endif %}
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col col-md-4">
+            <div class="card border-primary mb-3" style="max-width: available;">
+                <div class="card-body" style="margin: 20px;">
+                    <h3>Tareas pendientes</h3>
+                    <table>
+                        <tr>
+                            <th>Tarea       </th>
+                            <th>Fecha de creación</th>
+                        </tr>
+                        {% if tareas_no_completadas %}
+                            {% for tarea in tareas_no_completadas %}
+                            <tr>
+                                <th>{{tarea.nombre}}</th>
+                                <th>{{tarea.fecha_creacion}}</th>
+                            </tr>
+                            {% endfor %}
+                        {% endif %}
+                    </table>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

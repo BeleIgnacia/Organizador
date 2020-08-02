@@ -8,5 +8,5 @@ urlpatterns = [
     path('editar/<int:pk>', ModificarTarea.as_view(), name='editar_tarea'),
     path('eliminar/<int:pk>', EliminarTarea.as_view(), name='elimnar_tarea'),
     path('asignar/', AsignarTarea.as_view(), name='asignar_tarea'),
-    path('distribuir/', DistribuirTarea.as_view(), name='distribuir_tarea')
+    path('distribuir/', DistribuirTarea.as_view(), name='distribuir_tarea'),
 ]

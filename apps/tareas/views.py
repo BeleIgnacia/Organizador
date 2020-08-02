@@ -114,6 +114,19 @@ class ListarTarea(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(ListarTarea, self).get_context_data(**kwargs)
+
+        # Toma la id de usuario almacenada
+        pk_usuario = self.request.session.get('pk_usuario', '')
+        # Intancia el objeto usuario
+        usuario = Usuario.objects.get(pk=pk_usuario)
+        usuarios = Usuario.objects.filter(domicilio=usuario.domicilio)
+
+        Tareas_completadas = Tarea.objects.filter(domicilio=usuario.domicilio, completada=True)
+        Tareas_no_completadas = Tarea.objects.filter(domicilio=usuario.domicilio, completada=False)
+
+        context['asignaciones_completadas'] = AsignarTarea_model.objects.filter(usuario__in=usuarios, usuario=usuario, tarea__in=Tareas_completadas)
+        context['asignaciones_no_completadas'] = AsignarTarea_model.objects.filter(usuario__in=usuarios, usuario=usuario, tarea__in=Tareas_no_completadas)
+
         return context
 
     def post(self, request, *args, **kwargs):
