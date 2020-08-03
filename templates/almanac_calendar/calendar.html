@@ -7,6 +7,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.7.0/fullcalendar.min.css"/>
     <link rel="stylesheet" media="print" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.7.0/fullcalendar.print.css"/>
     <link rel="stylesheet" type="text/css" href="{% static 'css/calendar.css' %}">
+    <style>
+    .button {
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 2px 2px;
+      cursor: pointer;
+    }
+    .button1 {background-color: #4CAF50;} /* Green */
+    </style>
 {% endblock %}
 
 {% block content %}
@@ -37,9 +51,16 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-sm-13">
+                        <input type="button"
+                            class="button button1"
+                            value="EXPORTAR CALENDARIO"
+                            onclick="location.href='{% url 'calendario:exportar' %}'"/>
+                    </div>
                     <div class="row" id="dummy"></div>
                 </div>
             {% endif %}
+
             <div class="col-md-8">
                 <div id='calendar' style="height:1200px;width:1200px;"></div>
                 <div id="data" hidden>{{ events }}</div>

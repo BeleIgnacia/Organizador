@@ -11,4 +11,5 @@ urlpatterns = [
     path('mostrar/<str:valida>', MostrarCalendario.as_view(), name='mostrar_calendario_valida'),
     path('listar_tareas', ListarTareasUsuario, name='listar_tareas'),
     path('agregar_horario_ocupado', views.Horario_Ocupado_View, name='agregar_horario_ocupado'),
-]
+    path('exportar', views.exportar, name='exportar'),
+ ]

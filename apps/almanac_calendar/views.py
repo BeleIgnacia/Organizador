@@ -13,6 +13,7 @@ from apps.tareas.models import Tarea, AsignarTarea
 from .forms import EventForm
 from .models import Event
 
+import pyscreenshot as pyscreenshot
 
 class MostrarCalendario(CreateView):
     model = Event
@@ -136,3 +137,9 @@ def Horario_Ocupado_View(request):
     else:
         form = Horario_OcupadoForm()
     return render(request, 'hogar/../../templates/almanac_calendar/horario_ocupado.html', {'form': form})
+
+
+def exportar(request):
+    imagen = pyscreenshot.grab()
+    imagen.save("screenshot.png")
+    return HttpResponseRedirect(reverse_lazy('calendario:mostrar_calendario'))
