@@ -188,10 +188,9 @@ class DistribuirTarea(TemplateView):
         pd = PerteneceDependencia.objects.filter(domicilio=admin.domicilio)
 
         if identificador == 'cocinar':
-
             usuario = request.POST.get('usuario')
-            duracion = request.POST.get('duracion')
             hora = request.POST.get('hora')
+            duracion = request.POST.get('duracion')
             radio_value = request.POST.get('radio_value')
 
             # Si no tiene una dependencia cocina se crea una y se asigna inmediatamente al domicilio actual
@@ -202,15 +201,11 @@ class DistribuirTarea(TemplateView):
                 cocina.save()
                 PerteneceDependencia.objects.create(dependencia=cocina, domicilio=admin.domicilio, asignada=True)
 
-            # start como datetime
-            hour = int(hora[0] + hora[1])
-            minute = int(hora[3] + hora[4])
-            start = datetime.now().replace(microsecond=0, hour=hour, minute=minute)
+            # hora como datetime
+            start = hora_to_datetime(hora)
 
             # duracion como timedelta
-            hours = int(duracion[0] + duracion[1])
-            minutes = int(duracion[3] + duracion[4])
-            duracion = timedelta(hours=hours, minutes=minutes)
+            duracion = duracion_to_timedelta(duracion)
             end = start + duracion
 
             # Lista los usuario para ser rotativo
@@ -218,9 +213,7 @@ class DistribuirTarea(TemplateView):
             lista_usuarios = []
             if usuario == 'Todos de forma rotativa':
                 rotar = True
-                usuarios = list(usuarios)
-                for item in usuarios:
-                    lista_usuarios.append(item.username)
+                lista_usuarios = listar_usuarios(usuarios)
 
             # Crea las tareas, las asigna y calendariza por la semana
             for i in range(7):
@@ -238,7 +231,8 @@ class DistribuirTarea(TemplateView):
                     usuario = lista_usuarios[i % len(lista_usuarios)]
 
                 asignar_tarea = AsignarTarea_model(tarea=tarea,
-                                                   usuario=Usuario.objects.get(domicilio=admin.domicilio, username=usuario),
+                                                   usuario=Usuario.objects.get(domicilio=admin.domicilio,
+                                                                               username=usuario),
                                                    calendarizar=True)
 
                 asignar_tarea.save()
@@ -246,47 +240,76 @@ class DistribuirTarea(TemplateView):
                     title='Cocinar ' + str(radio_value),
                     asignar_tarea=asignar_tarea,
                     start=start + timedelta(days=i),
-                    end=end + timedelta(days=i)
+                    end=end + timedelta(days=i),
+                    description='Este día debes preparar ' + str(radio_value)
                 )
                 event.save()
-
-            '''
-            if radio_value == 'Todos de forma rotativa':
-                pass
-            else:
-                tarea = Tarea(nombre='Cocinar',
-                              domicilio=admin.domicilio,
-                              complejidad=2,
-                              duracion=duracion,
-                              dependencia=pd.get(dependencia__nombre='Cocina'),
-                              comentarios='Este día debes preparar ' + str(radio_value))
-                tarea.save()
-                asignar_tarea = AsignarTarea_model(tarea=tarea,
-                                                   usuario=Usuario.objects.get(domicilio=admin.domicilio,
-                                                                               username=usuario))
-                asignar_tarea.save()
-                Event.objects.create(
-                    title='Cocinar',
-                    asignar_tarea=asignar_tarea,
-                    start=hora + timedelta(days=i),
-                    end=hora + duracion + timedelta(days=i)
-                )
-                for i in range(10):
-                    Event.objects.create(
-                        title=form.cleaned_data['titulo'],
-                        asignar_tarea=asignar_tarea,
-                        start=form.cleaned_data['start'] + timedelta(weeks=i),
-                        end=form.cleaned_data['end'] + timedelta(weeks=i)
-                    )
-                '''
 
         elif identificador == 'limpiar':
 
             usuario = request.POST.get('usuario')
             dependencia = request.POST.get('dependencia')
-            duracion = request.POST.get('duracion')
             hora = request.POST.get('hora')
+            duracion = request.POST.get('duracion')
             radio_value = request.POST.get('radio_value')
+
+            # Dependencia
+            rotar_dependencia = False
+            lista_dependencias = []
+            if dependencia == 'Todas de forma rotativa':
+                rotar_dependencia = True
+                lista_dependencias = listar_dependencias(pd)
+
+            # hora como datetime
+            start = hora_to_datetime(hora)
+
+            # duracion como timedelta
+            duracion = duracion_to_timedelta(duracion)
+            end = start + duracion
+
+            # Lista los usuario para ser rotativo
+            rotar_usuario = False
+            lista_usuarios = []
+            if usuario == 'Todos de forma rotativa':
+                rotar_usuario = True
+                lista_usuarios = listar_usuarios(usuarios)
+
+            # Valor incremental en caso de ser cada dos dias
+            inc = 1
+            if radio_value == 'Cada dos dias':
+                inc = 2
+
+            for i in range(0, 7, inc):
+                if rotar_dependencia:
+                    dependencia = lista_dependencias[i % len(lista_dependencias)]
+
+                tarea = Tarea(nombre='Limpiar ' + str(dependencia),
+                              domicilio=admin.domicilio,
+                              complejidad=2,
+                              duracion=duracion,
+                              dependencia=pd.get(dependencia__nombre=dependencia).dependencia,
+                              comentarios='Este día debes limpiar ' + str(dependencia),
+                              asignada=True)
+                tarea.save()
+
+                # Cambia el usuario si es rotativo
+                if rotar_usuario:
+                    usuario = lista_usuarios[i % len(lista_usuarios)]
+
+                asignar_tarea = AsignarTarea_model(tarea=tarea,
+                                                   usuario=Usuario.objects.get(domicilio=admin.domicilio,
+                                                                               username=usuario),
+                                                   calendarizar=True)
+
+                asignar_tarea.save()
+                event = Event(
+                    title='Limpiar ' + str(dependencia),
+                    asignar_tarea=asignar_tarea,
+                    start=start + timedelta(days=i),
+                    end=end + timedelta(days=i),
+                    description='Este día debes limpiar ' + str(dependencia)
+                )
+                event.save()
 
         elif identificador == 'cuentas':
 
@@ -295,3 +318,40 @@ class DistribuirTarea(TemplateView):
 
             # Si no tiene una dependencia oficina o exterior se crea una y se asigna inmediatamente al domicilio actual
         return HttpResponseRedirect(reverse_lazy('tareas:distribuir_tarea'))
+
+
+# Utils : funciones de utilidad
+
+
+# Transforma un string hh:mm en datetime
+def hora_to_datetime(hora):
+    hour = int(hora[0] + hora[1])
+    minute = int(hora[3] + hora[4])
+    start = datetime.now().replace(microsecond=0, hour=hour, minute=minute)
+    return start
+
+
+# Transforma un string hh:mm en timedelta
+def duracion_to_timedelta(duracion):
+    hours = int(duracion[0] + duracion[1])
+    minutes = int(duracion[3] + duracion[4])
+    duracion = timedelta(hours=hours, minutes=minutes)
+    return duracion
+
+
+# Lista los usuarios de un queryset
+def listar_usuarios(usuarios):
+    lista_usuarios = []
+    usuarios = list(usuarios)
+    for usuario in usuarios:
+        lista_usuarios.append(usuario.username)
+    return lista_usuarios
+
+
+# Lista las dependencias de un queryset
+def listar_dependencias(pd):
+    lista_dependencias = []
+    pd_list = list(pd)
+    for item in pd_list:
+        lista_dependencias.append(item.dependencia.nombre)
+    return lista_dependencias
