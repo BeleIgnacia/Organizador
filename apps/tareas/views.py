@@ -1,3 +1,5 @@
+from datetime import datetime, date, timedelta
+
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
@@ -6,10 +8,11 @@ from django.views.generic import CreateView, ListView, UpdateView, DeleteView, T
 
 # Modelos
 from apps.hogar.models import Usuario, PerteneceDependencia, Dependencia, Domicilio
-# Formularios
-from apps.tareas.forms import TareaForm, AsignarTareaForm
 from apps.tareas.models import AsignarTarea as AsignarTarea_model
 from apps.tareas.models import Tarea
+from apps.almanac_calendar.models import Event
+# Formularios
+from apps.tareas.forms import TareaForm, AsignarTareaForm
 
 
 class CrearTarea(CreateView):
@@ -179,12 +182,116 @@ class DistribuirTarea(TemplateView):
 
     def post(self, request, *args, **kwargs):
         identificador = request.POST.get('identificador')
+        pk_usuario = self.request.session.get('pk_usuario', '')
+        admin = Usuario.objects.get(pk=pk_usuario)
+        usuarios = Usuario.objects.filter(domicilio=admin.domicilio)
+        pd = PerteneceDependencia.objects.filter(domicilio=admin.domicilio)
+
         if identificador == 'cocinar':
+
+            usuario = request.POST.get('usuario')
+            duracion = request.POST.get('duracion')
+            hora = request.POST.get('hora')
+            radio_value = request.POST.get('radio_value')
+
             # Si no tiene una dependencia cocina se crea una y se asigna inmediatamente al domicilio actual
-            print(identificador)
+            try:
+                pd.get(dependencia__nombre='Cocina')
+            except:
+                cocina = Dependencia('Cocina')
+                cocina.save()
+                PerteneceDependencia.objects.create(dependencia=cocina, domicilio=admin.domicilio, asignada=True)
+
+            # start como datetime
+            hour = int(hora[0] + hora[1])
+            minute = int(hora[3] + hora[4])
+            start = datetime.now().replace(microsecond=0, hour=hour, minute=minute)
+
+            # duracion como timedelta
+            hours = int(duracion[0] + duracion[1])
+            minutes = int(duracion[3] + duracion[4])
+            duracion = timedelta(hours=hours, minutes=minutes)
+            end = start + duracion
+
+            # Lista los usuario para ser rotativo
+            rotar = False
+            lista_usuarios = []
+            if usuario == 'Todos de forma rotativa':
+                rotar = True
+                usuarios = list(usuarios)
+                for item in usuarios:
+                    lista_usuarios.append(item.username)
+
+            # Crea las tareas, las asigna y calendariza por la semana
+            for i in range(7):
+                tarea = Tarea(nombre='Cocinar ' + str(radio_value),
+                              domicilio=admin.domicilio,
+                              complejidad=2,
+                              duracion=duracion,
+                              dependencia=pd.get(dependencia__nombre='Cocina').dependencia,
+                              comentarios='Este día debes preparar ' + str(radio_value),
+                              asignada=True)
+                tarea.save()
+
+                # Cambia el usuario si es rotativo
+                if rotar:
+                    usuario = lista_usuarios[i % len(lista_usuarios)]
+
+                asignar_tarea = AsignarTarea_model(tarea=tarea,
+                                                   usuario=Usuario.objects.get(domicilio=admin.domicilio, username=usuario),
+                                                   calendarizar=True)
+
+                asignar_tarea.save()
+                event = Event(
+                    title='Cocinar ' + str(radio_value),
+                    asignar_tarea=asignar_tarea,
+                    start=start + timedelta(days=i),
+                    end=end + timedelta(days=i)
+                )
+                event.save()
+
+            '''
+            if radio_value == 'Todos de forma rotativa':
+                pass
+            else:
+                tarea = Tarea(nombre='Cocinar',
+                              domicilio=admin.domicilio,
+                              complejidad=2,
+                              duracion=duracion,
+                              dependencia=pd.get(dependencia__nombre='Cocina'),
+                              comentarios='Este día debes preparar ' + str(radio_value))
+                tarea.save()
+                asignar_tarea = AsignarTarea_model(tarea=tarea,
+                                                   usuario=Usuario.objects.get(domicilio=admin.domicilio,
+                                                                               username=usuario))
+                asignar_tarea.save()
+                Event.objects.create(
+                    title='Cocinar',
+                    asignar_tarea=asignar_tarea,
+                    start=hora + timedelta(days=i),
+                    end=hora + duracion + timedelta(days=i)
+                )
+                for i in range(10):
+                    Event.objects.create(
+                        title=form.cleaned_data['titulo'],
+                        asignar_tarea=asignar_tarea,
+                        start=form.cleaned_data['start'] + timedelta(weeks=i),
+                        end=form.cleaned_data['end'] + timedelta(weeks=i)
+                    )
+                '''
+
         elif identificador == 'limpiar':
-            print(identificador)
+
+            usuario = request.POST.get('usuario')
+            dependencia = request.POST.get('dependencia')
+            duracion = request.POST.get('duracion')
+            hora = request.POST.get('hora')
+            radio_value = request.POST.get('radio_value')
+
         elif identificador == 'cuentas':
+
+            usuario = request.POST.get('usuario')
+            radio_value = request.POST.get('radio_value')
+
             # Si no tiene una dependencia oficina o exterior se crea una y se asigna inmediatamente al domicilio actual
-            print(identificador)
         return HttpResponseRedirect(reverse_lazy('tareas:distribuir_tarea'))

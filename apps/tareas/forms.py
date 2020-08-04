@@ -52,3 +52,16 @@ class TareaForm(forms.ModelForm):
             'dependencia': forms.Select(attrs={'class': 'form-control'}),
             'comentarios': forms.TextInput(attrs={'class': 'form-control'}),
         }
+
+
+class DistribucionRapidaForm(forms.Form):
+    class Meta:
+        fields = [
+            'start',
+            'end',
+        ]
+
+        widgets = {
+            'start': forms.DateTimeInput(attrs={'class': 'form-control', 'required': ''}),
+            'end': forms.DateTimeInput(attrs={'class': 'form-control', 'required': ''}),
+        }

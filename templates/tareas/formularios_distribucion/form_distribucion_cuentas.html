@@ -13,16 +13,23 @@
 
     <!-- fecha a pagar (radio) -->
     <label for="cuentas_periodicidad">Fecha a pagarse.</label>
+    <input type="hidden" value="Pagar a fin de mes" id="id_radio_cuentas" name="radio_value">
     <div class="form-group" id="cuentas_periodicidad">
         <div class="custom-control custom-radio">
-            <input type="radio" id="cuentas_radio_1" name="customRadio" class="custom-control-input" checked="">
+            <input type="radio" id="cuentas_radio_1" name="customRadio" class="custom-control-input" checked="" onclick="radio_change_cuentas('Pagar a fin de mes');">
             <label class="custom-control-label" for="cuentas_radio_1">Pagar a fin de mes.</label>
         </div>
         <div class="custom-control custom-radio">
-            <input type="radio" id="cuentas_radio_2" name="customRadio" class="custom-control-input">
+            <input type="radio" id="cuentas_radio_2" name="customRadio" class="custom-control-input" onclick="radio_change_cuentas('Pagar a la quincena');">
             <label class="custom-control-label" for="cuentas_radio_2">Pagar a la quincena.</label>
         </div>
     </div>
     <input type="hidden" name="identificador" value="cuentas">
     <button type="submit" class="btn btn-primary" style="font-size: 15px;">Añadir distribución <i class="fa fa-bell"></i></button>
 </form>
+
+<script type="text/javascript">
+    function radio_change_cuentas(param) {
+        document.getElementById('id_radio_cuentas').value = param;
+    }
+</script>

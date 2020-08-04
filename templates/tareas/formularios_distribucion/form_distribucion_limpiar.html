@@ -30,16 +30,23 @@
 
     <!-- periocidad (radio) -->
     <label for="limpieza_periodicidad">Periodicidad.</label>
+    <input type="hidden" value="Toda la semana" id="id_radio_periodicidad" name="radio_value">
     <div class="form-group" id="limpieza_periodicidad">
         <div class="custom-control custom-radio">
-            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" checked="">
-            <label class="custom-control-label" for="customRadio1">Toda la semana.</label>
+            <input type="radio" id="limpiar_radio_1" name="customRadio" class="custom-control-input" checked="" onclick="radio_change_periodicidad('Toda la semana');">
+            <label class="custom-control-label" for="limpiar_radio_1">Toda la semana.</label>
         </div>
         <div class="custom-control custom-radio">
-            <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
-            <label class="custom-control-label" for="customRadio2">Cada dos dias.</label>
+            <input type="radio" id="limpiar_radio_2" name="customRadio" class="custom-control-input" onclick="radio_change_periodicidad('Cada dos dias');">
+            <label class="custom-control-label" for="limpiar_radio_2">Cada dos dias.</label>
         </div>
     </div>
     <input type="hidden" name="identificador" value="limpiar">
     <button type="submit" class="btn btn-primary" style="font-size: 15px;">Añadir distribución <i class="fa fa-bell"></i></button>
 </form>
+
+<script type="text/javascript">
+    function radio_change_periodicidad(param) {
+        document.getElementById('id_radio_periodicidad').value = param;
+    }
+</script>
