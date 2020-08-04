@@ -1,4 +1,5 @@
 from datetime import datetime, date, timedelta
+from dateutil.relativedelta import relativedelta
 
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
@@ -180,6 +181,7 @@ class DistribuirTarea(TemplateView):
         context['usuarios'] = usuarios
         return context
 
+    # Spaghetti post u.u
     def post(self, request, *args, **kwargs):
         identificador = request.POST.get('identificador')
         pk_usuario = self.request.session.get('pk_usuario', '')
@@ -192,7 +194,6 @@ class DistribuirTarea(TemplateView):
             hora = request.POST.get('hora')
             duracion = request.POST.get('duracion')
             radio_value = request.POST.get('radio_value')
-
             # Si no tiene una dependencia cocina se crea una y se asigna inmediatamente al domicilio actual
             try:
                 pd.get(dependencia__nombre='Cocina')
@@ -200,21 +201,18 @@ class DistribuirTarea(TemplateView):
                 cocina = Dependencia('Cocina')
                 cocina.save()
                 PerteneceDependencia.objects.create(dependencia=cocina, domicilio=admin.domicilio, asignada=True)
-
+                pd = PerteneceDependencia.objects.filter(domicilio=admin.domicilio)
             # hora como datetime
             start = hora_to_datetime(hora)
-
             # duracion como timedelta
             duracion = duracion_to_timedelta(duracion)
             end = start + duracion
-
             # Lista los usuario para ser rotativo
             rotar = False
             lista_usuarios = []
             if usuario == 'Todos de forma rotativa':
                 rotar = True
                 lista_usuarios = listar_usuarios(usuarios)
-
             # Crea las tareas, las asigna y calendariza por la semana
             for i in range(7):
                 tarea = Tarea(nombre='Cocinar ' + str(radio_value),
@@ -225,7 +223,6 @@ class DistribuirTarea(TemplateView):
                               comentarios='Este día debes preparar ' + str(radio_value),
                               asignada=True)
                 tarea.save()
-
                 # Cambia el usuario si es rotativo
                 if rotar:
                     usuario = lista_usuarios[i % len(lista_usuarios)]
@@ -234,7 +231,6 @@ class DistribuirTarea(TemplateView):
                                                    usuario=Usuario.objects.get(domicilio=admin.domicilio,
                                                                                username=usuario),
                                                    calendarizar=True)
-
                 asignar_tarea.save()
                 event = Event(
                     title='Cocinar ' + str(radio_value),
@@ -246,49 +242,99 @@ class DistribuirTarea(TemplateView):
                 event.save()
 
         elif identificador == 'limpiar':
-
             usuario = request.POST.get('usuario')
             dependencia = request.POST.get('dependencia')
             hora = request.POST.get('hora')
             duracion = request.POST.get('duracion')
             radio_value = request.POST.get('radio_value')
-
             # Dependencia
             rotar_dependencia = False
             lista_dependencias = []
             if dependencia == 'Todas de forma rotativa':
                 rotar_dependencia = True
                 lista_dependencias = listar_dependencias(pd)
-
             # hora como datetime
             start = hora_to_datetime(hora)
-
             # duracion como timedelta
             duracion = duracion_to_timedelta(duracion)
             end = start + duracion
-
             # Lista los usuario para ser rotativo
             rotar_usuario = False
             lista_usuarios = []
             if usuario == 'Todos de forma rotativa':
                 rotar_usuario = True
                 lista_usuarios = listar_usuarios(usuarios)
-
             # Valor incremental en caso de ser cada dos dias
             inc = 1
             if radio_value == 'Cada dos dias':
                 inc = 2
-
+            # Creacion de objetos
             for i in range(0, 7, inc):
                 if rotar_dependencia:
                     dependencia = lista_dependencias[i % len(lista_dependencias)]
-
                 tarea = Tarea(nombre='Limpiar ' + str(dependencia),
                               domicilio=admin.domicilio,
                               complejidad=2,
                               duracion=duracion,
                               dependencia=pd.get(dependencia__nombre=dependencia).dependencia,
                               comentarios='Este día debes limpiar ' + str(dependencia),
+                              asignada=True)
+                tarea.save()
+                # Cambia el usuario si es rotativo
+                if rotar_usuario:
+                    usuario = lista_usuarios[i % len(lista_usuarios)]
+                asignar_tarea = AsignarTarea_model(tarea=tarea,
+                                                   usuario=Usuario.objects.get(domicilio=admin.domicilio,
+                                                                               username=usuario),
+                                                   calendarizar=True)
+                asignar_tarea.save()
+                event = Event(
+                    title='Limpiar ' + str(dependencia),
+                    asignar_tarea=asignar_tarea,
+                    start=start + timedelta(days=i),
+                    end=end + timedelta(days=i),
+                    description='Este día debes limpiar ' + str(dependencia)
+                )
+                event.save()
+
+        elif identificador == 'cuentas':
+            usuario = request.POST.get('usuario')
+            radio_value = request.POST.get('radio_value')
+            # Si no tiene una dependencia oficina o exterior se crea una y se asigna inmediatamente al domicilio actual
+            dependencia = 'Oficina'
+            try:
+                pd.get(dependencia__nombre='Oficina')
+            except Exception:
+                oficina = Dependencia('Oficina')
+                oficina.save()
+                PerteneceDependencia.objects.create(dependencia=oficina, domicilio=admin.domicilio, asignada=True)
+                pd = PerteneceDependencia.objects.filter(domicilio=admin.domicilio)
+            # hora como datetime
+            hora = '13:00'
+            hour = int(hora[0] + hora[1])
+            minute = int(hora[3] + hora[4])
+            if radio_value == 'Pagar a fin de mes':
+                start = datetime.now().replace(day=30, microsecond=0, hour=hour, minute=minute)
+            elif radio_value == 'Pagar a la quincena':
+                start = datetime.now().replace(day=15, microsecond=0, hour=hour, minute=minute)
+            # duracion como timedelta
+            duracion = '01:00'
+            duracion = duracion_to_timedelta(duracion)
+            end = start + duracion
+            # Lista los usuario para ser rotativo
+            rotar_usuario = False
+            lista_usuarios = []
+            if usuario == 'Todos de forma rotativa':
+                rotar_usuario = True
+                lista_usuarios = listar_usuarios(usuarios)
+            # Creación de objetos
+            for i in range(6):
+                tarea = Tarea(nombre='Realizar pago de cuentas',
+                              domicilio=admin.domicilio,
+                              complejidad=2,
+                              duracion=duracion,
+                              dependencia=pd.get(dependencia__nombre=dependencia).dependencia,
+                              comentarios='Este día debes pagar las cuentas',
                               asignada=True)
                 tarea.save()
 
@@ -303,20 +349,13 @@ class DistribuirTarea(TemplateView):
 
                 asignar_tarea.save()
                 event = Event(
-                    title='Limpiar ' + str(dependencia),
+                    title='Pagar cuentas ' + str(dependencia),
                     asignar_tarea=asignar_tarea,
-                    start=start + timedelta(days=i),
-                    end=end + timedelta(days=i),
-                    description='Este día debes limpiar ' + str(dependencia)
+                    start=start + relativedelta(months=i),
+                    end=end + relativedelta(months=i),
+                    description='Este día debes pagar las cuentas'
                 )
                 event.save()
-
-        elif identificador == 'cuentas':
-
-            usuario = request.POST.get('usuario')
-            radio_value = request.POST.get('radio_value')
-
-            # Si no tiene una dependencia oficina o exterior se crea una y se asigna inmediatamente al domicilio actual
         return HttpResponseRedirect(reverse_lazy('tareas:distribuir_tarea'))
 
 
