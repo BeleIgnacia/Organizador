@@ -14,6 +14,8 @@ from .forms import EventForm
 from .models import Event
 
 import pyscreenshot as pyscreenshot
+import os
+from PIL import Image
 
 class MostrarCalendario(CreateView):
     model = Event
@@ -140,6 +142,8 @@ def Horario_Ocupado_View(request):
 
 
 def exportar(request):
-    imagen = pyscreenshot.grab()
+    imagen = pyscreenshot.grab(bbox=(500, 200, 1700, 1000))
     imagen.save("screenshot.png")
+    f = Image.open(os.path.join('screenshot.png'))
+    f.show()
     return HttpResponseRedirect(reverse_lazy('calendario:mostrar_calendario'))
