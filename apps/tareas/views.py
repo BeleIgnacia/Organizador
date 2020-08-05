@@ -1,5 +1,6 @@
-from datetime import datetime, date, timedelta
+from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
+import time
 
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
@@ -139,6 +140,8 @@ class ListarTarea(ListView):
         asignada_tarea = AsignarTarea_model.objects.get(pk=pk_asignada)
         asignada_tarea.notifica_completada = True
         asignada_tarea.save()
+        # Delay para mostrar notificación
+        time.sleep(2)
         return HttpResponseRedirect(reverse_lazy('tareas:listar_tareas'))
 
     def get_queryset(self):

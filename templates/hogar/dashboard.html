@@ -52,6 +52,9 @@
                     </div>
                 </li>
             </ul>
+            <div class="form-inline my-2 my-lg-0">
+                <button class="btn btn-primary btn-lg" onclick="cerrar_sesion()">Cerrar Sesión</button>
+            </div>
         </div>
     </nav>
     <script type="text/javascript">
@@ -110,49 +113,67 @@
             }
         }
     </script>
+    <script>
+        function cerrar_sesion() {
+            $('#popup').fadeIn('slow');
+            $('.popup-overlay').fadeIn('slow');
+            $('.popup-overlay').height($(window).height());
+            return false;
+        }
+
+        $(document).ready(function () {
+            $('#close').on('click', function () {
+                $('#popup').fadeOut();
+                $('.popup-overlay').fadeOut('slow');
+                return false;
+            });
+        });
+    </script>
+    <!-- Poup cerrar sesión -->
+    {% include 'popups/cerrar_sesion.html' %}
 {% endblock %}
 
 {% block content %}
-<div class="jumbotron">
-    <div class="row">
-        <div class="col col-sm-7">
-            <h2 class="display-4"><strong>Bienvenido</strong><br>al Organizador de su Hogar.</h2>
-            <p class="lead">Mantengase al tanto de sus compromisos y colabore con las tareas del hogar.</p>
-        </div>
-        <div class="col col-sm-5 align-right">
-            {% if request.session.es_administrador %}
-            {% if object_list.count > 0 %}
-                <div class="card border-primary mb-3">
-                    <div class="card-header">Notificaciones de tareas</div>
-                    <div class="card-body">
-                        <table class="table table-hover">
-                            <tbody>
-                                {% for asignada_tarea in object_list %}
-                                <tr>
-                                    <form method="post">
-                                        {% csrf_token %}
-                                        <th scope="row">
-                                            <input type='hidden' value='{{ asignada_tarea.id }}' name='id_asignada'>
-                                            <input type='checkbox' style="display:none" id="checkbox_{{ asignada_tarea.id }}" name='asignada_status'>
-                                        <td>
-                                            {{ asignada_tarea.usuario }} notifica su tarea {{ asignada_tarea.tarea }} como cumplida
-                                        </td>
-                                        <td>
-                                            <button type="submit" class="btn btn-warning" style="font-size: medium;"><span style="font-size: 15px;">Rechazar <i class="fa fa-times fa-lg"></i></span></button>
-                                        </td>
-                                        <td>
-                                            <button type="submit" class="btn btn-success" style="font-size: medium;" onclick="document.getElementById('checkbox_{{ asignada_tarea.id }}').click()"><span style="font-size: 15px;">Aceptar<i class="fa fa-check fa-lg"></i></span></button>
-                                        </td>
-                                    </form>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            {% endif %}
-            {% endif %}
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col col-sm-7">
+                <h2 class="display-4"><strong>Bienvenido</strong><br>al Organizador de su Hogar.</h2>
+                <p class="lead">Mantengase al tanto de sus compromisos y colabore con las tareas del hogar.</p>
+            </div>
+            <div class="col col-sm-5 align-right">
+                {% if request.session.es_administrador %}
+                    {% if object_list.count > 0 %}
+                        <div class="card border-primary mb-3">
+                            <div class="card-header">Notificaciones de tareas</div>
+                            <div class="card-body">
+                                <table class="table table-hover">
+                                    <tbody>
+                                    {% for asignada_tarea in object_list %}
+                                        <tr>
+                                            <form method="post">
+                                                {% csrf_token %}
+                                                <th scope="row">
+                                                    <input type='hidden' value='{{ asignada_tarea.id }}' name='id_asignada'>
+                                                    <input type='checkbox' style="display:none" id="checkbox_{{ asignada_tarea.id }}" name='asignada_status'>
+                                                <td>
+                                                    {{ asignada_tarea.usuario }} notifica su tarea {{ asignada_tarea.tarea }} como cumplida
+                                                </td>
+                                                <td>
+                                                    <button type="submit" class="btn btn-warning" style="font-size: medium;"><span style="font-size: 15px;">Rechazar <i class="fa fa-times fa-lg"></i></span></button>
+                                                </td>
+                                                <td>
+                                                    <button type="submit" class="btn btn-success" style="font-size: medium;" onclick="document.getElementById('checkbox_{{ asignada_tarea.id }}').click()"><span style="font-size: 15px;">Aceptar<i class="fa fa-check fa-lg"></i></span></button>
+                                                </td>
+                                            </form>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            </div>
         </div>
     </div>
-</div>
 {% endblock %}
