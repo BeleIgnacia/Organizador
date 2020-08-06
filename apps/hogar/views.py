@@ -89,30 +89,47 @@ class Dashboard(ListView):
     model = AsignarTarea
     template_name = 'hogar/dashboard.html'
 
-    def get_queryset(self):
+    def get_context_data(self, **kwargs):
+        context = super(Dashboard, self).get_context_data(**kwargs)
         pk_usuario = self.request.session.get('pk_usuario', '')
         usuario = Usuario.objects.get(pk=pk_usuario)
         usuarios = Usuario.objects.filter(domicilio=usuario.domicilio)
-        return AsignarTarea.objects.filter(usuario__in=usuarios, notifica_completada=True)
+        context['qs_notifica_completada'] = AsignarTarea.objects.filter(usuario__in=usuarios, notifica_completada=True)
+        context['qs_notifica_objetar'] = AsignarTarea.objects.filter(usuario__in=usuarios, notifica_objetar=True)
+        return context
+
+    def get_queryset(self):
+        return None
 
     def post(self, request, *args, **kwargs):
         # Notifica su tarea asignada como completada
         pk_asignada = request.POST.get('id_asignada')
         asignada_status = request.POST.get('asignada_status')
         asignada_tarea = AsignarTarea.objects.get(pk=pk_asignada)
-        #obtiene el usuario
+        # obtiene el usuario
         pk_usuario = self.request.session.get('pk_usuario')
         usuario = Usuario.objects.get(pk=pk_usuario)
-        if asignada_status == "on":
-            asignada_tarea.tarea.completada = True
-            asignada_tarea.notifica_completada = False
-            #Asigna el puntaje al usuario
-            usuario.puntaje_obtenido += asignada_tarea.tarea.get_puntaje
-            
-        else:
-            asignada_tarea.tarea.completada = False
-            asignada_tarea.notifica_completada = False
-        #print(pk_usuario,usuario,usuario.puntaje_obtenido,asignada_tarea.tarea)
+
+        tipo = request.POST.get('tipo')
+        if tipo == 'notifica_completada':
+            if asignada_status == "on":
+                asignada_tarea.tarea.completada = True
+                asignada_tarea.notifica_completada = False
+                # Asigna el puntaje al usuario
+                usuario.puntaje_obtenido += asignada_tarea.tarea.get_puntaje
+            else:
+                asignada_tarea.tarea.completada = False
+                asignada_tarea.notifica_completada = False
+        elif tipo == 'notifica_objetar':
+            if asignada_status == 'on':
+                # Eliminar la tarea
+                asignada_tarea.notifica_objetar = False
+                asignada_tarea.tarea.delete()
+                asignada_tarea.delete()
+            else:
+                # Conservar la tarea
+                asignada_tarea.notifica_objetar = False
+
         usuario.save()
         asignada_tarea.tarea.save()
         asignada_tarea.save()

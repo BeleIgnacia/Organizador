@@ -75,7 +75,7 @@
                                     </form>
 
 
-                                    <button class="btn btn-warning" type="button" data-toggle="collapse" data-target="#just" aria-expanded="false" aria-controls="collapseExample" style="margin-left: 10px;">
+                                    <button class="btn btn-warning" type="button" data-toggle="collapse" data-target="#just_{{ asignada.tarea.pk }}" aria-expanded="false" aria-controls="collapseExample" style="margin-left: 10px;">
                                         <span style="font-size: 15px;">Objetar </span>
                                     </button>
 
@@ -93,7 +93,7 @@
                                 </div>
 
 
-                                <div class="collapse" id="just">
+                                <div class="collapse" id="just_{{ asignada.tarea.pk }}">
                                     <form method="post" id=upload_{{ asignada.id }} action="" enctype='multipart/form-data'>
                                         {% csrf_token %}
                                         <div class="card card-body">
