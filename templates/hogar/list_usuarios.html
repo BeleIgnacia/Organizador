@@ -3,37 +3,54 @@
 {% load static %}
 
 {% block content %}
-<div class="card-deck">
-  {% if request.session.es_administrador %}
-  {% if object_list %}
-  {% for usuario in object_list %}
-    <div class="card text-center">
-      <div class="card-header">
-        Imagen usuario?
-        <br><img src="..." class="card-img-top" alt="...">
+<div class="jumbotron">
+  <div class="sub-container">
+    <h1 class="display-4">Miembros del hogar.</h1>
+    <p class="lead">Aquí podras observar y modificar los diferentes atributos de cada integrante.</p>
+  </div>
+
+  <div class="card-deck">
+    {% if request.session.es_administrador %}
+    {% if object_list %}
+    {% for usuario in object_list %}
+      <div class="card text-center">
+        <div class="card-header">
+          Imagen usuario?
+          <br><img src="..." class="card-img-top" alt="...">
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Usuario : {{usuario}}</h5>
+          <p class="card-text">Detalles: 
+            <br>Correo electronico : {{usuario.email}}
+            <br>Telefono : {{usuario.telefono}}
+            <br>Domicilio : {{usuario.domicilio}}
+            <br>Puntaje Total Adquirido : {{usuario.puntaje_obtenido}}
+          </p>
+          <a class="btn btn btn-success" href="/hogar/usuarios/editar/{{usuario.pk}}">Modificar
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-sliders" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M14 3.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0zM11.5 5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM7 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0zM4.5 10a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm9.5 3.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0zM11.5 15a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+              <path fill-rule="evenodd" d="M9.5 4H0V3h9.5v1zM16 4h-2.5V3H16v1zM9.5 14H0v-1h9.5v1zm6.5 0h-2.5v-1H16v1zM6.5 9H16V8H6.5v1zM0 9h2.5V8H0v1z"/>
+            </svg>
+          </a>
+        </div>
+        <div class="card-footer text-muted">
+          Administrador : {{usuario.es_administrador}}
+        </div>
+      
       </div>
-      <div class="card-body">
-        <h5 class="card-title">Usuario : {{usuario}}</h5>
-        <p class="card-text">Detalles: 
-          <br>Correo electronico : {{usuario.email}}
-          <br>Telefono : {{usuario.telefono}}
-          <br>Domicilio : {{usuario.domicilio}}
-          <br>Puntaje Total Adquirido : {{usuario.puntaje_obtenido}}
-        </p>
-        <a class="btn btn btn-success" href="/hogar/usuarios/editar/{{usuario.pk}}">Modificar
-          <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-sliders" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" d="M14 3.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0zM11.5 5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM7 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0zM4.5 10a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm9.5 3.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0zM11.5 15a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
-            <path fill-rule="evenodd" d="M9.5 4H0V3h9.5v1zM16 4h-2.5V3H16v1zM9.5 14H0v-1h9.5v1zm6.5 0h-2.5v-1H16v1zM6.5 9H16V8H6.5v1zM0 9h2.5V8H0v1z"/>
-          </svg>
-        </a>
-      </div>
-      <div class="card-footer text-muted">
-        Administrador : {{usuario.es_administrador}}
-      </div>
-    </div>
-  {% endfor %}
-  {% endif %}
-  {% endif %}
+    {% endfor %}
+    {% endif %}
+    {% endif %}
+
+  </div>
+  <div class="sub-container">
+    <a class="btn btn-success btn-lg" href="../usuarios/agregar">Añadir nuevo usuario
+      <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-plus-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm7.5-3a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+        <path fill-rule="evenodd" d="M13 7.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0v-2z"/>
+      </svg>
+    </a>
+  </div>
 </div>
 
 

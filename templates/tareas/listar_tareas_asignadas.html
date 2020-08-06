@@ -2,7 +2,11 @@
 
 {% block content %}
 <div class="jumbotron">
-    <h4>Tareas Asignadas en el Hogar</h4>
+        <div class="sub-container">
+          <h1 class="display-4">Tareas Globales Asignadas.</h1>
+          <p class="lead">Aquí podrás observar todas las tareas que se encuentran asignadas a los diferentes usuarios hogar, en caso de ser administrador
+            puedes modificar la tarea en cuestion.</p>
+        </div>
         {% if object_list %}
         {% for asignada in object_list %}
         <div class="card">
