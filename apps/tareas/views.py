@@ -169,7 +169,7 @@ class ListarTareaAsignada(ListView):
         usuario = Usuario.objects.get(pk=pk_usuario)
         usuarios = Usuario.objects.filter(domicilio=usuario.domicilio)
         # Retorna las tareas asignadas filtradas según domicilio
-        return AsignarTarea_model.objects.filter(usuario__in=usuarios)
+        return AsignarTarea_model.objects.filter(usuario__in=usuarios,notifica_completada=False)
 
 
 class DistribuirTarea(TemplateView):
