@@ -7,7 +7,7 @@
             <div class="card border-primary mb-3">
                 <h2>Tareas Completadas</h2>
         {% if asignaciones_completadas %}
-
+                
             {% for asignada in asignaciones_completadas %}
                 <div class="card">
                     <div class="card-body">
@@ -23,7 +23,7 @@
                             <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#{{ asignada.tarea.nombre }}" aria-expanded="false" aria-controls="collapseExample" style="margin-left: 10px;">
                                 <span style="font-size: 15px;">Detalles </span><i class="fa fa-comment fa-lg"></i>
                             </button>
-
+                            
                         </div>
                         <div class="collapse" id="{{ asignada.tarea.nombre }}">
                             <div class="card card-body">
@@ -40,7 +40,7 @@
             {% endfor %}
         {% endif %}
             </div>
-
+        
         <div class="card border-primary mb-3">
                 <h2>Tareas Pendientes</h2>
         {% if asignaciones_no_completadas %}
@@ -57,9 +57,11 @@
                             <h5 style="color:Tomato;" >Comentario: </h5>{{ asignada.tarea.comentarios }}
                         </p>
                         <div class="row">
+
                             <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#{{ asignada.tarea.nombre }}" aria-expanded="false" aria-controls="collapseExample" style="margin-left: 10px;">
                                 <span style="font-size: 15px;">Detalles </span><i class="fa fa-comment fa-lg"></i>
                             </button>
+
                             <form method="post" id=upload_{{ asignada.id }} action="" enctype='multipart/form-data'>
                                 {% csrf_token %}
                                 <input type='hidden' value='{{ asignada.id }}' name='id_asignada'>
@@ -67,6 +69,13 @@
                                     <span style="font-size: 15px;">Notificar tarea lograda </span><i class="fa fa-check fa-lg"></i>
                                 </button>
                             </form>
+
+
+                            <button class="btn btn-warning" type="button" data-toggle="collapse" data-target="#just" aria-expanded="false" aria-controls="collapseExample" style="margin-left: 10px;">
+                                <span style="font-size: 15px;">Objetar </span>
+                            </button>
+
+
                         </div>
                         <div class="collapse" id="{{ asignada.tarea.nombre }}">
                             <div class="card card-body">
@@ -78,6 +87,23 @@
                                 <br>Puntos tarea: {{asignada.tarea.get_puntaje}}
                             </div>
                         </div>
+
+
+                        <div class="collapse" id="just">
+                            <div class="card card-body">
+                                <br>Justificación:
+                                <input type="text" id="justificacion" name="justificacion"><br><br>
+                            </div>
+                            <form method="post" id=upload_{{ asignada.id }} action="" enctype='multipart/form-data'>
+                                {% csrf_token %}
+                                <input type='hidden' value='{{ asignada.id }}' name='id_asignada'>
+                                <button type="submit" class="btn btn-success" style="margin-left: 15px;">
+                                    <span style="font-size: 15px;">Confirmar</span><i class="fa fa-check fa-lg"></i>
+                                </button>
+                            </form>
+                        </div>
+                        
+                        
                     </div>
                 </div>
             {% endfor %}
@@ -89,7 +115,7 @@
 
 <script>
     function puntaje(){
-
+       
     }
 </script>
 {% endblock content %}
