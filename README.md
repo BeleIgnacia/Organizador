@@ -22,5 +22,5 @@ Autores sin un orden especifico.
 * **Vicente Aravena ** - *'cargo'* - [Vicente](https://github.com/VincentArav)
 * **Manuel Diaz ** - *'cargo'* - [AmigoManuel](https://github.com/AmigoManuel)
 * **Eric Fernández ** - *'cargo'* - [fernandezeric](https://github.com/fernandezeric)
-* **Vicente Sanhueza ** - *'cargo'* - []()
+* **Vicente Sanhueza ** - *'cargo'* - [VicenteSanhueza](https://github.com/VicenteSanhueza)
 * **Joaquín Soto ** - *'cargo'* - [JoaquinSotoV](https://github.com/JoaquinSotoV)
