@@ -31,6 +31,9 @@ class AsignarTarea(models.Model):
     calendarizar = models.BooleanField(default=False)
     # Usuario notifica su tarea asignada como completada
     notifica_completada = models.BooleanField(default=False)
+    # Usuario objeta su tarea asignada
+    # notica_objetar = models.BooleanField(default=False)
+    # justificacion = models.CharField(max_length=50)
     
     def __str__(self):
         return 'tarea {} a usuario {}'.format(self.tarea, self.usuario)

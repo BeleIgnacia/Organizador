@@ -137,11 +137,14 @@ class ListarTarea(ListView):
     def post(self, request, *args, **kwargs):
         # Notifica su tarea asignada como completada
         pk_asignada = request.POST.get('id_asignada')
-        asignada_tarea = AsignarTarea_model.objects.get(pk=pk_asignada)
-        asignada_tarea.notifica_completada = True
-        asignada_tarea.save()
-        # Delay para mostrar notificación
-        time.sleep(2)
+        tipo = request.POST.get('tipo')
+        if tipo == 'notifica_lograda':
+            asignada_tarea = AsignarTarea_model.objects.get(pk=pk_asignada)
+            asignada_tarea.notifica_completada = True
+            asignada_tarea.save()
+        elif tipo == 'notifica_objetar':
+            justificacion = request.POST.get('justificacion')
+            print("objetar tarea")
         return HttpResponseRedirect(reverse_lazy('tareas:listar_tareas'))
 
     def get_queryset(self):
