@@ -43,6 +43,7 @@ class Usuario(User):
     es_administrador = models.BooleanField(default=True)
     domicilio = models.ForeignKey(Domicilio, on_delete=models.CASCADE)
     telefono = models.CharField(max_length=50)
+    puntaje_obtenido = models.IntegerField(default=0)
 
     def __str__(self):
         return '{}'.format(self.user)

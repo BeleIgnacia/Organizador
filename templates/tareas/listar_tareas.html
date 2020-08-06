@@ -65,7 +65,7 @@
                                     <form method="post" id=upload_{{ asignada.id }} action="" enctype='multipart/form-data'>
                                         {% csrf_token %}
                                         <input type='hidden' value='{{ asignada.id }}' name='id_asignada'>
-                                        <input type="hidden" value="    notifica_lograda" name="tipo">
+                                        <input type="hidden" value="notifica_lograda" name="tipo">
                                         <button type="submit" class="btn btn-success" style="margin-left: 15px;">
                                             <span style="font-size: 15px;">Notificar tarea lograda </span><i class="fa fa-check fa-lg"></i>
                                         </button>

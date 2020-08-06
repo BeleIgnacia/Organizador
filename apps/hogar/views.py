@@ -100,12 +100,20 @@ class Dashboard(ListView):
         pk_asignada = request.POST.get('id_asignada')
         asignada_status = request.POST.get('asignada_status')
         asignada_tarea = AsignarTarea.objects.get(pk=pk_asignada)
+        #obtiene el usuario
+        pk_usuario = self.request.session.get('pk_usuario')
+        usuario = Usuario.objects.get(pk=pk_usuario)
         if asignada_status == "on":
             asignada_tarea.tarea.completada = True
             asignada_tarea.notifica_completada = False
+            #Asigna el puntaje al usuario
+            usuario.puntaje_obtenido += asignada_tarea.tarea.get_puntaje
+            
         else:
             asignada_tarea.tarea.completada = False
             asignada_tarea.notifica_completada = False
+        #print(pk_usuario,usuario,usuario.puntaje_obtenido,asignada_tarea.tarea)
+        usuario.save()
         asignada_tarea.tarea.save()
         asignada_tarea.save()
         return HttpResponseRedirect(reverse_lazy('hogar:dashboard'))
