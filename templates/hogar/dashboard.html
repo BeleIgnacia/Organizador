@@ -165,7 +165,7 @@
                                                         <input type="hidden" value="notifica_completada" name="tipo">
                                                         <input type='checkbox' style="display:none" id="checkbox_{{ asignada_tarea.id }}" name='asignada_status'>
                                                         <div class="col-sm-6">
-                                                            {{ asignada_tarea.usuario }} notifica su tarea {{ asignada_tarea.tarea }} como cumplida
+                                                            <strong>{{ asignada_tarea.usuario }} notifica su tarea {{ asignada_tarea.tarea }} como cumplida</strong>
                                                         </div>
                                                         <div class="col-sm-3">
                                                             <button type="submit" class="btn btn-danger" style="font-size: medium;"><span style="font-size: 15px;">Rechazar <i class="fa fa-times fa-lg"></i></span></button>
@@ -186,7 +186,7 @@
                                                         <input type="hidden" value="notifica_objetar" name="tipo">
                                                         <input type='checkbox' style="display:none" id="checkbox_objetar_{{ asignada_tarea.id }}" name='asignada_status'>
                                                         <div class="col-sm-6">
-                                                            {{ asignada_tarea.usuario }} objeta su tarea {{ asignada_tarea.tarea }} porque {{ asignada_tarea.justificacion }}
+                                                            <strong>{{ asignada_tarea.usuario }} objeta su tarea {{ asignada_tarea.tarea }} porque {{ asignada_tarea.justificacion }}</strong>
                                                         </div>
                                                         <div class="col-sm-3">
                                                             <button type="submit" class="btn btn-danger" style="font-size: medium;"><span style="font-size: 15px;">Rechazar <i class="fa fa-times fa-lg"></i></span></button>
