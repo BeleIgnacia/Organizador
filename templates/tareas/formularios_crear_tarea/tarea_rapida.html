@@ -17,7 +17,7 @@
                         </select>
                     </div>
                     <div class="col col-md-4">
-                        <button type="button" class="btn btn-primary" style="font-size: medium;" onclick="nativa_limpiar();">
+                        <button type="button" class="btn btn-primary btn-lg btn-block" style="font-size: medium;" onclick="nativa_limpiar();">
                             <span style="font-size: 15px;">Limpiar<i class="fa fa-info-circle" style="margin-left: 5px"></i></span>
                         </button>
                     </div>
@@ -37,7 +37,7 @@
                     </div>
                     <div class="col col-md-4">
                         <!-- btn cocinar -->
-                        <button type="button" class="btn btn-primary" style="font-size: medium;" onclick="nativa_cocinar();">
+                        <button type="button" class="btn btn-primary btn-lg btn-block" style="font-size: medium;" onclick="nativa_cocinar();">
                             <span style="font-size: 15px;">Cocinar<i class="fa fa-cutlery" style="margin-left: 5px"></i></span>
                         </button>
                     </div>
@@ -51,7 +51,7 @@
                         <input type="text" class="form-control" id="id_nombre_añadir_plato"></label>
                     </div>
                     <div class="col col-md-4">
-                        <button type="button" class="btn btn-primary" style="font-size: medium;" onclick="add_plato(document.getElementById('id_nombre_añadir_plato').value)">
+                        <button type="button" class="btn btn-primary btn-lg btn-block" style="font-size: medium;" onclick="add_plato(document.getElementById('id_nombre_añadir_plato').value)">
                             <span style="font-size: 15px;">Añadir<i class="fa fa-plus" style="margin-left: 5px"></i></span>
                         </button>
                     </div>
@@ -69,13 +69,14 @@
                     </div>
                     <div class="col col-md-4">
                         <!-- btn atender -->
-                        <button type="button" class="btn btn-primary" style="font-size: medium;" onclick="nativa_atender();">
+                        <button type="button" class="btn btn-primary btn-lg btn-block" style="font-size: medium;" onclick="nativa_atender();">
                             <span style="font-size: 15px;">Mascota<i class="fas fa-dog" style="margin-left: 5px"></i></span>
                         </button>
                     </div>
                 </div>
                 <!-- Tareas añadidas por el usuario -->
                 <div id="tareas_custom">
+
                 </div>
             </div>
         {% elif name == "Asignar Tarea" %}

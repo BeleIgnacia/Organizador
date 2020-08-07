@@ -28,7 +28,7 @@
                 {% include 'tareas/formularios_crear_tarea/tarea_rapida.html' %}
             </div>
             {% if name == "Añadir Nueva Tarea" %}
-                <div class="card border-primary mb-3" style="max-width: 30rem;">
+                <div class="card border-primary mb-3" style="max-width: 25rem;">
                     {% include 'tareas/formularios_crear_tarea/crear_tarea_rapida.html' %}
                 </div>
             {% endif %}
@@ -103,7 +103,7 @@
         // Tareas a añadir
         let tareas_rapidas = get_tareas_rapidas();
         // Si hay tareas_rapidas en cookies
-        if (tareas_rapidas > 0){
+        if (tareas_rapidas.length > 0) {
             init_tareas_rapidas_html();
         }
 
@@ -145,6 +145,19 @@
         function init_tareas_rapidas_html() {
             for (let i = 0; i < tareas_rapidas.length; i++) {
                 // tareas_rapidas[i]
+                let div = document.createElement('div');
+                div.className = 'row';
+                div.style.marginTop = '10px';
+                div.innerHTML = `
+                        <div class="col col-sm-8 text-right">
+                            <label for="id_rapida">` + tareas_rapidas[i].nombre + `</label>
+                        </div>
+                        <div class="col col-sm-4">
+                            <button type="button" class="btn btn-primary btn-lg btn-block" style="font-size: medium;" onclick="custom_tarea(` + i + `);">
+                                <span style="font-size: 15px;">Añadir<i class="fas fa-plus" style="margin-left: 5px"></i></span>
+                            </button>
+                        </div>`;
+                tareas_custom.appendChild(div);
             }
         }
 
@@ -167,7 +180,7 @@
             tareas_rapidas = get_tareas_rapidas();
             tareas_rapidas.push(tarea_rapida);
             Cookies.set('tareas_rapidas', tareas_rapidas);
-            set_tareas_rapidas_html()
+            location.reload();
         }
 
         // Actualiza el selector de platos
@@ -177,10 +190,6 @@
             option.appendChild(document.createTextNode(plato));
             option.value = plato;
             comidas_select.appendChild(option);
-        }
-
-        function set_tareas_rapidas_html() {
-
         }
 
         // Setea dependencias según su nombre
@@ -213,6 +222,15 @@
             set_dependencia("Exterior")
             tarea_duracion.value = "01:00";
             tarea_comentario.value = "Debe Cocinar " + mascotas_select.value;
+        }
+
+        function custom_tarea(index) {
+            let tarea_rapida = tareas_rapidas[index];
+            tarea_nombre.value = tarea_rapida.nombre;
+            tarea_complejidad.value = tarea_rapida.complejidad;
+            tarea_duracion.value = tarea_rapida.duracion;
+            tarea_dependencia.value = tarea_rapida.dependencia;
+            tarea_comentario.value = tarea_rapida.comentario;
         }
 
     </script>
