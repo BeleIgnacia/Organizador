@@ -81,7 +81,8 @@ WSGI_APPLICATION = 'organizador.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-#BD por defecto
+'''
+# BD por defecto
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -90,6 +91,7 @@ DATABASES = {
 }
 
 '''
+# BD UdeC
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -100,7 +102,6 @@ DATABASES = {
         'PORT': 5432,
     }
 }
-'''
 
 
 
