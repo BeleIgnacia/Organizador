@@ -132,6 +132,7 @@ class Dashboard(ListView):
             else:
                 # Conservar la tarea
                 asignada_tarea.notifica_objetar = False
+                asignada_tarea.save()
 
         usuario.save()
         return HttpResponseRedirect(reverse_lazy('hogar:dashboard'))
