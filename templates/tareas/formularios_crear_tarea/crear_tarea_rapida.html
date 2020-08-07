@@ -1,0 +1,53 @@
+<div class="card-header">Crear tarea rapida</div>
+<div class="card-body">
+    <p class="card-text">
+    <div class="col" style="margin-block: 10px;">
+        <div class="row">
+            <div class="col">
+                <label for="id_rapida_nombre" style="float: right;">Nombre</label>
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" id="id_rapida_nombre" placeholder="Nombre de la tarea">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="id_rapida_complejidad" style="float: right;">Complejidad</label>
+            </div>
+            <div class="col">
+                <input type="range" class="custom-range" id="id_rapida_complejidad" placeholder="Complejidad de la tarea" max="5" min="0" step="1" value="0">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="id_rapida_duracion" style="float: right;">Duración</label>
+            </div>
+            <div class="col">
+                <input type="time" class="form-control" id="id_rapida_duracion" placeholder="Duración de la tarea">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="id_rapida_dependencia" style="float: right;">Dependencia</label>
+            </div>
+            <div class="col">
+                <select name="dependencia" class="form-control" id="id_rapida_dependencia">
+                    {% for value in form.dependencia %}
+                        {{ value }}
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="id_rapida_comentario" style="float: right;">Comentario</label>
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" id="id_rapida_comentario" placeholder="Comentario de la tarea">
+            </div>
+        </div>
+        <div class="row">
+            <button type="button" class="btn btn-primary btn-lg btn-block" onclick="add_tarea_rapida();">Crear tarea rapida</button>
+        </div>
+    </div>
+</div>

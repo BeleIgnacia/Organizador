@@ -1,0 +1,84 @@
+{% if name == "Añadir Nueva Tarea" %}
+    <div class="card-header">Añadir tarea rapida</div>
+{% endif %}
+<div class="card-body">
+    <p class="card-text">
+        {% if name == "Añadir Nueva Tarea" %}
+            <!-- Panel lateral para añadir tareas rapidas -->
+            <div class="col" style="margin-block: 10px;">
+                <!-- Limpiar -->
+                <label for="id_nativa_dependencia">Limpiar dependencia.</label>
+                <div class="row">
+                    <div class="col col-md-8">
+                        <select name="dependencia" class="form-control" required="" id="id_nativa_dependencia">
+                            {% for value in form.dependencia %}
+                                {{ value }}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col col-md-4">
+                        <button type="button" class="btn btn-primary" style="font-size: medium;" onclick="nativa_limpiar();">
+                            <span style="font-size: 15px;">Limpiar<i class="fa fa-info-circle" style="margin-left: 5px"></i></span>
+                        </button>
+                    </div>
+                </div>
+                <!-- Cocinar -->
+                <label for="id_nativa_comidas">Cocinar.</label>
+                <div class="row">
+                    <div class="col col-md-8">
+                        <select name="dependencia" class="form-control" required="" id="id_nativa_comidas">
+                            <option>----------</option>
+                            <option>Tallarines con salsa</option>
+                            <option>Pollo asado con papas fritas</option>
+                            <option>Lentejas</option>
+                            <option>Porotos</option>
+                            <option>Sopa</option>
+                        </select>
+                    </div>
+                    <div class="col col-md-4">
+                        <!-- btn cocinar -->
+                        <button type="button" class="btn btn-primary" style="font-size: medium;" onclick="nativa_cocinar();">
+                            <span style="font-size: 15px;">Cocinar<i class="fa fa-cutlery" style="margin-left: 5px"></i></span>
+                        </button>
+                    </div>
+                </div>
+                <!-- Añadir comida -->
+                <div class="row" style="margin-top: 20px;">
+                    <div class="col col-md-4">
+                        <label for="id_nombre_añadir_plato" style="float: right;">Añadir comida:</label>
+                    </div>
+                    <div class="col col-md-4">
+                        <input type="text" class="form-control" id="id_nombre_añadir_plato"></label>
+                    </div>
+                    <div class="col col-md-4">
+                        <button type="button" class="btn btn-primary" style="font-size: medium;" onclick="add_plato(document.getElementById('id_nombre_añadir_plato').value)">
+                            <span style="font-size: 15px;">Añadir<i class="fa fa-plus" style="margin-left: 5px"></i></span>
+                        </button>
+                    </div>
+                </div>
+                <!-- Atender Mascota -->
+                <label for="id_nativa_atender">Atender mascota:</label>
+                <div class="row" style="margin-top: 10px;">
+                    <div class="col col-md-8">
+                        <select name="dependencia" class="form-control" required="" id="id_nativa_atender">
+                            <option>----------</option>
+                            <option>Dar de comer</option>
+                            <option>Pasear</option>
+                            <option>Comprar alimento</option>
+                        </select>
+                    </div>
+                    <div class="col col-md-4">
+                        <!-- btn atender -->
+                        <button type="button" class="btn btn-primary" style="font-size: medium;" onclick="nativa_atender();">
+                            <span style="font-size: 15px;">Mascota<i class="fas fa-dog" style="margin-left: 5px"></i></span>
+                        </button>
+                    </div>
+                </div>
+                <!-- Tareas añadidas por el usuario -->
+                <div id="tareas_custom">
+                </div>
+            </div>
+        {% elif name == "Asignar Tarea" %}
+            Podra asignar las tareas a los usuarios del grupo hogar
+        {% endif %}
+</div>

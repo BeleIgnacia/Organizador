@@ -1,0 +1,13 @@
+<form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+        <div class="col-md-30">
+            <div class="form-group">
+                {{ field.label }}:
+                <p>
+                    {{ field }}
+            </div>
+        </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary btn-block" id="enviar">Guardar</button>
+</form>

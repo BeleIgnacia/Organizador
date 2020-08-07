@@ -21,108 +21,17 @@
             <div class="card border-primary mb-3" style="max-width: 20rem;">
                 <div class="card-header">{{ name }}</div>
                 <div class="card-body">
-                    <form method="post">
-                        {% csrf_token %}
-                        {% for field in form %}
-                            <div class="col-md-30">
-                                <div class="form-group">
-                                    {{ field.label }}:
-                                    <p>
-                                        {{ field }}
-                                </div>
-                            </div>
-                        {% endfor %}
-                        <button type="submit" class="btn btn-primary btn-block" id="enviar">Guardar</button>
-                    </form>
+                    {% include 'tareas/formularios_crear_tarea/nueva_tarea.html' %}
                 </div>
             </div>
             <div class="card border-primary mb-3" style="max-width: 30rem;">
-                {% if name == "Añadir Nueva Tarea" %}
-                    <div class="card-header">Añadir tarea rapida</div>
-                {% endif %}
-                <div class="card-body">
-                    <p class="card-text">
-                        {% if name == "Añadir Nueva Tarea" %}
-                            <!-- Panel lateral para añadir tareas rapidas -->
-                            <div class="col" style="margin-block: 10px;">
-                                <!-- Limpiar -->
-                                <label for="id_nativa_dependencia">Limpiar dependencia.</label>
-                                <div class="row">
-                                    <div class="col col-md-8">
-                                        <select name="dependencia" class="form-control" required="" id="id_nativa_dependencia">
-                                            {% for value in form.dependencia %}
-                                                {{ value }}
-                                            {% endfor %}
-                                        </select>
-                                    </div>
-                                    <div class="col col-md-4">
-                                        <button type="button" class="btn btn-primary" style="font-size: medium;" onclick="nativa_limpiar();">
-                                            <span style="font-size: 15px;">Limpiar<i class="fa fa-info-circle" style="margin-left: 5px"></i></span>
-                                        </button>
-                                    </div>
-                                </div>
-                                <!-- Cocinar -->
-                                <label for="id_nativa_comidas">Cocinar.</label>
-                                <div class="row">
-                                    <div class="col col-md-8">
-                                        <select name="dependencia" class="form-control" required="" id="id_nativa_comidas">
-                                            <option>----------</option>
-                                            <option>Tallarines con salsa</option>
-                                            <option>Pollo asado con papas fritas</option>
-                                            <option>Lentejas</option>
-                                            <option>Porotos</option>
-                                            <option>Sopa</option>
-                                        </select>
-                                    </div>
-                                    <div class="col col-md-4">
-                                        <!-- btn cocinar -->
-                                        <button type="button" class="btn btn-primary" style="font-size: medium;" onclick="nativa_cocinar();">
-                                            <span style="font-size: 15px;">Cocinar<i class="fa fa-cutlery" style="margin-left: 5px"></i></span>
-                                        </button>
-                                    </div>
-                                </div>
-                                <!-- Añadir comida -->
-                                <div class="row" style="margin-top: 20px;">
-                                    <div class="col col-md-4">
-                                        <label for="id_nombre_añadir_plato" style="float: right;">Añadir comida:</label>
-                                    </div>
-                                    <div class="col col-md-4">
-                                        <input type="text" class="form-control" id="id_nombre_añadir_plato"></label>
-                                    </div>
-                                    <div class="col col-md-4">
-                                        <button type="button" class="btn btn-primary" style="font-size: medium;" onclick="add_plato(document.getElementById('id_nombre_añadir_plato').value)">
-                                            <span style="font-size: 15px;">Añadir<i class="fa fa-plus" style="margin-left: 5px"></i></span>
-                                        </button>
-                                    </div>
-                                </div>
-                                <!-- Atender Mascota -->
-                                <label for="id_nativa_atender">Atender mascota:</label>
-                                <div class="row" style="margin-top: 10px;">
-                                    <div class="col col-md-8">
-                                        <select name="dependencia" class="form-control" required="" id="id_nativa_atender">
-                                            <option>----------</option>
-                                            <option>Dar de comer</option>
-                                            <option>Pasear</option>
-                                            <option>Comprar alimento</option>
-                                        </select>
-                                    </div>
-                                    <div class="col col-md-4">
-                                        <!-- btn atender -->
-                                        <button type="button" class="btn btn-primary" style="font-size: medium;" onclick="nativa_atender();">
-                                            <span style="font-size: 15px;">Mascota<i class="fas fa-dog" style="margin-left: 5px"></i></span>
-                                        </button>
-                                    </div>
-                                </div>
-
-
-                            </div>
-
-
-                        {% elif name == "Asignar Tarea" %}
-                            Podra asignar las tareas a los usuarios del grupo hogar
-                        {% endif %}
-                </div>
+                {% include 'tareas/formularios_crear_tarea/tarea_rapida.html' %}
             </div>
+            {% if name == "Añadir Nueva Tarea" %}
+                <div class="card border-primary mb-3" style="max-width: 30rem;">
+                    {% include 'tareas/formularios_crear_tarea/crear_tarea_rapida.html' %}
+                </div>
+            {% endif %}
         </div>
         {% if name == "Asignar Tarea" %}
             <a class="btn btn-success btn-lg" href="../crear/">Crear Tarea
@@ -165,12 +74,37 @@
         let limpiar_select = document.getElementById("id_nativa_dependencia");
         let comidas_select = document.getElementById("id_nativa_comidas");
         let mascotas_select = document.getElementById("id_nativa_atender");
+        //Parametros para crear tarea rapida
+        let rapida_nombre = document.getElementById('id_rapida_nombre');
+        let rapida_complejidad = document.getElementById('id_rapida_complejidad');
+        let rapida_duracion = document.getElementById('id_rapida_duracion');
+        let rapida_dependencia = document.getElementById('id_rapida_dependencia');
+        let rapida_comentario = document.getElementById('id_rapida_comentario');
+        // Tareas rapidas añadidas
+        let tareas_custom = document.getElementById('tareas_custom');
+
+        class TareaRapida {
+            constructor(nombre, complejidad, duracion, dependencia, comentario) {
+                this.nombre = nombre;
+                this.complejidad = complejidad;
+                this.duracion = duracion;
+                this.dependencia = dependencia;
+                this.comentario = comentario;
+            }
+        }
 
         // Platos a añadir
         let platos = get_platos();
         // Si hay platos en cookies
         if (platos.length > 0) {
             init_platos_select();
+        }
+
+        // Tareas a añadir
+        let tareas_rapidas = get_tareas_rapidas();
+        // Si hay tareas_rapidas en cookies
+        if (tareas_rapidas > 0){
+            init_tareas_rapidas_html();
         }
 
         // Almacena dependencias en un arreglo
@@ -191,12 +125,26 @@
             }
         }
 
-        function init_platos_select(){
-            for (let i = 0; i < platos.length; i++){
+        function get_tareas_rapidas() {
+            try {
+                return JSON.parse(Cookies.get('tareas_rapidas'))
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function init_platos_select() {
+            for (let i = 0; i < platos.length; i++) {
                 let option = document.createElement('option');
                 option.appendChild(document.createTextNode(platos[i]));
                 option.value = platos[i];
                 comidas_select.appendChild(option);
+            }
+        }
+
+        function init_tareas_rapidas_html() {
+            for (let i = 0; i < tareas_rapidas.length; i++) {
+                // tareas_rapidas[i]
             }
         }
 
@@ -208,6 +156,20 @@
             set_platos();
         }
 
+        function add_tarea_rapida() {
+            let tarea_rapida = new TareaRapida(
+                rapida_nombre.value,
+                rapida_complejidad.value,
+                rapida_duracion.value,
+                rapida_dependencia.value,
+                rapida_comentario.value
+            );
+            tareas_rapidas = get_tareas_rapidas();
+            tareas_rapidas.push(tarea_rapida);
+            Cookies.set('tareas_rapidas', tareas_rapidas);
+            set_tareas_rapidas_html()
+        }
+
         // Actualiza el selector de platos
         function set_platos() {
             let plato = platos[platos.length - 1];
@@ -215,6 +177,10 @@
             option.appendChild(document.createTextNode(plato));
             option.value = plato;
             comidas_select.appendChild(option);
+        }
+
+        function set_tareas_rapidas_html() {
+
         }
 
         // Setea dependencias según su nombre
