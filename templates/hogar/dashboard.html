@@ -176,7 +176,7 @@
                                                         {% csrf_token %}
                                                         <input type='hidden' value='{{ asignada_tarea.id }}' name='id_asignada'>
                                                         <input type="hidden" value="notifica_objetar" name="tipo">
-                                                        <input type='checkbox' style="display:none" id="checkbox_objetar_{{ asignada_tarea.id }}" name='asignada_status'>
+                                                        <input type='checkbox' style="display:none" id="checkbox_{{ asignada_tarea.id }}" name='asignada_status'>
                                                         <div class="col-sm-6">
                                                             <strong>{{ asignada_tarea.usuario }} objeta su tarea {{ asignada_tarea.tarea }} porque {{ asignada_tarea.justificacion }}</strong>
                                                         </div>

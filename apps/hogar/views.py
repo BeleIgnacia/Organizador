@@ -120,19 +120,20 @@ class Dashboard(ListView):
             else:
                 asignada_tarea.tarea.completada = False
                 asignada_tarea.notifica_completada = False
+            asignada_tarea.tarea.save()
+            asignada_tarea.save()
         elif tipo == 'notifica_objetar':
             if asignada_status == 'on':
                 # Eliminar la tarea
                 asignada_tarea.notifica_objetar = False
                 asignada_tarea.tarea.delete()
                 asignada_tarea.delete()
+                # asignada_tarea.delete()
             else:
                 # Conservar la tarea
                 asignada_tarea.notifica_objetar = False
 
         usuario.save()
-        asignada_tarea.tarea.save()
-        asignada_tarea.save()
         return HttpResponseRedirect(reverse_lazy('hogar:dashboard'))
 
 
