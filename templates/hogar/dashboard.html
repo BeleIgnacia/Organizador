@@ -142,14 +142,6 @@
             </div>
             <div class="col col-sm-5 align-right">
                 {% if request.session.es_administrador %}
-                    <!-- Depuración
-                    {% for item in qs_notifica_completada %}
-                        {{ item }}
-                    {% endfor %}
-                    {% for item in qs_notifica_objetar %}
-                        {{ item }}
-                    {% endfor %}
-                    -->
                     {% if qs_notifica_completada.count > 0 or qs_notifica_objetar.count > 0 %}
                         <div class="card border-primary mb-3">
                             <div class="card-header">Notificaciones de tareas</div>
@@ -198,28 +190,6 @@
                                                 </div>
                                         </div>
                                     {% endfor %}
-                                    <!--
-                                    {% for asignada_tarea in qs_notifica_objetar %}
-                                        <tr>
-                                            <form method="post">
-                                                {% csrf_token %}
-                                                <th scope="row">
-                                                    <input type='hidden' value='{{ asignada_tarea.id }}' name='id_asignada'>
-                                                    <input type="hidden" value="notifica_objetar" name="tipo">
-                                                    <input type='checkbox' style="display:none" id="checkbox_objetar_{{ asignada_tarea.id }}" name='asignada_status'>
-                                                <td>
-                                                    {{ asignada_tarea.usuario }} objeta su tarea {{ asignada_tarea.tarea }} porque {{ asignada_tarea.justificacion }}
-                                                </td>
-                                                <td>
-                                                    <button type="submit" class="btn btn-warning" style="font-size: medium;"><span style="font-size: 15px;">Rechazar <i class="fa fa-times fa-lg"></i></span></button>
-                                                </td>
-                                                <td>
-                                                    <button type="submit" class="btn btn-success" style="font-size: medium;" onclick="document.getElementById('checkbox_objetar_{{ asignada_tarea.id }}').click()"><span style="font-size: 15px;">Aceptar<i class="fa fa-check fa-lg"></i></span></button>
-                                                </td>
-                                            </form>
-                                        </tr>
-                                    {% endfor %}
-                                    -->
                                     </tbody>
                                 </table>
                             </div>

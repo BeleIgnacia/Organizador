@@ -8,13 +8,13 @@
         <div class="sub-container">
             {% if name == "Asignar Tarea" %}
                 <h1 class="display-4">Asignar Tarea</h1>
-                <p class="lead">Aquí podras asignar a un usuario una tarea ya creada.</p>  
+                <p class="lead">Aquí podras asignar a un usuario una tarea ya creada.</p>
             {% elif name == "Añadir Nueva Tarea" %}
                 <h1 class="display-4">Nueva Tarea</h1>
                 <p class="lead">Aquí podras crear nuevas tareas sin la necesidad de especificar quien la realiza, la dificultadad el<br>
                     sistema la otorga en base a la complejidad y el tiempo que se requiera para completarla.
                 </p>
-            {% endif%}
+            {% endif %}
         </div>
         <div id="dummy"></div>
         <div class="card-deck">
@@ -37,14 +37,16 @@
                 </div>
             </div>
             <div class="card border-primary mb-3" style="max-width: 30rem;">
+                {% if name == "Añadir Nueva Tarea" %}
+                    <div class="card-header">Añadir tarea rapida</div>
+                {% endif %}
                 <div class="card-body">
                     <p class="card-text">
-
-
                         {% if name == "Añadir Nueva Tarea" %}
                             <!-- Panel lateral para añadir tareas rapidas -->
                             <div class="col" style="margin-block: 10px;">
                                 <!-- Limpiar -->
+                                <label for="id_nativa_dependencia">Limpiar dependencia.</label>
                                 <div class="row">
                                     <div class="col col-md-8">
                                         <select name="dependencia" class="form-control" required="" id="id_nativa_dependencia">
@@ -60,7 +62,8 @@
                                     </div>
                                 </div>
                                 <!-- Cocinar -->
-                                <div class="row" style="margin-top: 10px;">
+                                <label for="id_nativa_comidas">Cocinar.</label>
+                                <div class="row">
                                     <div class="col col-md-8">
                                         <select name="dependencia" class="form-control" required="" id="id_nativa_comidas">
                                             <option>----------</option>
@@ -78,7 +81,22 @@
                                         </button>
                                     </div>
                                 </div>
+                                <!-- Añadir comida -->
+                                <div class="row" style="margin-top: 20px;">
+                                    <div class="col col-md-4">
+                                        <label for="id_nombre_añadir_plato" style="float: right;">Añadir comida:</label>
+                                    </div>
+                                    <div class="col col-md-4">
+                                        <input type="text" class="form-control" id="id_nombre_añadir_plato"></label>
+                                    </div>
+                                    <div class="col col-md-4">
+                                        <button type="button" class="btn btn-primary" style="font-size: medium;" onclick="add_plato(document.getElementById('id_nombre_añadir_plato').value)">
+                                            <span style="font-size: 15px;">Añadir<i class="fa fa-plus" style="margin-left: 5px"></i></span>
+                                        </button>
+                                    </div>
+                                </div>
                                 <!-- Atender Mascota -->
+                                <label for="id_nativa_atender">Atender mascota:</label>
                                 <div class="row" style="margin-top: 10px;">
                                     <div class="col col-md-8">
                                         <select name="dependencia" class="form-control" required="" id="id_nativa_atender">
@@ -91,12 +109,12 @@
                                     <div class="col col-md-4">
                                         <!-- btn atender -->
                                         <button type="button" class="btn btn-primary" style="font-size: medium;" onclick="nativa_atender();">
-                                            <span style="font-size: 15px;">Mascota<i style="margin-left: 5px"></i></span>
+                                            <span style="font-size: 15px;">Mascota<i class="fas fa-dog" style="margin-left: 5px"></i></span>
                                         </button>
                                     </div>
                                 </div>
 
-                                
+
                             </div>
 
 
@@ -106,54 +124,131 @@
                 </div>
             </div>
         </div>
-            {% if name == "Asignar Tarea" %}
-                <a class="btn btn-success btn-lg" href="../crear/">Crear Tarea
-                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-hand-index" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M6.75 1a.75.75 0 0 0-.75.75V9a.5.5 0 0 1-1 0v-.89l-1.003.2a.5.5 0 0 0-.399.546l.345 3.105a1.5 1.5 0 0 0 .243.666l1.433 2.15a.5.5 0 0 0 .416.223h6.385a.5.5 0 0 0 .434-.252l1.395-2.442a2.5 2.5 0 0 0 .317-.991l.272-2.715a1 1 0 0 0-.995-1.1H13.5v1a.5.5 0 0 1-1 0V7.154a4.208 4.208 0 0 0-.2-.26c-.187-.222-.368-.383-.486-.43-.124-.05-.392-.063-.708-.039a4.844 4.844 0 0 0-.106.01V8a.5.5 0 0 1-1 0V5.986c0-.167-.073-.272-.15-.314a1.657 1.657 0 0 0-.448-.182c-.179-.035-.5-.04-.816-.027l-.086.004V8a.5.5 0 0 1-1 0V1.75A.75.75 0 0 0 6.75 1zM8.5 4.466V1.75a1.75 1.75 0 0 0-3.5 0v5.34l-1.199.24a1.5 1.5 0 0 0-1.197 1.636l.345 3.106a2.5 2.5 0 0 0 .405 1.11l1.433 2.15A1.5 1.5 0 0 0 6.035 16h6.385a1.5 1.5 0 0 0 1.302-.756l1.395-2.441a3.5 3.5 0 0 0 .444-1.389l.272-2.715a2 2 0 0 0-1.99-2.199h-.582a5.184 5.184 0 0 0-.195-.248c-.191-.229-.51-.568-.88-.716-.364-.146-.846-.132-1.158-.108l-.132.012a1.26 1.26 0 0 0-.56-.642 2.634 2.634 0 0 0-.738-.288c-.31-.062-.739-.058-1.05-.046l-.048.002zm2.094 2.025z"/>
-                    </svg>
-                </a>
-            {% elif name == "Añadir Nueva Tarea" %}
-                <a class="btn btn-success btn-lg" href="../asignar/">Asignar Tarea
-                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-hand-index-thumb" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M6.75 1a.75.75 0 0 0-.75.75V9.5a.5.5 0 0 1-.854.354l-2.41-2.411a.517.517 0 0 0-.809.631l2.512 4.185 1.232 2.465a.5.5 0 0 0 .447.276h6.302a.5.5 0 0 0 .434-.252l1.395-2.442a2.5 2.5 0 0 0 .317-.991l.272-2.715a1 1 0 0 0-.995-1.1H13.5v1a.5.5 0 1 1-1 0V7.154a4.208 4.208 0 0 0-.2-.26c-.187-.222-.368-.383-.486-.43-.124-.05-.392-.063-.708-.039a4.844 4.844 0 0 0-.106.01V8a.5.5 0 1 1-1 0V5.986c0-.167-.073-.272-.15-.314a1.657 1.657 0 0 0-.448-.182c-.179-.035-.5-.04-.816-.027l-.086.004V8a.5.5 0 1 1-1 0V1.75A.75.75 0 0 0 6.75 1zM8.5 4.466V1.75a1.75 1.75 0 1 0-3.5 0v6.543L3.443 6.736A1.517 1.517 0 0 0 1.07 8.588l2.491 4.153 1.215 2.43A1.5 1.5 0 0 0 6.118 16h6.302a1.5 1.5 0 0 0 1.302-.756l1.395-2.441a3.5 3.5 0 0 0 .444-1.389l.272-2.715a2 2 0 0 0-1.99-2.199h-.582a5.114 5.114 0 0 0-.195-.248c-.191-.229-.51-.568-.88-.716-.364-.146-.846-.132-1.158-.108l-.132.012a1.26 1.26 0 0 0-.56-.642 2.634 2.634 0 0 0-.738-.288c-.31-.062-.739-.058-1.05-.046l-.048.002zm2.094 2.025z"/>
-                    </svg>
-                </a>
-            {% endif%}
-            <a class="btn btn-info btn-lg" href="../distribuir/">Distribución Rápida
-                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-puzzle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M3.112 3.645A1.5 1.5 0 0 1 4.605 2H7a.5.5 0 0 1 .5.5v.382c0 .696-.497 1.182-.872 1.469a.459.459 0 0 0-.115.118.113.113 0 0 0-.012.025L6.5 4.5v.003l.003.01c.004.01.014.028.036.053a.86.86 0 0 0 .27.194C7.09 4.9 7.51 5 8 5c.492 0 .912-.1 1.19-.24a.86.86 0 0 0 .271-.194.213.213 0 0 0 .036-.054l.003-.01v-.008a.112.112 0 0 0-.012-.025.459.459 0 0 0-.115-.118c-.375-.287-.872-.773-.872-1.469V2.5A.5.5 0 0 1 9 2h2.395a1.5 1.5 0 0 1 1.493 1.645L12.645 6.5h.237c.195 0 .42-.147.675-.48.21-.274.528-.52.943-.52.568 0 .947.447 1.154.862C15.877 6.807 16 7.387 16 8s-.123 1.193-.346 1.638c-.207.415-.586.862-1.154.862-.415 0-.733-.246-.943-.52-.255-.333-.48-.48-.675-.48h-.237l.243 2.855A1.5 1.5 0 0 1 11.395 14H9a.5.5 0 0 1-.5-.5v-.382c0-.696.497-1.182.872-1.469a.459.459 0 0 0 .115-.118.113.113 0 0 0 .012-.025L9.5 11.5v-.003l-.003-.01a.214.214 0 0 0-.036-.053.859.859 0 0 0-.27-.194C8.91 11.1 8.49 11 8 11c-.491 0-.912.1-1.19.24a.859.859 0 0 0-.271.194.214.214 0 0 0-.036.054l-.003.01v.002l.001.006a.113.113 0 0 0 .012.025c.016.027.05.068.115.118.375.287.872.773.872 1.469v.382a.5.5 0 0 1-.5.5H4.605a1.5 1.5 0 0 1-1.493-1.645L3.356 9.5h-.238c-.195 0-.42.147-.675.48-.21.274-.528.52-.943.52-.568 0-.947-.447-1.154-.862C.123 9.193 0 8.613 0 8s.123-1.193.346-1.638C.553 5.947.932 5.5 1.5 5.5c.415 0 .733.246.943.52.255.333.48.48.675.48h.238l-.244-2.855z"/>
+        {% if name == "Asignar Tarea" %}
+            <a class="btn btn-success btn-lg" href="../crear/">Crear Tarea
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-hand-index" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                          d="M6.75 1a.75.75 0 0 0-.75.75V9a.5.5 0 0 1-1 0v-.89l-1.003.2a.5.5 0 0 0-.399.546l.345 3.105a1.5 1.5 0 0 0 .243.666l1.433 2.15a.5.5 0 0 0 .416.223h6.385a.5.5 0 0 0 .434-.252l1.395-2.442a2.5 2.5 0 0 0 .317-.991l.272-2.715a1 1 0 0 0-.995-1.1H13.5v1a.5.5 0 0 1-1 0V7.154a4.208 4.208 0 0 0-.2-.26c-.187-.222-.368-.383-.486-.43-.124-.05-.392-.063-.708-.039a4.844 4.844 0 0 0-.106.01V8a.5.5 0 0 1-1 0V5.986c0-.167-.073-.272-.15-.314a1.657 1.657 0 0 0-.448-.182c-.179-.035-.5-.04-.816-.027l-.086.004V8a.5.5 0 0 1-1 0V1.75A.75.75 0 0 0 6.75 1zM8.5 4.466V1.75a1.75 1.75 0 0 0-3.5 0v5.34l-1.199.24a1.5 1.5 0 0 0-1.197 1.636l.345 3.106a2.5 2.5 0 0 0 .405 1.11l1.433 2.15A1.5 1.5 0 0 0 6.035 16h6.385a1.5 1.5 0 0 0 1.302-.756l1.395-2.441a3.5 3.5 0 0 0 .444-1.389l.272-2.715a2 2 0 0 0-1.99-2.199h-.582a5.184 5.184 0 0 0-.195-.248c-.191-.229-.51-.568-.88-.716-.364-.146-.846-.132-1.158-.108l-.132.012a1.26 1.26 0 0 0-.56-.642 2.634 2.634 0 0 0-.738-.288c-.31-.062-.739-.058-1.05-.046l-.048.002zm2.094 2.025z"/>
                 </svg>
             </a>
-</div>
+        {% elif name == "Añadir Nueva Tarea" %}
+            <a class="btn btn-success btn-lg" href="../asignar/">Asignar Tarea
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-hand-index-thumb" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                          d="M6.75 1a.75.75 0 0 0-.75.75V9.5a.5.5 0 0 1-.854.354l-2.41-2.411a.517.517 0 0 0-.809.631l2.512 4.185 1.232 2.465a.5.5 0 0 0 .447.276h6.302a.5.5 0 0 0 .434-.252l1.395-2.442a2.5 2.5 0 0 0 .317-.991l.272-2.715a1 1 0 0 0-.995-1.1H13.5v1a.5.5 0 1 1-1 0V7.154a4.208 4.208 0 0 0-.2-.26c-.187-.222-.368-.383-.486-.43-.124-.05-.392-.063-.708-.039a4.844 4.844 0 0 0-.106.01V8a.5.5 0 1 1-1 0V5.986c0-.167-.073-.272-.15-.314a1.657 1.657 0 0 0-.448-.182c-.179-.035-.5-.04-.816-.027l-.086.004V8a.5.5 0 1 1-1 0V1.75A.75.75 0 0 0 6.75 1zM8.5 4.466V1.75a1.75 1.75 0 1 0-3.5 0v6.543L3.443 6.736A1.517 1.517 0 0 0 1.07 8.588l2.491 4.153 1.215 2.43A1.5 1.5 0 0 0 6.118 16h6.302a1.5 1.5 0 0 0 1.302-.756l1.395-2.441a3.5 3.5 0 0 0 .444-1.389l.272-2.715a2 2 0 0 0-1.99-2.199h-.582a5.114 5.114 0 0 0-.195-.248c-.191-.229-.51-.568-.88-.716-.364-.146-.846-.132-1.158-.108l-.132.012a1.26 1.26 0 0 0-.56-.642 2.634 2.634 0 0 0-.738-.288c-.31-.062-.739-.058-1.05-.046l-.048.002zm2.094 2.025z"/>
+                </svg>
+            </a>
+        {% endif %}
+        <a class="btn btn-info btn-lg" href="../distribuir/">Distribución Rápida
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-puzzle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                      d="M3.112 3.645A1.5 1.5 0 0 1 4.605 2H7a.5.5 0 0 1 .5.5v.382c0 .696-.497 1.182-.872 1.469a.459.459 0 0 0-.115.118.113.113 0 0 0-.012.025L6.5 4.5v.003l.003.01c.004.01.014.028.036.053a.86.86 0 0 0 .27.194C7.09 4.9 7.51 5 8 5c.492 0 .912-.1 1.19-.24a.86.86 0 0 0 .271-.194.213.213 0 0 0 .036-.054l.003-.01v-.008a.112.112 0 0 0-.012-.025.459.459 0 0 0-.115-.118c-.375-.287-.872-.773-.872-1.469V2.5A.5.5 0 0 1 9 2h2.395a1.5 1.5 0 0 1 1.493 1.645L12.645 6.5h.237c.195 0 .42-.147.675-.48.21-.274.528-.52.943-.52.568 0 .947.447 1.154.862C15.877 6.807 16 7.387 16 8s-.123 1.193-.346 1.638c-.207.415-.586.862-1.154.862-.415 0-.733-.246-.943-.52-.255-.333-.48-.48-.675-.48h-.237l.243 2.855A1.5 1.5 0 0 1 11.395 14H9a.5.5 0 0 1-.5-.5v-.382c0-.696.497-1.182.872-1.469a.459.459 0 0 0 .115-.118.113.113 0 0 0 .012-.025L9.5 11.5v-.003l-.003-.01a.214.214 0 0 0-.036-.053.859.859 0 0 0-.27-.194C8.91 11.1 8.49 11 8 11c-.491 0-.912.1-1.19.24a.859.859 0 0 0-.271.194.214.214 0 0 0-.036.054l-.003.01v.002l.001.006a.113.113 0 0 0 .012.025c.016.027.05.068.115.118.375.287.872.773.872 1.469v.382a.5.5 0 0 1-.5.5H4.605a1.5 1.5 0 0 1-1.493-1.645L3.356 9.5h-.238c-.195 0-.42.147-.675.48-.21.274-.528.52-.943.52-.568 0-.947-.447-1.154-.862C.123 9.193 0 8.613 0 8s.123-1.193.346-1.638C.553 5.947.932 5.5 1.5 5.5c.415 0 .733.246.943.52.255.333.48.48.675.48h.238l-.244-2.855z"/>
+            </svg>
+        </a>
+    </div>
 {% endblock %}
 
 {% block extrajs %}
+    <!-- Crear y eliminar Cookies -->
+
     <!-- Script de tareas nativas -->
     <script>
+        // Formulario
+        let tarea_nombre = document.getElementById('id_nombre');
+        let tarea_complejidad = document.getElementById('id_complejidad');
+        let tarea_dependencia = document.getElementById('id_dependencia');
+        let tarea_duracion = document.getElementById('id_duracion');
+        let tarea_comentario = document.getElementById('id_comentarios');
+        // Dependencias por nombre
+        let dependencias_nombre = get_dependencias();
+        // Select
+        let limpiar_select = document.getElementById("id_nativa_dependencia");
+        let comidas_select = document.getElementById("id_nativa_comidas");
+        let mascotas_select = document.getElementById("id_nativa_atender");
+
+        // Platos a añadir
+        let platos = get_platos();
+        // Si hay platos en cookies
+        if (platos.length > 0) {
+            init_platos_select();
+        }
+
+        // Almacena dependencias en un arreglo
+        function get_dependencias() {
+            let array = [];
+            for (let i = 0; i < tarea_dependencia.options.length; i++) {
+                array.push(tarea_dependencia.options[i].text);
+            }
+            return array;
+        }
+
+        // Va por los platos almacenados en cookies
+        function get_platos() {
+            try {
+                return JSON.parse(Cookies.get('platos'))
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function init_platos_select(){
+            for (let i = 0; i < platos.length; i++){
+                let option = document.createElement('option');
+                option.appendChild(document.createTextNode(platos[i]));
+                option.value = platos[i];
+                comidas_select.appendChild(option);
+            }
+        }
+
+        // Añade platos a cookies
+        function add_plato(plato) {
+            platos = get_platos();
+            platos.push(plato);
+            Cookies.set('platos', platos);
+            set_platos();
+        }
+
+        // Actualiza el selector de platos
+        function set_platos() {
+            let plato = platos[platos.length - 1];
+            let option = document.createElement('option');
+            option.appendChild(document.createTextNode(plato));
+            option.value = plato;
+            comidas_select.appendChild(option);
+        }
+
+        // Setea dependencias según su nombre
+        function set_dependencia(dependencia) {
+            tarea_dependencia.selectedIndex = dependencias_nombre.indexOf(dependencia);
+        }
+
+        // Procedimiento para limpiar
         function nativa_limpiar() {
-            document.getElementById('id_dependencia').value = document.getElementById('id_nativa_dependencia').value;
-            document.getElementById('id_nombre').value = "Debe limpiar";
-            document.getElementById('id_complejidad').value = 1;
-            document.getElementById('id_duracion').value = "00:45";
-            document.getElementById('enviar').click();
-            alert("Tarea Creada")
+            tarea_nombre.value = "Limpiar";
+            tarea_complejidad.value = 2;
+            tarea_dependencia.value = limpiar_select.value;
+            tarea_duracion.value = "01:00";
+            tarea_comentario.value = "Debe limpiar " + limpiar_select.options[limpiar_select.value].text;
         }
 
+        // Procedimiento para cocinar
         function nativa_cocinar() {
-            document.getElementById('id_dependencia').value = document.getElementById('id_nativa_comidas').value;
-            document.getElementById('id_nombre').value = "Debe Cocinar " + document.getElementById('id_nativa_comidas').value;
-            document.getElementById('id_complejidad').value = 2;
-            document.getElementById('id_duracion').value = "1:30";
-            document.getElementById('enviar').click();
+            tarea_nombre.value = "Cocinar";
+            tarea_complejidad.value = 2;
+            set_dependencia("Cocina");
+            tarea_duracion.value = "01:00";
+            tarea_comentario.value = "Debe Cocinar " + comidas_select.value;
         }
 
+        // Procedimiento para atender
         function nativa_atender() {
-            document.getElementById('id_dependencia').value = document.getElementById('id_nativa_atender').value;
-            document.getElementById('id_nombre').value = document.getElementById('id_nativa_atender').value;
-            document.getElementById('id_complejidad').value = 1;
-            document.getElementById('id_duracion').value = "1:00";
-            document.getElementById('enviar').click();
+            tarea_nombre.value = "Atender mascota";
+            tarea_complejidad.value = 2;
+            set_dependencia("Exterior")
+            tarea_duracion.value = "01:00";
+            tarea_comentario.value = "Debe Cocinar " + mascotas_select.value;
         }
+
     </script>
 
     <!-- Script de alerta -->
